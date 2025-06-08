@@ -1,7 +1,6 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Copy, Download, FileText } from 'lucide-react';
+import { Copy, Download, FileText, Sparkles } from 'lucide-react';
 
 interface GeneratedContentOutputProps {
   content: string[];
