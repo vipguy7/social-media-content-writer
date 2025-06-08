@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -7,17 +6,28 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Slider } from '@/components/ui/slider';
-import { Loader2, Wand2 } from 'lucide-react';
+import { Loader2, Wand2, Sparkles } from 'lucide-react';
 import { ContentFormData } from '@/pages/Index';
 
 interface ContentFormConfigProps {
   formData: ContentFormData;
   setFormData: (data: ContentFormData) => void;
   onGenerate: () => void;
+  onGenerateImages: () => void;
   isLoading: boolean;
+  isGeneratingImages: boolean;
+  hasContent: boolean;
 }
 
-const ContentFormConfig = ({ formData, setFormData, onGenerate, isLoading }: ContentFormConfigProps) => {
+const ContentFormConfig = ({ 
+  formData, 
+  setFormData, 
+  onGenerate, 
+  onGenerateImages,
+  isLoading, 
+  isGeneratingImages,
+  hasContent 
+}: ContentFormConfigProps) => {
   const updateFormData = (updates: Partial<ContentFormData>) => {
     setFormData({ ...formData, ...updates });
   };
@@ -202,24 +212,47 @@ const ContentFormConfig = ({ formData, setFormData, onGenerate, isLoading }: Con
           />
         </div>
 
-        {/* Generate Button */}
-        <Button
-          onClick={onGenerate}
-          disabled={isLoading || !formData.productName.trim() || !formData.keyMessage.trim()}
-          className="w-full myanmar-gradient hover:opacity-90 transition-opacity text-lg py-6"
-        >
-          {isLoading ? (
-            <>
-              <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-              Generating Content...
-            </>
-          ) : (
-            <>
-              <Wand2 className="w-5 h-5 mr-2" />
-              Generate Myanmar Content
-            </>
+        {/* Generate Buttons */}
+        <div className="space-y-4">
+          <Button
+            onClick={onGenerate}
+            disabled={isLoading || !formData.productName.trim() || !formData.keyMessage.trim()}
+            className="w-full myanmar-gradient hover:opacity-90 transition-opacity text-lg py-6"
+          >
+            {isLoading ? (
+              <>
+                <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                Generating Professional Content...
+              </>
+            ) : (
+              <>
+                <Wand2 className="w-5 h-5 mr-2" />
+                Generate Myanmar Content
+              </>
+            )}
+          </Button>
+
+          {hasContent && (
+            <Button
+              onClick={onGenerateImages}
+              disabled={isGeneratingImages || !hasContent}
+              variant="outline"
+              className="w-full border-myanmar-red text-myanmar-red hover:bg-myanmar-red hover:text-white transition-colors text-lg py-6"
+            >
+              {isGeneratingImages ? (
+                <>
+                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                  Creating Graphics...
+                </>
+              ) : (
+                <>
+                  <Sparkles className="w-5 h-5 mr-2" />
+                  Generate Matching Images
+                </>
+              )}
+            </Button>
           )}
-        </Button>
+        </div>
       </CardContent>
     </Card>
   );
