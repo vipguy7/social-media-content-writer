@@ -17,21 +17,21 @@ interface ImageRequestBody {
 
 function generateImagePrompts(body: ImageRequestBody): string[] {
   const basePrompts = [
-    `Professional product photography of ${body.productName}, Myanmar style, clean background, high quality, commercial use`,
-    `Modern social media graphic for ${body.productName}, Myanmar colors (red, gold), typography, square format`,
-    `Lifestyle image showing ${body.productName} in use, Myanmar setting, natural lighting, authentic`,
-    `Minimalist graphic design for ${body.productName}, Myanmar cultural elements, geometric shapes, square layout`
+    `Professional Myanmar business advertisement for ${body.productName}, red and gold colors, clean typography, square format, commercial quality`,
+    `Modern social media post design for ${body.productName}, Myanmar cultural elements, vibrant colors, square layout, professional branding`,
+    `Minimalist product showcase for ${body.productName}, Myanmar style background, elegant design, square format, high quality`,
+    `Creative promotional graphic for ${body.productName}, traditional Myanmar patterns, modern typography, square composition`
   ];
 
   // Enhance prompts based on content type
   const enhancedPrompts = basePrompts.map(prompt => {
     switch (body.contentType) {
       case 'promotional':
-        return `${prompt}, promotional style, vibrant colors, attention-grabbing`;
+        return `${prompt}, promotional style, eye-catching, sales-focused`;
       case 'educational':
-        return `${prompt}, informative layout, clean design, professional`;
+        return `${prompt}, informative layout, clean design, educational`;
       case 'entertaining':
-        return `${prompt}, fun and engaging, bright colors, dynamic composition`;
+        return `${prompt}, fun and engaging, bright colors, entertainment`;
       default:
         return prompt;
     }
@@ -65,28 +65,29 @@ serve(async (req) => {
     const imagePrompts = generateImagePrompts(body);
     const images: string[] = [];
 
-    // Generate images sequentially to avoid rate limiting
+    // Generate images using OpenAI's image generation (more reliable than Imagen)
     for (const prompt of imagePrompts) {
       try {
         console.log('Generating image with prompt:', prompt.substring(0, 100) + '...');
         
         const imageResponse = await Promise.race([
-          fetch(`https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-001:generateImage?key=${GEMINI_API_KEY}`, {
+          fetch('https://api.openai.com/v1/images/generations', {
             method: 'POST',
             headers: {
+              'Authorization': `Bearer ${GEMINI_API_KEY}`,
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
+              model: 'dall-e-3',
               prompt: prompt,
-              config: {
-                aspectRatio: "1:1",
-                safetyFilterLevel: "BLOCK_ONLY_HIGH",
-                personGeneration: "ALLOW_ADULT"
-              }
+              n: 1,
+              size: '1024x1024',
+              quality: 'standard',
+              response_format: 'b64_json'
             }),
           }),
           new Promise((_, reject) => 
-            setTimeout(() => reject(new Error('Image generation timeout')), 20000)
+            setTimeout(() => reject(new Error('Image generation timeout')), 30000)
           )
         ]) as Response;
 
@@ -97,16 +98,15 @@ serve(async (req) => {
 
         const imageData = await imageResponse.json();
         
-        if (imageData.images && imageData.images.length > 0) {
-          // The response should contain base64 encoded image data
-          const base64Image = imageData.images[0].image;
+        if (imageData.data && imageData.data.length > 0) {
+          const base64Image = imageData.data[0].b64_json;
           images.push(`data:image/png;base64,${base64Image}`);
           console.log('Successfully generated image');
         }
 
         // Add delay between requests to respect rate limits
         if (imagePrompts.indexOf(prompt) < imagePrompts.length - 1) {
-          await new Promise(resolve => setTimeout(resolve, 1000));
+          await new Promise(resolve => setTimeout(resolve, 2000));
         }
 
       } catch (error) {

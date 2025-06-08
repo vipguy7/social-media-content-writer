@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import ContentFormConfig from '@/components/ContentFormConfig';
@@ -76,13 +77,14 @@ const Index = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhsb3diZ2x0enRrdHJlamppZmllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcwMTM3NDgsImV4cCI6MjA2MjU4OTc0OH0.hzBK9jGmDoCUPF1v-YEaXNKBsTnOL4Srjru0f8hZRuE`,
         },
         body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorData = await response.json();
+        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
@@ -141,7 +143,7 @@ const Index = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhsb3diZ2x0enRrdHJlamppZmllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcwMTM3NDgsImV4cCI6MjA2MjU4OTc0OH0.hzBK9jGmDoCUPF1v-YEaXNKBsTnOL4Srjru0f8hZRuE`,
         },
         body: JSON.stringify({
           contentText: generatedContent[0],
@@ -153,7 +155,8 @@ const Index = () => {
       });
 
       if (!imageResponse.ok) {
-        throw new Error(`HTTP error! status: ${imageResponse.status}`);
+        const errorData = await imageResponse.json();
+        throw new Error(errorData.error || `HTTP error! status: ${imageResponse.status}`);
       }
 
       const imageData = await imageResponse.json();
