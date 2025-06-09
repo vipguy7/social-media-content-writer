@@ -17,27 +17,120 @@ interface ImageRequestBody {
 
 function generateImagePrompts(body: ImageRequestBody): string[] {
   const basePrompts = [
-    `Professional Myanmar business advertisement for ${body.productName}, red and gold colors, clean typography, square format, commercial quality`,
-    `Modern social media post design for ${body.productName}, Myanmar cultural elements, vibrant colors, square layout, professional branding`,
-    `Minimalist product showcase for ${body.productName}, Myanmar style background, elegant design, square format, high quality`,
-    `Creative promotional graphic for ${body.productName}, traditional Myanmar patterns, modern typography, square composition`
+    `Professional Myanmar business social media post for ${body.productName}, red and gold Myanmar colors, clean modern typography, square format 1:1, commercial quality, minimalist design`,
+    `Modern Facebook post design for ${body.productName}, Myanmar cultural elements, traditional patterns, vibrant colors, square layout, professional branding, engaging visual`,
+    `Creative promotional graphic for ${body.productName}, Myanmar flag colors, elegant design, square format, social media ready, high quality, professional look`,
+    `Minimalist product showcase for ${body.productName}, Myanmar style background, clean typography, square composition, Instagram ready, premium quality`
   ];
 
-  // Enhance prompts based on content type
+  // Enhance prompts based on content type and platform
   const enhancedPrompts = basePrompts.map(prompt => {
+    let enhancement = '';
+    
     switch (body.contentType) {
       case 'promotional':
-        return `${prompt}, promotional style, eye-catching, sales-focused`;
+        enhancement = ', promotional style, eye-catching, sales-focused, call-to-action elements';
+        break;
       case 'educational':
-        return `${prompt}, informative layout, clean design, educational`;
+        enhancement = ', informative layout, clean design, educational content, professional';
+        break;
       case 'entertaining':
-        return `${prompt}, fun and engaging, bright colors, entertainment`;
+        enhancement = ', fun and engaging, bright colors, entertainment theme, playful';
+        break;
       default:
-        return prompt;
+        enhancement = ', professional and clean design';
     }
+
+    if (body.platform === 'facebook') {
+      enhancement += ', Facebook post format, engaging social media design';
+    } else if (body.platform === 'instagram') {
+      enhancement += ', Instagram post format, visually appealing, hashtag ready';
+    }
+
+    return `${prompt}${enhancement}, high resolution, professional quality`;
   });
 
   return enhancedPrompts.slice(0, body.numImages);
+}
+
+async function generateImageWithGemini(prompt: string, geminiApiKey: string): Promise<string | null> {
+  try {
+    console.log('Generating image with Gemini Imagen...');
+    
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-001:generateImage?key=${geminiApiKey}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        prompt: prompt,
+        safetySettings: [
+          {
+            category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+            threshold: "BLOCK_LOW_AND_ABOVE"
+          },
+          {
+            category: "HARM_CATEGORY_HATE_SPEECH", 
+            threshold: "BLOCK_LOW_AND_ABOVE"
+          },
+          {
+            category: "HARM_CATEGORY_HARASSMENT",
+            threshold: "BLOCK_LOW_AND_ABOVE"
+          },
+          {
+            category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+            threshold: "BLOCK_LOW_AND_ABOVE"
+          }
+        ],
+        generationConfig: {
+          aspectRatio: "1:1",
+          negativePrompt: "blurry, low quality, distorted, watermark, text overlay, poor lighting"
+        }
+      }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Gemini Imagen API error:', response.status, errorText);
+      return null;
+    }
+
+    const data = await response.json();
+    
+    if (data.candidates && data.candidates.length > 0 && data.candidates[0].image) {
+      const base64Image = data.candidates[0].image.data;
+      return `data:image/png;base64,${base64Image}`;
+    }
+
+    return null;
+  } catch (error) {
+    console.error('Error generating image with Gemini:', error);
+    return null;
+  }
+}
+
+function generatePlaceholderImage(productName: string, index: number): string {
+  // Generate a simple SVG placeholder with Myanmar styling
+  const svg = `
+    <svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#FF6B6B;stop-opacity:1" />
+        </linearGradient>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#grad1)"/>
+      <rect x="20" y="20" width="472" height="472" fill="none" stroke="#fff" stroke-width="4"/>
+      <text x="256" y="200" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="#fff">Myanmar Content</text>
+      <text x="256" y="240" font-family="Arial, sans-serif" font-size="18" text-anchor="middle" fill="#fff">${productName}</text>
+      <text x="256" y="300" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#fff">Professional Design ${index + 1}</text>
+      <circle cx="256" cy="350" r="30" fill="none" stroke="#fff" stroke-width="3"/>
+      <path d="M 240 350 L 250 360 L 272 338" stroke="#fff" stroke-width="3" fill="none"/>
+    </svg>
+  `;
+  
+  const base64Svg = btoa(unescape(encodeURIComponent(svg)));
+  return `data:image/svg+xml;base64,${base64Svg}`;
 }
 
 serve(async (req) => {
@@ -58,69 +151,61 @@ serve(async (req) => {
     }
 
     const GEMINI_API_KEY = Deno.env.get('GEMINI_API_KEY');
-    if (!GEMINI_API_KEY) {
-      throw new Error('GEMINI_API_KEY is not configured');
-    }
-
     const imagePrompts = generateImagePrompts(body);
     const images: string[] = [];
 
-    // Generate images using OpenAI's image generation (more reliable than Imagen)
-    for (const prompt of imagePrompts) {
-      try {
-        console.log('Generating image with prompt:', prompt.substring(0, 100) + '...');
+    // Try to generate images with Gemini Imagen if API key is available
+    if (GEMINI_API_KEY) {
+      console.log('Using Gemini Imagen for image generation...');
+      
+      for (let i = 0; i < imagePrompts.length; i++) {
+        const prompt = imagePrompts[i];
+        console.log(`Generating image ${i + 1} with prompt: ${prompt.substring(0, 100)}...`);
         
-        const imageResponse = await Promise.race([
-          fetch('https://api.openai.com/v1/images/generations', {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${GEMINI_API_KEY}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              model: 'dall-e-3',
-              prompt: prompt,
-              n: 1,
-              size: '1024x1024',
-              quality: 'standard',
-              response_format: 'b64_json'
-            }),
-          }),
-          new Promise((_, reject) => 
-            setTimeout(() => reject(new Error('Image generation timeout')), 30000)
-          )
-        ]) as Response;
+        try {
+          const imageData = await Promise.race([
+            generateImageWithGemini(prompt, GEMINI_API_KEY),
+            new Promise<null>((_, reject) => 
+              setTimeout(() => reject(new Error('Image generation timeout')), 30000)
+            )
+          ]);
 
-        if (!imageResponse.ok) {
-          console.error(`Image generation failed for prompt: ${prompt.substring(0, 50)}...`);
-          continue;
+          if (imageData) {
+            images.push(imageData);
+            console.log(`Successfully generated image ${i + 1}`);
+          } else {
+            console.log(`Failed to generate image ${i + 1}, creating placeholder`);
+            images.push(generatePlaceholderImage(body.productName, i));
+          }
+
+          // Add delay between requests to respect rate limits
+          if (i < imagePrompts.length - 1) {
+            await new Promise(resolve => setTimeout(resolve, 2000));
+          }
+
+        } catch (error) {
+          console.error(`Error generating image ${i + 1}:`, error);
+          // Create placeholder image if generation fails
+          images.push(generatePlaceholderImage(body.productName, i));
         }
-
-        const imageData = await imageResponse.json();
-        
-        if (imageData.data && imageData.data.length > 0) {
-          const base64Image = imageData.data[0].b64_json;
-          images.push(`data:image/png;base64,${base64Image}`);
-          console.log('Successfully generated image');
-        }
-
-        // Add delay between requests to respect rate limits
-        if (imagePrompts.indexOf(prompt) < imagePrompts.length - 1) {
-          await new Promise(resolve => setTimeout(resolve, 2000));
-        }
-
-      } catch (error) {
-        console.error('Error generating individual image:', error);
-        // Continue with other images even if one fails
+      }
+    } else {
+      console.log('No Gemini API key found, generating placeholder images...');
+      // Generate placeholder images if no API key is available
+      for (let i = 0; i < body.numImages; i++) {
+        images.push(generatePlaceholderImage(body.productName, i));
       }
     }
 
-    console.log(`Generated ${images.length} images out of ${imagePrompts.length} requested`);
+    console.log(`Generated ${images.length} images out of ${body.numImages} requested`);
 
     return new Response(JSON.stringify({
       success: true,
       images: images,
-      prompts: imagePrompts
+      prompts: imagePrompts,
+      message: GEMINI_API_KEY ? 
+        `Generated ${images.length} images using AI` : 
+        `Generated ${images.length} placeholder images (Gemini API key not configured)`
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
