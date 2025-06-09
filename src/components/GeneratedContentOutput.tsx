@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Copy, Download, FileText, Sparkles } from 'lucide-react';
@@ -21,10 +22,10 @@ const GeneratedContentOutput = ({ content, images = [], onCopy, onExportAll }: G
             <div>
               <CardTitle className="flex items-center gap-2">
                 <FileText className="w-5 h-5 text-myanmar-red" />
-                Generated Content
+                ဖန်တီးပြီး ကွန်တင့်
               </CardTitle>
               <CardDescription>
-                {content.length} professional variation{content.length > 1 ? 's' : ''} ready for use
+                အသုံးပြုရန် အဆင်သင့် ပရော်ဖက်ရှင်နယ် ရွေးချယ်စရာ {content.length} မျိုး
               </CardDescription>
             </div>
             <Button
@@ -34,7 +35,7 @@ const GeneratedContentOutput = ({ content, images = [], onCopy, onExportAll }: G
               className="hover:bg-myanmar-red hover:text-white transition-colors"
             >
               <Download className="w-4 h-4 mr-2" />
-              Export All
+              အားလုံး ထုတ်ယူပါ
             </Button>
           </div>
         </CardHeader>
@@ -47,7 +48,7 @@ const GeneratedContentOutput = ({ content, images = [], onCopy, onExportAll }: G
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
                   <div className="text-xs text-muted-foreground mb-2 font-medium">
-                    Variation {index + 1}
+                    ရွေးချယ်စရာ {index + 1}
                   </div>
                   <p className="text-sm leading-relaxed text-foreground whitespace-pre-wrap">
                     {variation}
@@ -73,10 +74,10 @@ const GeneratedContentOutput = ({ content, images = [], onCopy, onExportAll }: G
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-myanmar-red" />
-              Generated Graphics
+              ဖန်တီးပြီး ဂရပ်ဖစ်များ
             </CardTitle>
             <CardDescription>
-              {images.length} professional graphic{images.length > 1 ? 's' : ''} ready for social media
+              ဆိုရှယ်မီဒီယာအတွက် အဆင်သင့် ပရော်ဖက်ရှင်နယ် ဂရပ်ဖစ် {images.length} ခု
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -88,7 +89,7 @@ const GeneratedContentOutput = ({ content, images = [], onCopy, onExportAll }: G
                 >
                   <img
                     src={image}
-                    alt={`Generated graphic ${index + 1}`}
+                    alt={`ဖန်တီးပြီး ဂရပ်ဖစ် ${index + 1}`}
                     className="w-full h-48 object-cover"
                   />
                   <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -103,11 +104,11 @@ const GeneratedContentOutput = ({ content, images = [], onCopy, onExportAll }: G
                       size="sm"
                     >
                       <Download className="w-4 h-4 mr-2" />
-                      Download
+                      ဒေါင်းလုဒ်
                     </Button>
                   </div>
                   <div className="absolute top-2 left-2 bg-white/90 text-xs px-2 py-1 rounded">
-                    Graphic {index + 1}
+                    ဂရပ်ဖစ် {index + 1}
                   </div>
                 </div>
               ))}

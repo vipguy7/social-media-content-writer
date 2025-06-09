@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -6,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Slider } from '@/components/ui/slider';
-import { Loader2, Wand2, Sparkles } from 'lucide-react';
+import { Loader2, Wand2, Sparkles, Facebook } from 'lucide-react';
 import { ContentFormData } from '@/pages/Index';
 
 interface ContentFormConfigProps {
@@ -37,20 +38,20 @@ const ContentFormConfig = ({
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Wand2 className="w-5 h-5 text-myanmar-red" />
-          Content Configuration
+          ကွန်တင့် ဖွဲ့စည်းမှု
         </CardTitle>
         <CardDescription>
-          Define your content parameters to generate professional Burmese social media posts
+          ပရော်ဖက်ရှင်နယ် မြန်မာ ဆိုရှယ်မီဒီယာ ပို့စ်များ ဖန်တီးရန် သင့်ကွန်တင့် ပြင်းထန်ခဲ့ချက်များကို သတ်မှတ်ပါ
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Platform and Content Type */}
         <div className="grid md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="platform">Platform</Label>
+            <Label htmlFor="platform">ပလပ်ဖောင်း</Label>
             <Select value={formData.platform} onValueChange={(value) => updateFormData({ platform: value })}>
               <SelectTrigger>
-                <SelectValue placeholder="Select platform" />
+                <SelectValue placeholder="ပလပ်ဖောင်း ရွေးချယ်ပါ" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="facebook">Facebook</SelectItem>
@@ -63,17 +64,17 @@ const ContentFormConfig = ({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="contentType">Content Type</Label>
+            <Label htmlFor="contentType">ကွန်တင့်အမျိုးအစား</Label>
             <Select value={formData.contentType} onValueChange={(value) => updateFormData({ contentType: value })}>
               <SelectTrigger>
-                <SelectValue placeholder="Select content type" />
+                <SelectValue placeholder="ကွန်တင့်အမျိုးအစား ရွေးချယ်ပါ" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="promotional">Promotional</SelectItem>
-                <SelectItem value="educational">Educational</SelectItem>
-                <SelectItem value="entertaining">Entertaining</SelectItem>
-                <SelectItem value="news">News & Updates</SelectItem>
-                <SelectItem value="community">Community Building</SelectItem>
+                <SelectItem value="promotional">ကြော်ငြာ</SelectItem>
+                <SelectItem value="educational">ပညာရေး</SelectItem>
+                <SelectItem value="entertaining">ဖျော်ဖြေရေး</SelectItem>
+                <SelectItem value="news">သတင်းနှင့် အပ်ဒိတ်များ</SelectItem>
+                <SelectItem value="community">အသိုင်းအဝိုင်း တည်ဆောက်ရေး</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -82,59 +83,76 @@ const ContentFormConfig = ({
         {/* Product Details */}
         <div className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="productName">Product/Service Name *</Label>
+            <Label htmlFor="productName">ထုတ်ကုန်/ဝန်ဆောင်မှု အမည် *</Label>
             <Input
               id="productName"
               value={formData.productName}
               onChange={(e) => updateFormData({ productName: e.target.value })}
-              placeholder="Enter your product or service name"
+              placeholder="သင့်ထုတ်ကုန် သို့မဟုတ် ဝန်ဆောင်မှု အမည်ကို ထည့်ပါ"
               className="focus:ring-myanmar-red focus:border-myanmar-red"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="keyMessage">Key Message *</Label>
+            <Label htmlFor="keyMessage">အဓိက မက်ဆေ့ခ် *</Label>
             <Textarea
               id="keyMessage"
               value={formData.keyMessage}
               onChange={(e) => updateFormData({ keyMessage: e.target.value })}
-              placeholder="What's the main message you want to convey?"
+              placeholder="သင် ပေးပို့လိုသော အဓိက မက်ဆေ့ခ်မှာ ဘာလဲ?"
               rows={3}
               className="focus:ring-myanmar-red focus:border-myanmar-red"
             />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="facebookPageLink" className="flex items-center gap-2">
+              <Facebook className="w-4 h-4 text-blue-600" />
+              Facebook Page လင့်ခ်
+            </Label>
+            <Input
+              id="facebookPageLink"
+              value={formData.facebookPageLink}
+              onChange={(e) => updateFormData({ facebookPageLink: e.target.value })}
+              placeholder="https://facebook.com/yourpage (ဘရန်းခွဲခြမ်းစိတ်ဖြာမှုအတွက်)"
+              className="focus:ring-myanmar-red focus:border-myanmar-red"
+            />
+            <p className="text-xs text-muted-foreground">
+              သင့် Facebook Page လင့်ခ်ကို ထည့်ပါ။ AI သည် သင့်ဘရန်း၏ စာရေးပုံစံ၊ အပြုအမူနှင့် ပရိသတ်တုံ့ပြန်မှုများကို ခွဲခြမ်းစိတ်ဖြာ၍ ပိုမိုကိုက်ညီသော ကွန်တင့်များ ဖန်တီးပေးပါမည်။
+            </p>
           </div>
         </div>
 
         {/* Style and Objectives */}
         <div className="grid md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="objective">Marketing Objective</Label>
+            <Label htmlFor="objective">မားကတ်တင်း ရည်ရွယ်ချက်</Label>
             <Select value={formData.objective} onValueChange={(value) => updateFormData({ objective: value })}>
               <SelectTrigger>
-                <SelectValue placeholder="Select objective" />
+                <SelectValue placeholder="ရည်ရွယ်ချက် ရွေးချယ်ပါ" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="awareness">Brand Awareness</SelectItem>
-                <SelectItem value="engagement">Engagement</SelectItem>
-                <SelectItem value="conversion">Conversion</SelectItem>
-                <SelectItem value="retention">Customer Retention</SelectItem>
-                <SelectItem value="traffic">Website Traffic</SelectItem>
+                <SelectItem value="awareness">ဘရန်း သိရှိမှု</SelectItem>
+                <SelectItem value="engagement">ပရိသတ် ပါဝင်မှု</SelectItem>
+                <SelectItem value="conversion">ရောင်းချမှု ပြောင်းလဲမှု</SelectItem>
+                <SelectItem value="retention">ဖောက်သည် ထိန်းသိမ်းမှု</SelectItem>
+                <SelectItem value="traffic">ဝက်ဘ်ဆိုက် လည်ပတ်မှု</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="style">Writing Style</Label>
+            <Label htmlFor="style">စာရေးပုံစံ</Label>
             <Select value={formData.style} onValueChange={(value) => updateFormData({ style: value })}>
               <SelectTrigger>
-                <SelectValue placeholder="Select style" />
+                <SelectValue placeholder="ပုံစံ ရွေးချယ်ပါ" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="professional">Professional</SelectItem>
-                <SelectItem value="casual">Casual</SelectItem>
-                <SelectItem value="friendly">Friendly</SelectItem>
-                <SelectItem value="authoritative">Authoritative</SelectItem>
-                <SelectItem value="playful">Playful</SelectItem>
+                <SelectItem value="professional">ပရော်ဖက်ရှင်နယ်</SelectItem>
+                <SelectItem value="casual">ပေါ့ပေါ့ပါးပါး</SelectItem>
+                <SelectItem value="friendly">ဖော်ရွေ</SelectItem>
+                <SelectItem value="authoritative">အခွင့်အာဏာရှိ</SelectItem>
+                <SelectItem value="playful">ကစားပွမ်း</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -143,32 +161,32 @@ const ContentFormConfig = ({
         {/* Target Audience and Keywords */}
         <div className="grid md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="targetAudience">Target Audience</Label>
+            <Label htmlFor="targetAudience">ပစ်မှတ် ပရိသတ်</Label>
             <Input
               id="targetAudience"
               value={formData.targetAudience}
               onChange={(e) => updateFormData({ targetAudience: e.target.value })}
-              placeholder="e.g., Young professionals in Yangon"
+              placeholder="ဥပမာ - ရန်ကုန်မြို့ရှိ လူငယ် ပရော်ဖက်ရှင်နယ်များ"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="keywords">Keywords</Label>
+            <Label htmlFor="keywords">အဓိက စကားလုံးများ</Label>
             <Input
               id="keywords"
               value={formData.keywords}
               onChange={(e) => updateFormData({ keywords: e.target.value })}
-              placeholder="e.g., မြန်မာ, အရည်အသွေး, ဝန်ဆောင်မှု"
+              placeholder="ဥပမာ - မြန်မာ, အရည်အသွေး, ဝန်ဆောင်မှု"
             />
           </div>
         </div>
 
         {/* Content Options */}
         <div className="space-y-4">
-          <Label className="text-base font-medium">Content Features</Label>
+          <Label className="text-base font-medium">ကွန်တင့် အင်္ဂါရပ်များ</Label>
           <div className="grid md:grid-cols-3 gap-4">
             <div className="flex items-center justify-between p-3 border rounded-lg">
-              <Label htmlFor="includeCTA" className="text-sm">Call to Action</Label>
+              <Label htmlFor="includeCTA" className="text-sm">လုပ်ဆောင်ချက် တောင်းဆိုမှု</Label>
               <Switch
                 id="includeCTA"
                 checked={formData.includeCTA}
@@ -177,7 +195,7 @@ const ContentFormConfig = ({
             </div>
             
             <div className="flex items-center justify-between p-3 border rounded-lg">
-              <Label htmlFor="includeEmojis" className="text-sm">Emojis</Label>
+              <Label htmlFor="includeEmojis" className="text-sm">အီမိုဂျီများ</Label>
               <Switch
                 id="includeEmojis"
                 checked={formData.includeEmojis}
@@ -186,7 +204,7 @@ const ContentFormConfig = ({
             </div>
             
             <div className="flex items-center justify-between p-3 border rounded-lg">
-              <Label htmlFor="includeHashtags" className="text-sm">Hashtags</Label>
+              <Label htmlFor="includeHashtags" className="text-sm">Hashtag များ</Label>
               <Switch
                 id="includeHashtags"
                 checked={formData.includeHashtags}
@@ -199,7 +217,7 @@ const ContentFormConfig = ({
         {/* Number of Variations */}
         <div className="space-y-3">
           <Label className="flex items-center justify-between">
-            Number of Variations
+            ရွေးချယ်စရာ အရေအတွက်
             <span className="text-myanmar-red font-medium">{formData.numVariations}</span>
           </Label>
           <Slider
@@ -222,12 +240,12 @@ const ContentFormConfig = ({
             {isLoading ? (
               <>
                 <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                Generating Professional Content...
+                ပရော်ဖက်ရှင်နယ် ကွန်တင့် ဖန်တီးနေသည်...
               </>
             ) : (
               <>
                 <Wand2 className="w-5 h-5 mr-2" />
-                Generate Myanmar Content
+                မြန်မာ ကွန်တင့် ဖန်တီးပါ
               </>
             )}
           </Button>
@@ -242,12 +260,12 @@ const ContentFormConfig = ({
               {isGeneratingImages ? (
                 <>
                   <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                  Creating Graphics...
+                  ဂရပ်ဖစ်များ ဖန်တီးနေသည်...
                 </>
               ) : (
                 <>
                   <Sparkles className="w-5 h-5 mr-2" />
-                  Generate Matching Images
+                  ကိုက်ညီသော ပုံများ ဖန်တီးပါ
                 </>
               )}
             </Button>

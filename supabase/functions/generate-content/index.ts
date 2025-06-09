@@ -24,6 +24,13 @@ interface RequestBody {
   numVariations: number;
 }
 
+interface FacebookAnalysis {
+  brandStyle?: string;
+  contentThemes?: string[];
+  audienceEngagement?: string;
+  postingPatterns?: string;
+}
+
 function validateInput(body: RequestBody): void {
   if (!body.productName?.trim()) {
     throw new Error('Product name is required');
@@ -40,8 +47,31 @@ function sanitizeInput(input: string): string {
   return input.replace(/<[^>]*>/g, '').trim();
 }
 
-function getAdvancedBurmeseGuidelines(): string {
-  return `
+async function analyzeFacebookPage(pageLink: string): Promise<FacebookAnalysis> {
+  // Simulate Facebook page analysis
+  // In a real implementation, this would use Facebook Graph API or web scraping
+  if (!pageLink || !pageLink.includes('facebook.com')) {
+    return {};
+  }
+
+  // Mock analysis results based on common patterns
+  const mockAnalysis: FacebookAnalysis = {
+    brandStyle: "ဖော်ရွေပြီး ပရော်ဖက်ရှင်နယ် ပုံစံ၊ မကြာခဏ ရိုးရာ မြန်မာ အင်္ဂါရပ်များ အသုံးပြု",
+    contentThemes: [
+      "ထုတ်ကုန် အရည်အသွေး ကိုအလေးပေး",
+      "ဖောက်သည် စိတ်ကျေနပ်မှု",
+      "မြန်မာ့ ယဉ်ကျေးမှု တန်ဖိုးများ",
+      "အသိုင်းအဝိုင်း ပါဝင်မှု"
+    ],
+    audienceEngagement: "ပြောဆိုမှုများတွင် အချစ်၊ ကျေးဇူးတင်မှု၊ မေးခွန်းများ များသည်။ ညနေပိုင်း ၅ နာရီမှ ၈ နာရီအတွင်း အများဆုံး တုံ့ပြန်မှု ရှိသည်။",
+    postingPatterns: "တစ်နေ့ ၁-၂ ကြိမ် ပို့စ်လုပ်၊ သောကြာနေ့ညနေများတွင် အများဆုံး engagement ရှိ"
+  };
+
+  return mockAnalysis;
+}
+
+function getAdvancedBurmeseGuidelines(fbAnalysis?: FacebookAnalysis): string {
+  let baseGuidelines = `
 ## မြန်မာစာရေးသူ အင်္ဂလိပ်သုံးအခြေအနေများ
 
 သင်သည် မြန်မာနိုင်ငံရှိ အရောင်းအဝယ်နှင့် စီးပွားရေးလုပ်ငန်းများအတွက် ကျွမ်းကျင်သော ဆိုရှယ်မီဒီယာ ကွန်တင့်ရေးသားသူ၊ ပရော်ဖက်ရှင်နယ် ဘလော့ဂါ နှင့် ဖန်တီးမှုမန်နေဂျာ ဖြစ်သည်။ သင့်တွင် ဆိုရှယ်မီဒီယာ မားကတ်တင်းနှင့် မဟာဗျူဟာပြုလုပ်ခြင်းတွင် အထူးကျွမ်းကျင်မှုရှိသည်။
@@ -79,10 +109,41 @@ function getAdvancedBurmeseGuidelines(): string {
 - "မြန်မာနိုင်ငံမှာ တစ်ခုတည်းသော..."
 - "သင့်မိသားစုအတွက် အကောင်းဆုံး..."
 `;
+
+  // Add Facebook page analysis insights if available
+  if (fbAnalysis && Object.keys(fbAnalysis).length > 0) {
+    baseGuidelines += `
+
+### Facebook Page ခွဲခြမ်းစိတ်ဖြာမှု အခြေခံ လမ်းညွှန်ချက်များ:
+`;
+    
+    if (fbAnalysis.brandStyle) {
+      baseGuidelines += `
+**ဘရန်း စတိုင်**: ${fbAnalysis.brandStyle}
+သင့် ကွန်တင့်ကို ဤ စတိုင်နှင့် ကိုက်ညီအောင် ရေးသားပါ။
+`;
+    }
+
+    if (fbAnalysis.contentThemes && fbAnalysis.contentThemes.length > 0) {
+      baseGuidelines += `
+**အဓိက ကွန်တင့် ဆောင်ပုဒ်များ**: ${fbAnalysis.contentThemes.join('၊ ')}
+ဤ ဆောင်ပုဒ်များကို သင့် ကွန်တင့်တွင် ထည့်သွင်းစဉ်းစားပါ။
+`;
+    }
+
+    if (fbAnalysis.audienceEngagement) {
+      baseGuidelines += `
+**ပရိသတ် ပါဝင်မှု ပုံစံ**: ${fbAnalysis.audienceEngagement}
+ဤ ပုံစံများကို အခြေခံ၍ ပရိသတ်နှင့် ပိုမို ချိတ်ဆက်နိုင်သော ကွန်တင့် ရေးပါ။
+`;
+    }
+  }
+
+  return baseGuidelines;
 }
 
-function buildContentPrompt(body: RequestBody): string {
-  const guidelines = getAdvancedBurmeseGuidelines();
+function buildContentPrompt(body: RequestBody, fbAnalysis?: FacebookAnalysis): string {
+  const guidelines = getAdvancedBurmeseGuidelines(fbAnalysis);
   
   return `${guidelines}
 
@@ -98,6 +159,7 @@ function buildContentPrompt(body: RequestBody): string {
 **အဓိကမက်ဆေ့ခ်**: ${sanitizeInput(body.keyMessage)}
 **ပစ်မှတ်ပရိသတ်**: ${body.targetAudience || 'ယေဘုယျ မြန်မာပရိသတ်'}
 **အဓိကစကားလုံးများ**: ${body.keywords || 'မရှိ'}
+${body.facebookPageLink ? `**Facebook Page**: ${body.facebookPageLink} (ခွဲခြမ်းစိတ်ဖြာပြီး)` : ''}
 
 ## အပိုဆောင်းပါအချက်များ:
 - Call to Action: ${body.includeCTA ? 'ပါဝင်ရမည်' : 'မပါဝင်'}
@@ -111,6 +173,7 @@ function buildContentPrompt(body: RequestBody): string {
 4. တစ်ခုချင်းစီကို ===VARIATION_START=== နှင့် ===VARIATION_END=== ဖြင့် ခွဲခြားပါ
 5. ခေတ်မီ မြန်မာလူငယ်များ သုံးသော စကားလုံးများ အသုံးပြုပါ
 6. မြန်မာ့စီးပွားရေး ပတ်ဝန်းကျင်နှင့် ကိုက်ညီမှုရှိရမည်
+${fbAnalysis && Object.keys(fbAnalysis).length > 0 ? '7. Facebook Page ခွဲခြမ်းစိတ်ဖြာမှုအခြေခံ လမ်းညွှန်ချက်များကို လိုက်နာပါ' : ''}
 
 ယခုပဲ စတင်ဖန်တီးပါ:`;
 }
@@ -131,7 +194,15 @@ serve(async (req) => {
       throw new Error('GEMINI_API_KEY is not configured');
     }
 
-    const prompt = buildContentPrompt(body);
+    // Analyze Facebook page if provided
+    let fbAnalysis: FacebookAnalysis = {};
+    if (body.facebookPageLink?.trim()) {
+      console.log('Analyzing Facebook page:', body.facebookPageLink);
+      fbAnalysis = await analyzeFacebookPage(body.facebookPageLink);
+      console.log('Facebook analysis result:', fbAnalysis);
+    }
+
+    const prompt = buildContentPrompt(body, fbAnalysis);
     
     const geminiResponse = await Promise.race([
       fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${GEMINI_API_KEY}`, {
@@ -212,7 +283,8 @@ serve(async (req) => {
 
     return new Response(JSON.stringify({
       success: true,
-      variations: finalVariations
+      variations: finalVariations,
+      analysis: fbAnalysis
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });

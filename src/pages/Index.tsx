@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import ContentFormConfig from '@/components/ContentFormConfig';
@@ -63,7 +62,7 @@ const Index = () => {
     
     // Basic validation
     if (!formData.productName.trim() || !formData.keyMessage.trim()) {
-      setError('Product name and key message are required.');
+      setError('ထုတ်ကုန်အမည်နှင့် အဓိကမက်ဆေ့ခ် လိုအပ်ပါသည်။');
       return;
     }
 
@@ -90,7 +89,7 @@ const Index = () => {
       const data = await response.json();
       
       if (!data.success) {
-        throw new Error(data.error || 'Content generation failed');
+        throw new Error(data.error || 'ကွန်တင့် ဖန်တီးမှု မအောင်မြင်ပါ');
       }
 
       setGeneratedContent(data.variations || []);
@@ -107,16 +106,16 @@ const Index = () => {
       setQAMetrics(mockQA);
       
       toast({
-        title: "Content Generated Successfully!",
-        description: `Generated ${data.variations?.length || 0} professional Burmese content variations`,
+        title: "ကွန်တင့် အောင်မြင်စွာ ဖန်တီးပြီးပါပြီ!",
+        description: `ပရော်ဖက်ရှင်နယ် မြန်မာ ကွန်တင့် ${data.variations?.length || 0} မျိုး ဖန်တီးပေးပြီးပါပြီ`,
       });
       
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to generate content';
+      const errorMessage = err instanceof Error ? err.message : 'ကွန်တင့် ဖန်တီးမှု မအောင်မြင်ပါ';
       setError(errorMessage);
       toast({
         variant: "destructive",
-        title: "Generation Failed",
+        title: "ဖန်တီးမှု မအောင်မြင်ပါ",
         description: errorMessage,
       });
     } finally {
@@ -128,8 +127,8 @@ const Index = () => {
     if (generatedContent.length === 0) {
       toast({
         variant: "destructive",
-        title: "Generate Content First",
-        description: "Please generate content before creating images",
+        title: "ကွန်တင့် ဦးစွာ ဖန်တီးပါ",
+        description: "ပုံများ မဖန်တီးမီ ကွန်တင့် ဦးစွာ ဖန်တီးပါ",
       });
       return;
     }
@@ -162,21 +161,21 @@ const Index = () => {
       const imageData = await imageResponse.json();
       
       if (!imageData.success) {
-        throw new Error(imageData.error || 'Image generation failed');
+        throw new Error(imageData.error || 'ပုံ ဖန်တီးမှု မအောင်မြင်ပါ');
       }
 
       setGeneratedImages(imageData.images || []);
       
       toast({
-        title: "Images Generated Successfully!",
-        description: `Created ${imageData.images?.length || 0} professional graphics`,
+        title: "ပုံများ အောင်မြင်စွာ ဖန်တီးပြီးပါပြီ!",
+        description: `ပရော်ဖက်ရှင်နယ် ဂရပ်ဖစ် ${imageData.images?.length || 0} ခု ဖန်တီးပေးပြီးပါပြီ`,
       });
       
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to generate images';
+      const errorMessage = err instanceof Error ? err.message : 'ပုံများ ဖန်တီးမှု မအောင်မြင်ပါ';
       toast({
         variant: "destructive",
-        title: "Image Generation Failed", 
+        title: "ပုံ ဖန်တီးမှု မအောင်မြင်ပါ", 
         description: errorMessage,
       });
     } finally {
@@ -188,14 +187,14 @@ const Index = () => {
     try {
       await navigator.clipboard.writeText(content);
       toast({
-        title: "Copied to clipboard!",
-        description: "Content has been copied successfully",
+        title: "ကလစ်ဘုတ်သို့ ကူးယူပြီးပါပြီ!",
+        description: "ကွန်တင့်ကို အောင်မြင်စွာ ကူးယူပြီးပါပြီ",
       });
     } catch (err) {
       toast({
         variant: "destructive",
-        title: "Copy failed",
-        description: "Could not copy content to clipboard",
+        title: "ကူးယူမှု မအောင်မြင်ပါ",
+        description: "ကလစ်ဘုတ်သို့ ကွန်တင့် ကူးယူ၍ မရပါ",
       });
     }
   };
@@ -211,8 +210,8 @@ const Index = () => {
     URL.revokeObjectURL(url);
     
     toast({
-      title: "Content Exported!",
-      description: "All content variations have been downloaded",
+      title: "ကွန်တင့် ထုတ်ယူပြီးပါပြီ!",
+      description: "ကွန်တင့် အားလုံးကို ဒေါင်းလုဒ် လုပ်ပြီးပါပြီ",
     });
   };
 
@@ -226,19 +225,19 @@ const Index = () => {
           <div className="flex items-center justify-center gap-2 mb-4">
             <Sparkles className="w-8 h-8 text-myanmar-red" />
             <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-myanmar-red to-myanmar-red-light bg-clip-text text-transparent">
-              Myanmar Content Crafter
+              မြန်မာ ကွန်တင့် ကျွမ်းကျင်သူ
             </h1>
           </div>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Professional AI-powered social media content generation with advanced Burmese language patterns. 
-            Create culturally relevant content and matching graphics for Myanmar business success.
+            အဆင့်မြင့် မြန်မာဘာသာ ပုံစံများဖြင့် AI စွမ်းအင်ဖြင့် ပရော်ဖက်ရှင်နယ် ဆိုရှယ်မီဒီယာ ကွန်တင့် ဖန်တီးမှု။ 
+            မြန်မာ လုပ်ငန်း အောင်မြင်မှုအတွက် ယဉ်ကျေးမှုနှင့် ကိုက်ညီသော ကွန်တင့်နှင့် ကိုက်ညီသော ဂရပ်ဖစ်များ ဖန်တီးပါ။
           </p>
         </div>
 
         {/* Error Display */}
         {error && (
           <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4 text-destructive animate-slide-up">
-            <p className="font-medium">Error: {error}</p>
+            <p className="font-medium">အမှား: {error}</p>
           </div>
         )}
 
