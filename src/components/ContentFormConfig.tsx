@@ -38,10 +38,10 @@ const ContentFormConfig = ({
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Wand2 className="w-5 h-5 text-myanmar-red" />
-          ကွန်တင့် ဖွဲ့စည်းမှု
+          အရေးအသား ဖွဲ့စည်းမှု
         </CardTitle>
         <CardDescription>
-          ပရော်ဖက်ရှင်နယ် မြန်မာ ဆိုရှယ်မီဒီယာ ပို့စ်များ ဖန်တီးရန် သင့်ကွန်တင့် ပြင်းထန်ခဲ့ချက်များကို သတ်မှတ်ပါ
+        ဆိုရှယ်မီဒီယာပို့စ်များ ဖန်တီးရန်အတွက် အချက်အလက်များ ထည့်သွင်းရွေးချယ်ပါ.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -64,17 +64,17 @@ const ContentFormConfig = ({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="contentType">ကွန်တင့်အမျိုးအစား</Label>
+            <Label htmlFor="contentType">ပိုစ့်အမျိုးအစား</Label>
             <Select value={formData.contentType} onValueChange={(value) => updateFormData({ contentType: value })}>
               <SelectTrigger>
                 <SelectValue placeholder="ကွန်တင့်အမျိုးအစား ရွေးချယ်ပါ" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="promotional">ကြော်ငြာ</SelectItem>
-                <SelectItem value="educational">ပညာရေး</SelectItem>
-                <SelectItem value="entertaining">ဖျော်ဖြေရေး</SelectItem>
-                <SelectItem value="news">သတင်းနှင့် အပ်ဒိတ်များ</SelectItem>
-                <SelectItem value="community">အသိုင်းအဝိုင်း တည်ဆောက်ရေး</SelectItem>
+                <SelectItem value="promotional">ကြော်ငြာ ပိုစ့်</SelectItem>
+                <SelectItem value="educational">ထုတ်ကုန်နှင့်ပတ်သတ်သည်များကို ရှင်းပြသည့် ပိုစ့်</SelectItem>
+                <SelectItem value="entertaining">ဖျော်ဖြေ်ရေးဆန်သော ပိုစ့်</SelectItem>
+                <SelectItem value="news">Press Release</SelectItem>
+                <SelectItem value="community">အားပေးသူ တိုးလာစေချင်တဲ့ ပိုစ့်</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -118,7 +118,7 @@ const ContentFormConfig = ({
               className="focus:ring-myanmar-red focus:border-myanmar-red"
             />
             <p className="text-xs text-muted-foreground">
-              သင့် Facebook Page လင့်ခ်ကို ထည့်ပါ။ AI သည် သင့်ဘရန်း၏ စာရေးပုံစံ၊ အပြုအမူနှင့် ပရိသတ်တုံ့ပြန်မှုများကို ခွဲခြမ်းစိတ်ဖြာ၍ ပိုမိုကိုက်ညီသော ကွန်တင့်များ ဖန်တီးပေးပါမည်။
+              သင့် Facebook Page လင့်ခ်ကို ထည့်ပါ။ AI သည် သင့်ဘရန်း၏ စာရေးပုံစံ၊ အပြုအမူနှင့် ပရိသတ်တုံ့ပြန်မှုများကို ခွဲခြမ်းစိတ်ဖြာ၍ ပိုမိုကိုက်ညီသော ပိုစ့်များ ဖန်တီးပေးပါမည်။
             </p>
           </div>
         </div>
@@ -126,7 +126,7 @@ const ContentFormConfig = ({
         {/* Brand Voice and Pronouns */}
         <div className="grid md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="brandGender">ဘရန်း လိင်သေအိပ်</Label>
+            <Label htmlFor="brandGender">ကိုယ်စားပြုနာမ်ရွေးရန်</Label>
             <Select value={formData.brandGender || ''} onValueChange={(value) => updateFormData({ brandGender: value })}>
               <SelectTrigger>
                 <SelectValue placeholder="ဘရန်း လိင်သေအိပ် ရွေးချယ်ပါ" />
@@ -138,7 +138,7 @@ const ContentFormConfig = ({
               </SelectContent>
             </Select>
             <p className="text-xs text-muted-foreground">
-              ဘရန်း၏ လိင်သေအိပ်အရ သင့်လျော်သော စကားလုံးများ အသုံးပြုပါမည်
+              ဘရန်း၏ ကိုယ်စားပြုနာမ်အရ သင့်လျော်သော စကားလုံးများ အသုံးပြုပါမည်
             </p>
           </div>
 
@@ -153,7 +153,7 @@ const ContentFormConfig = ({
                 <SelectItem value="engagement">ပရိသတ် ပါဝင်မှု</SelectItem>
                 <SelectItem value="conversion">ရောင်းချမှု ပြောင်းလဲမှု</SelectItem>
                 <SelectItem value="retention">ဖောက်သည် ထိန်းသိမ်းမှု</SelectItem>
-                <SelectItem value="traffic">ဝက်ဘ်ဆိုက် လည်ပတ်မှု</SelectItem>
+                <SelectItem value="traffic">ဖတ်ရှုနှုန်းတိုးတက်မှု</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -162,7 +162,7 @@ const ContentFormConfig = ({
         {/* Style and Target Audience */}
         <div className="grid md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="style">စာရေးပုံစံ</Label>
+            <Label htmlFor="style">အရေးအသားပုံစံ</Label>
             <Select value={formData.style} onValueChange={(value) => updateFormData({ style: value })}>
               <SelectTrigger>
                 <SelectValue placeholder="ပုံစံ ရွေးချယ်ပါ" />
@@ -171,8 +171,8 @@ const ContentFormConfig = ({
                 <SelectItem value="professional">ပရော်ဖက်ရှင်နယ်</SelectItem>
                 <SelectItem value="casual">ပေါ့ပေါ့ပါးပါး</SelectItem>
                 <SelectItem value="friendly">ဖော်ရွေ</SelectItem>
-                <SelectItem value="authoritative">အခွင့်အာဏာရှိ</SelectItem>
-                <SelectItem value="playful">ကစားပွမ်း</SelectItem>
+                <SelectItem value="authoritative">ရုံးစာဆန်သော</SelectItem>
+                <SelectItem value="playful">ဟာသဆန်သော</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -201,7 +201,7 @@ const ContentFormConfig = ({
 
         {/* Content Options */}
         <div className="space-y-4">
-          <Label className="text-base font-medium">ကွန်တင့် အင်္ဂါရပ်များ</Label>
+          <Label className="text-base font-medium">ပိုစ့် အင်္ဂါရပ်များ</Label>
           <div className="grid md:grid-cols-3 gap-4">
             <div className="flex items-center justify-between p-3 border rounded-lg">
               <Label htmlFor="includeCTA" className="text-sm">လုပ်ဆောင်ချက် တောင်းဆိုမှု</Label>
