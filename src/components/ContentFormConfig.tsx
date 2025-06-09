@@ -129,7 +129,7 @@ const ContentFormConfig = ({
             <Label htmlFor="brandGender">ကိုယ်စားပြုနာမ်ရွေးရန်</Label>
             <Select value={formData.brandGender || ''} onValueChange={(value) => updateFormData({ brandGender: value })}>
               <SelectTrigger>
-                <SelectValue placeholder="ဘရန်း လိင်သေအိပ် ရွေးချယ်ပါ" />
+                <SelectValue placeholder="ကိုယ်စားပြုနာမ်ရွေးပါ" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="male">ယောက်ျား (ကျွန်တော်၊ သူ)</SelectItem>
@@ -258,12 +258,12 @@ const ContentFormConfig = ({
             {isLoading ? (
               <>
                 <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                ပရော်ဖက်ရှင်နယ် ကွန်တင့် ဖန်တီးနေသည်...
+                သင်အတွက် ပိုစ့်ကို ဖန်တီးနေသည်...
               </>
             ) : (
               <>
                 <Wand2 className="w-5 h-5 mr-2" />
-                မြန်မာ ကွန်တင့် ဖန်တီးပါ
+                 ပိုစ့်ရေးသားပါ
               </>
             )}
           </Button>
