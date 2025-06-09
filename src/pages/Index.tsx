@@ -17,6 +17,7 @@ export interface ContentFormData {
   targetAudience: string;
   keywords: string;
   facebookPageLink: string;
+  brandGender?: string;
   includeCTA: boolean;
   includeEmojis: boolean;
   includeHashtags: boolean;
@@ -51,6 +52,7 @@ const Index = () => {
     targetAudience: '',
     keywords: '',
     facebookPageLink: '',
+    brandGender: '',
     includeCTA: true,
     includeEmojis: true,
     includeHashtags: true,

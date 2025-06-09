@@ -123,8 +123,25 @@ const ContentFormConfig = ({
           </div>
         </div>
 
-        {/* Style and Objectives */}
+        {/* Brand Voice and Pronouns */}
         <div className="grid md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="brandGender">ဘရန်း လိင်သေအိပ်</Label>
+            <Select value={formData.brandGender || ''} onValueChange={(value) => updateFormData({ brandGender: value })}>
+              <SelectTrigger>
+                <SelectValue placeholder="ဘရန်း လိင်သေအိပ် ရွေးချယ်ပါ" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="male">ယောက်ျား (ကျွန်တော်၊ သူ)</SelectItem>
+                <SelectItem value="female">မိန်းမ (ကျွန်မ၊ သူမ)</SelectItem>
+                <SelectItem value="neutral">ကြားခံ (ကျွန်ုပ်၊ ကျွန်တော်တို့)</SelectItem>
+              </SelectContent>
+            </Select>
+            <p className="text-xs text-muted-foreground">
+              ဘရန်း၏ လိင်သေအိပ်အရ သင့်လျော်သော စကားလုံးများ အသုံးပြုပါမည်
+            </p>
+          </div>
+
           <div className="space-y-2">
             <Label htmlFor="objective">မားကတ်တင်း ရည်ရွယ်ချက်</Label>
             <Select value={formData.objective} onValueChange={(value) => updateFormData({ objective: value })}>
@@ -140,7 +157,10 @@ const ContentFormConfig = ({
               </SelectContent>
             </Select>
           </div>
+        </div>
 
+        {/* Style and Target Audience */}
+        <div className="grid md:grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label htmlFor="style">စာရေးပုံစံ</Label>
             <Select value={formData.style} onValueChange={(value) => updateFormData({ style: value })}>
@@ -156,10 +176,7 @@ const ContentFormConfig = ({
               </SelectContent>
             </Select>
           </div>
-        </div>
 
-        {/* Target Audience and Keywords */}
-        <div className="grid md:grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label htmlFor="targetAudience">ပစ်မှတ် ပရိသတ်</Label>
             <Input
@@ -169,16 +186,17 @@ const ContentFormConfig = ({
               placeholder="ဥပမာ - ရန်ကုန်မြို့ရှိ လူငယ် ပရော်ဖက်ရှင်နယ်များ"
             />
           </div>
+        </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="keywords">အဓိက စကားလုံးများ</Label>
-            <Input
-              id="keywords"
-              value={formData.keywords}
-              onChange={(e) => updateFormData({ keywords: e.target.value })}
-              placeholder="ဥပမာ - မြန်မာ, အရည်အသွေး, ဝန်ဆောင်မှု"
-            />
-          </div>
+        {/* Keywords */}
+        <div className="space-y-2">
+          <Label htmlFor="keywords">အဓိက စကားလုံးများ</Label>
+          <Input
+            id="keywords"
+            value={formData.keywords}
+            onChange={(e) => updateFormData({ keywords: e.target.value })}
+            placeholder="ဥပမာ - မြန်မာ, အရည်အသွေး, ဝန်ဆောင်မှု"
+          />
         </div>
 
         {/* Content Options */}
