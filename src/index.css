@@ -31,24 +31,24 @@
 
   .dark {
     --background: 21 32 43;
-    --foreground: rgb(227, 216, 198);
+    --foreground: rgb(141, 140, 140);
     --card: 25 39 52;
-    --card-foreground: rgb(227, 216, 198);
-    --popover: 25 39 52;
-    --popover-foreground: 255 255 255;
+    --card-foreground: rgb(99, 98, 97);
+    --popover: rgb(187, 205, 232);
+    --popover-foreground: rgb(187, 205, 232);
     --primary: rgb(82, 118, 130);
     --primary-foreground: rgb(227, 216, 198);
     --secondary: rgb(82, 118, 130);
-    --secondary-foreground: rgb(227, 216, 198);
+    --secondary-foreground: rgb(153, 152, 151);
     --muted: 56 68 77;
     --muted-foreground: rgb(227, 216, 198);
-    --accent: 255 173 31;
-    --accent-foreground: rgb(227, 216, 198);
+    --accent: rgba(5, 95, 133, 0.623);
+    --accent-foreground: rgba(36, 36, 35, 0.452);
     --destructive: 224 36 94;
     --destructive-foreground: rgb(227, 216, 198);
-    --border: 56 68 77;
-    --input: 21 32 43;
-    --ring: 29 161 242;
+    --border: rgb(78, 138, 165);
+    --input: rgb(247, 245, 243);
+    --ring: rgb(78, 138, 165);
   }
 }
 
