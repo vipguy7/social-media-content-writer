@@ -8,7 +8,6 @@ interface ResultsPanelProps {
   marketingInsights: MarketingInsightsType | null;
   qaMetrics: QAMetrics | null;
   generatedContent: string[];
-  generatedImages: string[];
   onCopy: (content: string) => void;
   onExportAll: () => void;
 }
@@ -17,7 +16,6 @@ const ResultsPanel = ({
   marketingInsights,
   qaMetrics,
   generatedContent,
-  generatedImages,
   onCopy,
   onExportAll
 }: ResultsPanelProps) => {
@@ -34,7 +32,6 @@ const ResultsPanel = ({
       {generatedContent.length > 0 && (
         <GeneratedContentOutput
           content={generatedContent}
-          images={generatedImages}
           onCopy={onCopy}
           onExportAll={onExportAll}
         />
