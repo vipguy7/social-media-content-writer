@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import Header from '@/components/Header';
@@ -6,6 +5,7 @@ import HeroSection from '@/components/HeroSection';
 import ContentGeneratorForm from '@/components/ContentGeneratorForm';
 import ResultsPanel from '@/components/ResultsPanel';
 import ErrorDisplay from '@/components/ErrorDisplay';
+import FloatingActionButton from '@/components/FloatingActionButton';
 import { ContentFormData, QAMetrics, MarketingInsights } from '@/types/content';
 
 const Index = () => {
@@ -197,16 +197,16 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
+    <div className="min-h-screen bg-gradient-to-br from-myanmar-gray-light via-white to-myanmar-blue-light">
       <Header />
       
-      <main className="container mx-auto px-4 py-8 space-y-8">
+      <main className="container mx-auto px-4 py-12 space-y-12">
         <HeroSection />
 
         <ErrorDisplay error={error} />
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2">
+        <div className="grid xl:grid-cols-3 gap-8">
+          <div className="xl:col-span-2 animate-slide-in-left">
             <ContentGeneratorForm
               formData={formData}
               updateFormData={updateFormData}
@@ -218,7 +218,7 @@ const Index = () => {
             />
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-6 animate-slide-in-right">
             <ResultsPanel
               marketingInsights={marketingInsights}
               qaMetrics={qaMetrics}
@@ -230,6 +230,11 @@ const Index = () => {
           </div>
         </div>
       </main>
+
+      <FloatingActionButton
+        onClick={handleGenerateContent}
+        isLoading={isLoading}
+      />
     </div>
   );
 };

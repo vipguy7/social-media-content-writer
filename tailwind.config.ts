@@ -54,11 +54,18 @@ export default {
 					foreground: 'hsl(var(--card-foreground))'
 				},
 				myanmar: {
-					red: 'hsl(var(--myanmar-red))',
-					gold: 'hsl(var(--myanmar-gold))',
-					'red-light': 'hsl(var(--myanmar-red-light))',
-					'gold-light': 'hsl(var(--myanmar-gold-light))'
+					blue: 'hsl(var(--myanmar-blue))',
+					orange: 'hsl(var(--myanmar-orange))',
+					'blue-light': 'hsl(var(--myanmar-blue-light))',
+					'orange-light': 'hsl(var(--myanmar-orange-light))',
+					'blue-dark': 'hsl(var(--myanmar-blue-dark))',
+					gray: 'hsl(var(--myanmar-gray))',
+					'gray-light': 'hsl(var(--myanmar-gray-light))'
 				}
+			},
+			fontFamily: {
+				'myanmar': ['Noto Sans Myanmar', 'Pyidaungsu', 'sans-serif'],
+				'inter': ['Inter', 'system-ui', 'sans-serif']
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -81,11 +88,21 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'float': {
+					'0%, 100%': { transform: 'translateY(0px)' },
+					'50%': { transform: 'translateY(-8px)' }
+				},
+				'glow': {
+					'0%, 100%': { boxShadow: '0 0 20px rgba(255, 153, 51, 0.5)' },
+					'50%': { boxShadow: '0 0 30px rgba(255, 153, 51, 0.8)' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'float': 'float 3s ease-in-out infinite',
+				'glow': 'glow 2s ease-in-out infinite'
 			}
 		}
 	},
