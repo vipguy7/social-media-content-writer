@@ -7,7 +7,7 @@
 
 @layer base {
   :root {
-    --background: 248 248 248; /* Very light grey background */
+    --background: 209 204 255; /* Very light grey background */
     --foreground: 20 20 20; /* Dark charcoal text */
 
     --card: 255 255 255; /* Pure white cards */
