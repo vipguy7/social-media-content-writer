@@ -9,7 +9,7 @@
    --background: 255 255 255;
     --foreground: 26 25 25;
 
-    --card: 245 245 245;
+    --card: 184 248 255;
     --card-foreground: 0 0 0;
 
     --popover: 245 245 245;
@@ -18,7 +18,7 @@
     --primary: 0 0 0;
     --primary-foreground: 255 255 255;
 
-    --secondary: 235 235 235;
+    --secondary: 184 248 255;
     --secondary-foreground: 0 0 0;
 
     --muted: 240 240 240;
@@ -27,7 +27,7 @@
     --accent: 142 199 210;
     --accent-foreground: 0 0 0;
 
-    --destructive: 150 0 0;
+    --destructive: 184 248 255;
     --destructive-foreground: 255 255 255;
 
     --border: 26 25 25;
