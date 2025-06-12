@@ -1,72 +1,72 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Myanmar Content Crafter Design System */
+/* Myanmar Content Crafter Design System - Retro Typewriter Theme */
 
 @layer base {
   :root {
-    --background: 248 250 252;
-    --foreground: 15 23 42;
+    --background: 240 240 240; /* Light grey background */
+    --foreground: 0 0 0; /* Black text */
 
-    --card: 255 255 255;
-    --card-foreground: 15 23 42;
+    --card: 255 255 255; /* White cards */
+    --card-foreground: 0 0 0; /* Black text on cards */
 
     --popover: 255 255 255;
-    --popover-foreground: 15 23 42;
+    --popover-foreground: 0 0 0;
 
-    --primary: 220 38 127;
-    --primary-foreground: 255 255 255;
+    --primary: 218 165 32; /* Dark goldenrod */
+    --primary-foreground: 0 0 0;
 
-    --secondary: 241 245 249;
-    --secondary-foreground: 15 23 42;
+    --secondary: 248 248 248; /* Very light grey */
+    --secondary-foreground: 0 0 0;
 
-    --muted: 248 250 252;
-    --muted-foreground: 100 116 139;
+    --muted: 245 245 245; /* Light grey */
+    --muted-foreground: 64 64 64; /* Dark grey */
 
-    --accent: 241 245 249;
-    --accent-foreground: 15 23 42;
+    --accent: 255 215 0; /* Gold */
+    --accent-foreground: 0 0 0;
 
-    --destructive: 239 68 68;
+    --destructive: 220 38 38;
     --destructive-foreground: 255 255 255;
 
-    --border: 226 232 240;
-    --input: 226 232 240;
-    --ring: 220 38 127;
+    --border: 218 165 32; /* Gold border */
+    --input: 255 255 255; /* White input background */
+    --ring: 218 165 32; /* Gold focus ring */
 
-    --radius: 12px;
+    --radius: 8px;
 
-    /* Myanmar Brand Colors */
-    --myanmar-blue: 219 234 254;
-    --myanmar-blue-light: 239 246 255;
-    --myanmar-blue-dark: 29 78 216;
-    --myanmar-orange: 255 153 51;
-    --myanmar-orange-light: 255 186 102;
-    --myanmar-gray: 148 163 184;
-    --myanmar-gray-light: 241 245 249;
+    /* Myanmar Brand Colors - Retro Theme */
+    --myanmar-blue: 218 165 32; /* Replace with gold */
+    --myanmar-blue-light: 255 215 0; /* Light gold */
+    --myanmar-blue-dark: 184 134 11; /* Dark gold */
+    --myanmar-orange: 218 165 32; /* Gold */
+    --myanmar-orange-light: 255 215 0; /* Light gold */
+    --myanmar-gray: 128 128 128; /* Medium grey */
+    --myanmar-gray-light: 240 240 240; /* Light grey background */
+    --myanmar-red: 218 165 32; /* Gold instead of red */
   }
 
   .dark {
-    --background: 9 9 11;
-    --foreground: 248 250 252;
-    --card: 24 24 27;
-    --card-foreground: 248 250 252;
-    --popover: 24 24 27;
-    --popover-foreground: 248 250 252;
-    --primary: 147 197 253;
-    --primary-foreground: 15 23 42;
-    --secondary: 39 39 42;
-    --secondary-foreground: 248 250 252;
-    --muted: 39 39 42;
-    --muted-foreground: 161 161 170;
-    --accent: 39 39 42;
-    --accent-foreground: 248 250 252;
-    --destructive: 239 68 68;
-    --destructive-foreground: 248 250 252;
-    --border: 39 39 42;
-    --input: 39 39 42;
-    --ring: 147 197 253;
+    --background: 32 32 32;
+    --foreground: 255 255 255;
+    --card: 48 48 48;
+    --card-foreground: 255 255 255;
+    --popover: 48 48 48;
+    --popover-foreground: 255 255 255;
+    --primary: 255 215 0;
+    --primary-foreground: 0 0 0;
+    --secondary: 64 64 64;
+    --secondary-foreground: 255 255 255;
+    --muted: 64 64 64;
+    --muted-foreground: 192 192 192;
+    --accent: 255 215 0;
+    --accent-foreground: 0 0 0;
+    --destructive: 220 38 38;
+    --destructive-foreground: 255 255 255;
+    --border: 255 215 0;
+    --input: 48 48 48;
+    --ring: 255 215 0;
   }
 }
 
@@ -91,23 +91,23 @@
 
 @layer utilities {
   .myanmar-gradient {
-    background: linear-gradient(135deg, hsl(var(--myanmar-blue-dark)) 0%, hsl(var(--myanmar-blue)) 100%);
+    background: linear-gradient(135deg, hsl(var(--myanmar-gray-light)) 0%, hsl(var(--myanmar-gray)) 100%);
   }
   
-  .orange-gradient {
+  .gold-gradient {
     background: linear-gradient(135deg, hsl(var(--myanmar-orange)) 0%, hsl(var(--myanmar-orange-light)) 100%);
   }
   
   .glass-card {
-    @apply bg-white/90 backdrop-blur-lg border border-white/30 shadow-xl shadow-blue-500/10;
+    @apply bg-white border-2 border-myanmar-orange shadow-lg;
   }
 
   .glass-card-dark {
-    @apply bg-gray-900/80 backdrop-blur-lg border border-gray-700/50 shadow-xl;
+    @apply bg-gray-800 border-2 border-myanmar-orange shadow-lg;
   }
 
   .floating-card {
-    @apply glass-card hover:shadow-2xl hover:shadow-blue-500/20 transform hover:scale-[1.02] transition-all duration-300;
+    @apply glass-card hover:shadow-xl hover:border-myanmar-orange-light transform hover:scale-[1.02] transition-all duration-300;
   }
   
   .animate-fade-in {
@@ -127,15 +127,19 @@
   }
 
   .btn-myanmar {
-    @apply bg-gradient-to-r from-myanmar-blue-dark to-blue-600 text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105;
+    @apply bg-gradient-to-r from-myanmar-orange to-myanmar-orange-light text-black px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:shadow-lg hover:shadow-myanmar-orange/25 hover:scale-105 border-2 border-myanmar-orange;
   }
 
   .btn-orange {
-    @apply bg-gradient-to-r from-myanmar-orange to-orange-500 text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/25 hover:scale-105;
+    @apply bg-gradient-to-r from-myanmar-orange to-myanmar-orange-light text-black px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:shadow-lg hover:shadow-myanmar-orange/25 hover:scale-105 border-2 border-myanmar-orange;
   }
 
   .floating-action-btn {
-    @apply fixed bottom-8 right-8 w-16 h-16 bg-gradient-to-r from-myanmar-orange to-orange-500 text-white rounded-full shadow-2xl hover:shadow-orange-500/50 transition-all duration-300 hover:scale-110 z-50 animate-float;
+    @apply fixed bottom-8 right-8 w-16 h-16 bg-gradient-to-r from-myanmar-orange to-myanmar-orange-light text-black rounded-full shadow-2xl hover:shadow-myanmar-orange/50 transition-all duration-300 hover:scale-110 z-50 animate-float border-2 border-myanmar-orange;
+  }
+
+  .typewriter-key {
+    @apply bg-white border-2 border-myanmar-orange rounded-lg shadow-md hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5;
   }
 }
 
@@ -185,11 +189,11 @@
 
 /* Myanmar text specific styling */
 .myanmar-text {
-  @apply font-myanmar text-base leading-relaxed;
+  @apply font-myanmar text-base leading-relaxed text-black;
 }
 
 .myanmar-heading {
-  @apply font-myanmar font-semibold tracking-wide;
+  @apply font-myanmar font-semibold tracking-wide text-black;
 }
 
 /* Responsive design improvements */
