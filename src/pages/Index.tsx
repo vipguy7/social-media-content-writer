@@ -32,6 +32,14 @@ export interface QAMetrics {
   engagement: number;
 }
 
+export interface MarketingInsights {
+  audienceProfile: string;
+  emotionalTriggers: string[];
+  brandPersonality: string;
+  competitiveAdvantage: string;
+  contentStrategy: string;
+}
+
 const Index = () => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
@@ -40,6 +48,7 @@ const Index = () => {
   const [generatedContent, setGeneratedContent] = useState<string[]>([]);
   const [generatedImages, setGeneratedImages] = useState<string[]>([]);
   const [qaMetrics, setQAMetrics] = useState<QAMetrics | null>(null);
+  const [marketingInsights, setMarketingInsights] = useState<MarketingInsights | null>(null);
 
   const [formData, setFormData] = useState<ContentFormData>({
     platform: 'facebook',
@@ -71,7 +80,7 @@ const Index = () => {
     setIsLoading(true);
     
     try {
-      console.log('Starting content generation...');
+      console.log('Starting enhanced content generation...');
       
       // Call the enhanced Gemini edge function
       const response = await fetch(`https://xlowbgltztktrejjifie.supabase.co/functions/v1/generate-content`, {
@@ -95,6 +104,7 @@ const Index = () => {
       }
 
       setGeneratedContent(data.variations || []);
+      setMarketingInsights(data.marketingInsights || null);
       
       // Mock QA metrics with enhanced scoring
       const mockQA: QAMetrics = {
@@ -108,7 +118,7 @@ const Index = () => {
       setQAMetrics(mockQA);
       
       toast({
-        title: "ကွန်တင့် အောင်မြင်စွာ ဖန်တီးပြီးပါပြီ!",
+        title: "အဆင့်မြင့် ကွန်တင့် အောင်မြင်စွာ ဖန်တီးပြီးပါပြီ!",
         description: `ပရော်ဖက်ရှင်နယ် မြန်မာ ကွန်တင့် ${data.variations?.length || 0} မျိုး ဖန်တီးပေးပြီးပါပြီ`,
       });
       
@@ -259,6 +269,10 @@ const Index = () => {
 
           {/* Results Panel */}
           <div className="space-y-6">
+            {marketingInsights && (
+              <MarketingInsights insights={marketingInsights} />
+            )}
+            
             {qaMetrics && (
               <QualityAssurance metrics={qaMetrics} />
             )}

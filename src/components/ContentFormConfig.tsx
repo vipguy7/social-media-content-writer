@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,6 +8,8 @@ import { Switch } from '@/components/ui/switch';
 import { Slider } from '@/components/ui/slider';
 import { Loader2, Wand2, Sparkles, Facebook } from 'lucide-react';
 import { ContentFormData } from '@/pages/Index';
+import AudienceTargeting from './AudienceTargeting';
+import MarketingInsights from './MarketingInsights';
 
 interface ContentFormConfigProps {
   formData: ContentFormData;
@@ -118,10 +119,16 @@ const ContentFormConfig = ({
               className="focus:ring-myanmar-red focus:border-myanmar-red"
             />
             <p className="text-xs text-muted-foreground">
-              သင့် Facebook Page လင့်ခ်ကို ထည့်ပါ။ AI သည် သင့်ဘရန်း၏ စာရေးပုံစံ၊ အပြုအမူနှင့် ပရိသတ်တုံ့ပြန်မှုများကို ခွဲခြမ်းစိတ်ဖြာ၍ ပိုမိုကိုက်ညီသော ပိုစ့်များ ဖန်တီးပေးပါမည်။
+              သင့် Facebook Page လင့်ခ်ကို ထည့်ပါ။ AI သည် သင့်ဘရန်း၏ စာရေးပုံစံ၊ အပြုအမူနှင့် ပရိသတ်တုံ့ပြန်မှုများကို ခွဲခြမ်းစိတ်ဖြာ၍ ပိုမိုက်ညီသော ပိုစ့်များ ဖန်တီးပေးပါမည်။
             </p>
           </div>
         </div>
+
+        {/* Audience Targeting Component */}
+        <AudienceTargeting 
+          formData={formData} 
+          updateFormData={updateFormData}
+        />
 
         {/* Brand Voice and Pronouns */}
         <div className="grid md:grid-cols-2 gap-4">
