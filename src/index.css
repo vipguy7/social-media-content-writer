@@ -67,8 +67,13 @@
     @apply border-border;
   }
 
+  html {
+    background-color: hsl(var(--background)) !important;
+  }
+
   body {
-    @apply bg-background text-foreground font-myanmar;
+    @apply text-foreground font-myanmar; /* Removed bg-background from here */
+    background-color: hsl(var(--background)) !important; /* Added it here with !important */
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -84,7 +89,10 @@
 }
 
 @layer utilities {
-  .clay-card {
+  .clay-gradient {
+    background-color: hsl(var(--background));
+  }
+    .clay-card {
     @apply bg-card border border-border rounded-2xl;
     box-shadow: var(--shadow-clay-md);
   }
