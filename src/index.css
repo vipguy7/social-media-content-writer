@@ -24,15 +24,15 @@
     --muted: 240 240 240;
     --muted-foreground: 85 85 85;
 
-    --accent: 230 230 230;
+    --accent: 142 199 210;
     --accent-foreground: 0 0 0;
 
     --destructive: 150 0 0;
     --destructive-foreground: 255 255 255;
 
-    --border: 220 220 220;
+    --border: 26 25 25;
     --input: 255 255 255;
-    --ring: 0 0 0;
+    --ring: 26 25 25;
 
     --radius: 10px;
 
