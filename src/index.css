@@ -69,8 +69,13 @@
     @apply border-border;
   }
 
+  html {
+    background-color: hsl(var(--background)) !important;
+  }
+
   body {
-    @apply bg-background text-foreground font-myanmar;
+    @apply text-foreground font-myanmar; /* Removed bg-background from here */
+    background-color: hsl(var(--background)) !important; /* Added it here with !important */
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -88,7 +93,7 @@
 @layer utilities {
   /* Clay Design System */
   .clay-gradient {
-    background: linear-gradient(245.88deg 100% 90%), hsl(var(--background)) 0%, hsl(var(--muted)) 100%);
+    background-color: hsl(var(--background));
   }
   
   .clay-card {
