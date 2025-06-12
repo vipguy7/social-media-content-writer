@@ -8,17 +8,17 @@
   :root {
     --background: 0 0 0;
     --foreground: 20 225 225;
-    --card: 20 255 250;
+    --card: 20 0 250;
     --card-foreground: 70 80 90;
     --popover: 125 125 125;
     --popover-foreground: 20 23 26;
-    --primary: 125 125 125;
+    --primary: 125 205 225;
     --primary-foreground: 255 235 255;
-    --secondary: 200 0 24;
+    --secondary: 20 255 24;
     --secondary-foreground: 255 235 255;
-    --muted: 230 236 240;
-    --muted-foreground: 101 119 134;
-    --accent: 225 122 25;
+    --muted: 255 255 210;
+    --muted-foreground: 20 20 20;
+    --accent: 100 50 255;
     --accent-foreground: 20 20 20;
     --destructive: 224 36 94;
     --destructive-foreground: 20 23 13;
