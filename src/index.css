@@ -1,66 +1,64 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Myanmar Content Crafter Design System - Minimalist Clay Aesthetic */
+/* Myanmar Content Crafter Design System - Minimalist Clay Aesthetic (Black & White Theme) */
 
 @layer base {
   :root {
-    --background: 255 255 255; /* white */
-    --foreground: 0 0 0; /* black */
+    --background: 255 255 255;
+    --foreground: 0 0 0;
 
-    --card: 250 250 250; /* very light grey */
-    --card-foreground: 0 0 0; /* black */
+    --card: 245 245 245;
+    --card-foreground: 0 0 0;
 
-    --popover: 250 250 250; /* very light grey */
-    --popover-foreground: 0 0 0; /* black */
+    --popover: 245 245 245;
+    --popover-foreground: 0 0 0;
 
-    --primary: 0 0 0; /* black */
-    --primary-foreground: 255 255 255; /* white */
+    --primary: 0 0 0;
+    --primary-foreground: 255 255 255;
 
-    --secondary: 240 240 240; /* light grey */
-    --secondary-foreground: 0 0 0; /* black */
+    --secondary: 235 235 235;
+    --secondary-foreground: 0 0 0;
 
-    --muted: 245 245 245; /* very light grey */
-    --muted-foreground: 100 100 100; /* darker grey */
+    --muted: 240 240 240;
+    --muted-foreground: 85 85 85;
 
-    --accent: 230 230 230; /* light grey */
-    --accent-foreground: 0 0 0; /* black */
+    --accent: 230 230 230;
+    --accent-foreground: 0 0 0;
 
-    --destructive: 220 38 38;
+    --destructive: 150 0 0;
     --destructive-foreground: 255 255 255;
 
-    --border: 220 220 220; /* light grey */
-    --input: 255 255 255; /* white */
-    --ring: 0 0 0; /* black */
+    --border: 220 220 220;
+    --input: 255 255 255;
+    --ring: 0 0 0;
 
-    --radius: 12px; /* Slightly reduced for a cleaner B&W feel, but still rounded for clay */
+    --radius: 10px;
 
-    /* Clay Shadow Variables */
-    --shadow-clay-sm: 0 2px 8px -2px rgba(0, 0, 0, 0.08), 0 1px 4px -1px rgba(0, 0, 0, 0.08);
-    --shadow-clay-md: 0 4px 16px -4px rgba(0, 0, 0, 0.10), 0 2px 8px -2px rgba(0, 0, 0, 0.06);
-    --shadow-clay-lg: 0 8px 32px -8px rgba(0, 0, 0, 0.15), 0 4px 16px -4px rgba(0, 0, 0, 0.08);
+    --shadow-clay-sm: 0 2px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-clay-md: 0 4px 12px -4px rgba(0, 0, 0, 0.07);
+    --shadow-clay-lg: 0 8px 24px -8px rgba(0, 0, 0, 0.12);
   }
 
   .dark {
-    --background: 0 0 0; /* black */
-    --foreground: 255 255 255; /* white */
-    --card: 20 20 20; /* very dark grey */
-    --card-foreground: 255 255 255; /* white */
-    --popover: 20 20 20; /* very dark grey */
-    --popover-foreground: 255 255 255; /* white */
-    --primary: 255 255 255; /* white */
-    --primary-foreground: 0 0 0; /* black */
-    --secondary: 30 30 30; /* dark grey */
-    --secondary-foreground: 255 255 255; /* white */
-    --muted: 25 25 25; /* very dark grey */
-    --muted-foreground: 150 150 150; /* lighter grey */
-    --accent: 40 40 40; /* dark grey */
-    --accent-foreground: 255 255 255; /* white */
-    --border: 50 50 50; /* dark grey */
-    --input: 0 0 0; /* black */
-    --ring: 255 255 255; /* white */
+    --background: 0 0 0;
+    --foreground: 255 255 255;
+    --card: 20 20 20;
+    --card-foreground: 255 255 255;
+    --popover: 20 20 20;
+    --popover-foreground: 255 255 255;
+    --primary: 255 255 255;
+    --primary-foreground: 0 0 0;
+    --secondary: 30 30 30;
+    --secondary-foreground: 255 255 255;
+    --muted: 25 25 25;
+    --muted-foreground: 170 170 170;
+    --accent: 40 40 40;
+    --accent-foreground: 255 255 255;
+    --border: 60 60 60;
+    --input: 0 0 0;
+    --ring: 255 255 255;
   }
 }
 
@@ -91,15 +89,12 @@
 }
 
 @layer utilities {
-  /* Clay Design System */
   .clay-gradient {
     background-color: hsl(var(--background));
   }
-  
-  .clay-card {
+    .clay-card {
     @apply bg-card border border-border rounded-2xl;
     box-shadow: var(--shadow-clay-md);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .clay-card-elevated {
@@ -109,156 +104,56 @@
   }
 
   .clay-button {
-    @apply bg-primary text-primary-foreground px-6 py-3 rounded-xl font-medium transition-all duration-300;
+    @apply bg-primary text-primary-foreground px-6 py-3 rounded-xl font-medium;
     box-shadow: var(--shadow-clay-sm);
   }
 
-  .clay-button:hover {
-    @apply clay-card-elevated;
-    transform: translateY(-1px) scale(1.02);
-  }
-
   .clay-input {
-    @apply bg-input border border-border rounded-xl px-4 py-3 transition-all duration-200;
+    @apply bg-input border border-border rounded-xl px-4 py-3;
     box-shadow: inset var(--shadow-clay-sm);
   }
 
-  .clay-input:focus {
-    @apply ring-2 ring-primary ring-offset-2;
-    box-shadow: inset var(--shadow-clay-sm), 0 0 0 2px hsl(var(--primary));
-  }
-
   .floating-clay-button {
-    @apply fixed bottom-8 right-8 w-16 h-16 bg-primary text-primary-foreground rounded-full transition-all duration-300 z-50;
+    @apply fixed bottom-8 right-8 w-16 h-16 bg-primary text-primary-foreground rounded-full z-50;
     box-shadow: var(--shadow-clay-lg);
   }
 
-  .floating-clay-button:hover {
-    transform: translateY(-4px) scale(1.1);
-    box-shadow: 0 12px 40px -12px rgba(0, 0, 0, 0.25);
-  }
-
   .animate-fade-in {
-    animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  
-  .animate-slide-up {
-    animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .animate-slide-in-left {
-    animation: slideInLeft 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .animate-slide-in-right {
-    animation: slideInRight 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
+    animation: fadeIn 0.8s ease-out;
   }
 
   .myanmar-text {
-    @apply font-myanmar text-base leading-relaxed text-foreground;
-  }
-
-  .myanmar-heading {
-    @apply font-myanmar font-semibold tracking-wide text-foreground;
+    @apply font-myanmar text-base text-foreground;
   }
 
   .glass-morphism {
-    backdrop-filter: blur(16px);
-    background: rgba(211, 208, 208, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-  }
-
-  .tactile-surface {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .tactile-surface::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(45deg, transparent 49%, rgba(233, 226, 226, 0.915) 50%, transparent 51%);
-    pointer-events: none;
+    backdrop-filter: blur(10px);
+    background: rgba(240, 240, 240, 0.7);
+    border: 1px solid rgba(0, 0, 0, 0.05);
   }
 }
 
 @keyframes fadeIn {
-  from { 
-    opacity: 0; 
-    transform: translateY(30px);
-  }
-  to { 
-    opacity: 1; 
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes slideUp {
-  from { 
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to { 
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-60px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(60px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-}
-
-/* Responsive design improvements */
 @media (max-width: 768px) {
   .floating-clay-button {
     @apply w-14 h-14 bottom-6 right-6;
   }
 }
 
-/* Custom scrollbar for clay aesthetic */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
   background: hsl(var(--muted));
-  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
   background: hsl(var(--border));
-  border-radius: 4px;
-  transition: background 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
