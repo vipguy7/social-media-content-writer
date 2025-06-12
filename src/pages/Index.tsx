@@ -1,44 +1,12 @@
+
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import ContentFormConfig from '@/components/ContentFormConfig';
-import GeneratedContentOutput from '@/components/GeneratedContentOutput';
-import QualityAssurance from '@/components/QualityAssurance';
 import Header from '@/components/Header';
-import { Sparkles } from 'lucide-react';
-
-export interface ContentFormData {
-  platform: string;
-  contentType: string;
-  contentLength: string;
-  objective: string;
-  style: string;
-  productName: string;
-  keyMessage: string;
-  targetAudience: string;
-  keywords: string;
-  facebookPageLink: string;
-  brandGender?: string;
-  includeCTA: boolean;
-  includeEmojis: boolean;
-  includeHashtags: boolean;
-  numVariations: number;
-}
-
-export interface QAMetrics {
-  grammar: number;
-  narrativeFlow: number;
-  culturalContext: number;
-  optimization: number;
-  engagement: number;
-}
-
-export interface MarketingInsights {
-  audienceProfile: string;
-  emotionalTriggers: string[];
-  brandPersonality: string;
-  competitiveAdvantage: string;
-  contentStrategy: string;
-}
+import HeroSection from '@/components/HeroSection';
+import ContentGeneratorForm from '@/components/ContentGeneratorForm';
+import ResultsPanel from '@/components/ResultsPanel';
+import ErrorDisplay from '@/components/ErrorDisplay';
+import { ContentFormData, QAMetrics, MarketingInsights } from '@/types/content';
 
 const Index = () => {
   const { toast } = useToast();
@@ -68,10 +36,13 @@ const Index = () => {
     numVariations: 3
   });
 
+  const updateFormData = (updates: Partial<ContentFormData>) => {
+    setFormData(prev => ({ ...prev, ...updates }));
+  };
+
   const handleGenerateContent = async () => {
     setError('');
     
-    // Basic validation
     if (!formData.productName.trim() || !formData.keyMessage.trim()) {
       setError('ထုတ်ကုန်အမည်နှင့် အဓိကမက်ဆေ့ခ် လိုအပ်ပါသည်။');
       return;
@@ -82,7 +53,6 @@ const Index = () => {
     try {
       console.log('Starting enhanced content generation...');
       
-      // Call the enhanced Gemini edge function
       const response = await fetch(`https://xlowbgltztktrejjifie.supabase.co/functions/v1/generate-content`, {
         method: 'POST',
         headers: {
@@ -106,7 +76,6 @@ const Index = () => {
       setGeneratedContent(data.variations || []);
       setMarketingInsights(data.marketingInsights || null);
       
-      // Mock QA metrics with enhanced scoring
       const mockQA: QAMetrics = {
         grammar: Math.floor(Math.random() * 10) + 90,
         narrativeFlow: Math.floor(Math.random() * 10) + 85,
@@ -232,33 +201,15 @@ const Index = () => {
       <Header />
       
       <main className="container mx-auto px-4 py-8 space-y-8">
-        {/* Hero Section */}
-        <div className="text-center space-y-4 mb-12">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <Sparkles className="w-8 h-8 text-myanmar-red" />
-            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-myanmar-red to-myanmar-red-light bg-clip-text text-transparent">
-              မြန်မာ ကွန်တင့် ကျွမ်းကျင်သူ
-            </h1>
-          </div>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            အဆင့်မြင့် မြန်မာဘာသာ ပုံစံများဖြင့် AI စွမ်းအင်ဖြင့် ပရော်ဖက်ရှင်နယ် ဆိုရှယ်မီဒီယာ ကွန်တင့် ဖန်တီးမှု။ 
-            မြန်မာ လုပ်ငန်း အောင်မြင်မှုအတွက် ယဉ်ကျေးမှုနှင့် ကိုက်ညီသော ကွန်တင့်နှင့် ကိုက်ညီသော ဂရပ်ဖစ်များ ဖန်တီးပါ။
-          </p>
-        </div>
+        <HeroSection />
 
-        {/* Error Display */}
-        {error && (
-          <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4 text-destructive animate-slide-up">
-            <p className="font-medium">အမှား: {error}</p>
-          </div>
-        )}
+        <ErrorDisplay error={error} />
 
         <div className="grid lg:grid-cols-3 gap-8">
-          {/* Content Form */}
           <div className="lg:col-span-2">
-            <ContentFormConfig
+            <ContentGeneratorForm
               formData={formData}
-              setFormData={setFormData}
+              updateFormData={updateFormData}
               onGenerate={handleGenerateContent}
               onGenerateImages={handleGenerateImages}
               isLoading={isLoading}
@@ -267,24 +218,15 @@ const Index = () => {
             />
           </div>
 
-          {/* Results Panel */}
           <div className="space-y-6">
-            {marketingInsights && (
-              <MarketingInsights insights={marketingInsights} />
-            )}
-            
-            {qaMetrics && (
-              <QualityAssurance metrics={qaMetrics} />
-            )}
-            
-            {generatedContent.length > 0 && (
-              <GeneratedContentOutput
-                content={generatedContent}
-                images={generatedImages}
-                onCopy={copyToClipboard}
-                onExportAll={exportAllContent}
-              />
-            )}
+            <ResultsPanel
+              marketingInsights={marketingInsights}
+              qaMetrics={qaMetrics}
+              generatedContent={generatedContent}
+              generatedImages={generatedImages}
+              onCopy={copyToClipboard}
+              onExportAll={exportAllContent}
+            />
           </div>
         </div>
       </main>
