@@ -12,13 +12,13 @@
     --card-foreground: 70 80 90;
     --popover: 125 125 125;
     --popover-foreground: 20 23 26;
-    --primary: 125 205 225;
+    --primary: 255 205 255;
     --primary-foreground: 255 235 255;
-    --secondary: 20 255 24;
+    --secondary: 255 255 242;
     --secondary-foreground: 255 235 255;
-    --muted: 255 255 210;
+    --muted: 0 0 0;
     --muted-foreground: 20 20 20;
-    --accent: 100 50 255;
+    --accent: 0 50 255;
     --accent-foreground: 20 20 20;
     --destructive: 224 36 94;
     --destructive-foreground: 20 23 13;
