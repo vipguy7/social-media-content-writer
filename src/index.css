@@ -7,24 +7,24 @@
 @layer base {
   :root {
     --background: rgb(25, 23, 29);
-    --foreground: rgb(240, 243, 250);
-    --card: rgb(82, 118, 130);
-    --card-foreground: rgb(227, 216, 198);
+    --foreground: rgb(4, 81, 122);
+    --card: rgb(25, 116, 146);
+    --card-foreground: rgb(172, 180, 186);
     --popover: 255 255 255;
-    --popover-foreground: 20 23 26;
-    --primary: rgb(82, 118, 130);
+    --popover-foreground: rgb(187, 205, 232);
+    --primary: rgb(24, 145, 185);
     --primary-foreground: rgb(227, 216, 198);
-    --secondary:rgb(82, 118, 130);
-    --secondary-foreground: rgb(227, 216, 198);
+    --secondary:rgb(18, 154, 199);
+    --secondary-foreground: rgb(85, 112, 163);
     --muted: rgb(82, 118, 130);
-    --muted-foreground: rgb(227, 216, 198);
-    --accent: rgb(82, 118, 130);
-    --accent-foreground: rgb(227, 216, 198);
-    --destructive: 224 36 94;
-    --destructive-foreground: rgb(227, 216, 198);
-    --border: 170 184 194;
-    --input: 255 255 255;
-    --ring: 29 161 242;
+    --muted-foreground: rgb(75, 103, 115);
+    --accent: rgb(5, 131, 174);
+    --accent-foreground: rgb(91, 140, 153);
+    --destructive: #bbcde8;
+    --destructive-foreground: #e3d8c6;
+    --border: hsl(214, 19%, 7%);
+    --input:rgb(9, 10, 12);
+    --ring: rgb(38, 187, 240);
     --radius: 10px; /* Kept existing radius */
 
   }
