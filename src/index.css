@@ -61,7 +61,7 @@
     @apply bg-background text-foreground font-myanmar;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    -moz-osx-font-smoothing: black;
   }
 
   .font-english {
@@ -83,9 +83,9 @@
   }
 
   .glass-morphism {
-    backdrop-filter: blur(10px);
-    background: rgba(204, 210, 209, 0.945);
-    border: 1px solid rgba(147, 121, 4, 0.922);
+    backdrop-filter: blur(3px);
+    background: rgba(5, 5, 5, 0.945);
+    border: 1px solid rgba(151, 229, 245, 0.922);
   }
 }
 
