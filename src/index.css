@@ -6,24 +6,24 @@
 
 @layer base {
   :root {
-    --background: 255 255 255;
+    --background: 255 235 255;
     --foreground: 20 23 26;
     --card: 245 248 250;
     --card-foreground: 20 23 26;
-    --popover: 255 255 255;
+    --popover: 255 235 255;
     --popover-foreground: 20 23 26;
     --primary: 29 161 242;
-    --primary-foreground: 255 255 255;
+    --primary-foreground: 255 235 255;
     --secondary: 24 119 242;
-    --secondary-foreground: 255 255 255;
+    --secondary-foreground: 255 235 255;
     --muted: 230 236 240;
     --muted-foreground: 101 119 134;
-    --accent: 255 173 31;
-    --accent-foreground: 255 255 255;
+    --accent: 12 20 25;
+    --accent-foreground: 20 20 20;
     --destructive: 224 36 94;
-    --destructive-foreground: 255 255 255;
+    --destructive-foreground: 20 23 13;
     --border: 170 184 194;
-    --input: 255 255 255;
+    --input: 255 235 255;
     --ring: 29 161 242;
     --radius: 10px; /* Kept existing radius */
 
@@ -31,21 +31,21 @@
 
   .dark {
     --background: 21 32 43;
-    --foreground: 255 255 255;
+    --foreground: 255 235 255;
     --card: 25 39 52;
-    --card-foreground: 255 255 255;
+    --card-foreground: 255 235 255;
     --popover: 25 39 52;
-    --popover-foreground: 255 255 255;
+    --popover-foreground: 255 235 255;
     --primary: 29 161 242;
-    --primary-foreground: 255 255 255;
+    --primary-foreground: 255 235 255;
     --secondary: 24 119 242;
-    --secondary-foreground: 255 255 255;
+    --secondary-foreground: 255 235 255;
     --muted: 56 68 77;
     --muted-foreground: 136 153 166;
     --accent: 255 173 31;
-    --accent-foreground: 255 255 255;
+    --accent-foreground: 255 235 255;
     --destructive: 224 36 94;
-    --destructive-foreground: 255 255 255;
+    --destructive-foreground: 255 235 255;
     --border: 56 68 77;
     --input: 21 32 43;
     --ring: 29 161 242;
