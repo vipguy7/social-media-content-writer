@@ -197,7 +197,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-myanmar-gray-light via-white to-myanmar-blue-light">
+    <div className="min-h-screen clay-gradient">
       <Header />
       
       <main className="container mx-auto px-4 py-12 space-y-12">

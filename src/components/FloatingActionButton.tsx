@@ -12,7 +12,7 @@ const FloatingActionButton = ({ onClick, isLoading = false }: FloatingActionButt
     <Button
       onClick={onClick}
       disabled={isLoading}
-      className="floating-action-btn flex items-center justify-center"
+      className="floating-clay-button flex items-center justify-center tactile-surface animate-tactile-press"
       size="icon"
     >
       <Wand2 className={`w-6 h-6 ${isLoading ? 'animate-spin' : ''}`} />
