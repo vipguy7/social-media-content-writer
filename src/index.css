@@ -32,8 +32,8 @@
   .dark {
     --background: 21 32 43;
     --foreground: rgb(141, 140, 140);
-    --card: 25 39 52;
-    --card-foreground: rgb(99, 98, 97);
+    --card:rgb(5, 142, 180);
+    --card-foreground: rgb(217, 218, 219);
     --popover: rgba(156, 161, 169, 0.632);
     --popover-foreground: rgba(43, 97, 180, 0.532);
     --primary: rgb(33, 34, 34);

@@ -29,10 +29,10 @@ const AudienceTargeting = ({ formData, updateFormData }: AudienceTargetingProps)
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Target className="w-5 h-5 text-myanmar-red" />
-          ပစ်မှတ် ပရိသတ် ခွဲခြမ်းစိတ်ဖြာမှု
+          ရည်မှန်းပရိသတ် ခွဲခြမ်းစိတ်ဖြာမှု
         </CardTitle>
         <CardDescription>
-          ဘရန်း အသံနှင့် ကိုက်ညီသော ကွန်တင့် ဖန်တီးရန်အတွက် ပရိသတ် အချက်အလက်များ ထည့်သွင်းပါ
+          သင့်လုပ်ငန်းအတွက် သင့်လျော်သော ပရိသတ် အုပ်စုကို ရွေးချယ်ပါ။
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -61,13 +61,13 @@ const AudienceTargeting = ({ formData, updateFormData }: AudienceTargetingProps)
                 <SelectItem value="female">
                   <div className="flex items-center gap-2">
                     <Heart className="w-4 h-4 text-pink-500" />
-                    အမျိုးသမီးများ (နူးညံ့၊ ယဉ်ကျေးသော အသံ)
+                    မိန်းမဆန်သော အရေးအသား (နူးညံ့၊ ယဉ်ကျေးသော အသံ)
                   </div>
                 </SelectItem>
                 <SelectItem value="male">
                   <div className="flex items-center gap-2">
                     <Zap className="w-4 h-4 text-blue-500" />
-                    အမျိုးသားများ (အားကောင်း၊ ရဲရင့်သော အသံ)
+                    ယောက်ျားဆန်သော အရေးအသား (အားကောင်း၊ ရဲရင့်သော အသံ)
                   </div>
                 </SelectItem>
                 <SelectItem value="general">
@@ -95,14 +95,14 @@ const AudienceTargeting = ({ formData, updateFormData }: AudienceTargetingProps)
                 <SelectItem value="လူလတ်ပိုင်း ၂၆-৩৫">လူလတ်ပိုင်း (၂၆-৩৫ နှစ်)</SelectItem>
                 <SelectItem value="အရွယ်ရောက် ၃၆-၄၅">အရွယ်ရောက် (၃၆-၄၅ နှစ်)</SelectItem>
                 <SelectItem value="အလယ်အလတ် ၄၆-၅၅">အလယ်အလတ် (၄၆-၅၅ နှစ်)</SelectItem>
-                <SelectItem value="အကြီးအကဲ ၅၆+">အကြီးအကဲ (၅၆+ နှစ်)</SelectItem>
+                <SelectItem value="အကြီးအကဲ ၅၆+">သက်ကြီးပိုင်း (၅၆+ နှစ်)</SelectItem>
               </SelectContent>
             </Select>
           </div>
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="detailedAudience">အသေးစိတ် ပရိသတ် ဖော်ပြချက်</Label>
+          <Label htmlFor="detailedAudience">ပရိသတ်ကို အသေးစိတ် ဖော်ပြချက်</Label>
           <Textarea
             id="detailedAudience"
             value={formData.targetAudience}
@@ -119,10 +119,9 @@ const AudienceTargeting = ({ formData, updateFormData }: AudienceTargetingProps)
               <Target className="w-4 h-4 text-myanmar-red" />
             </div>
             <div className="flex-1">
-              <h4 className="font-medium text-sm mb-1">AI မားကတ်တင်း အကြံပေးချက်</h4>
+              <h4 className="font-medium text-sm mb-1"> အရေးအသား ပိုကောင်းအောင် အကြံလေးတစ်ခု ပေးပါရစေ</h4>
               <p className="text-xs text-muted-foreground">
-                သင်ရွေးချယ်ထားသော ပရိသတ်အပေါ် မူတည်၍ AI သည် သင့်လျော်သော ဘရန်း အသံ၊ 
-                စိတ်ခံစားမှု လှုံ့ဆော်မှု နည်းလမ်းများနှင့် ကွန်တင့် ဖွဲ့စည်းပုံ ရွေးချယ်ပေးပါမည်။
+                သင်ရွေးချယ်ထားသော ပရိသတ်အပေါ် အခြေခံပြီး သင့်လုပ်ငန်းနှင့် ကြော်ငြာလိုတဲ့ အကြောင်းအရာ/အချက်အလက် များများပြောပြပေးနိုင်မယ်ဆိုရင် ပိုကောင်းအောင်ရေးသားပေးနိုင်ပါလိမ့်မည်။ ဥပမာ - "ရန်ကုန်မြို့ရှိ အမျိုးသမီး လူငယ် ပရော်ဖက်ရှင်နယ်များ" ဆိုရင် "ရန်ကုန်မြို့ရှိ အမျိုးသမီး လူငယ် ပရော်ဖက်ရှင်နယ်များ" ဟု ရေးသားပေးပါ။
               </p>
             </div>
           </div>
