@@ -34,21 +34,21 @@
     --foreground: rgb(141, 140, 140);
     --card: 25 39 52;
     --card-foreground: rgb(99, 98, 97);
-    --popover: rgb(187, 205, 232);
-    --popover-foreground: rgb(187, 205, 232);
-    --primary: rgb(82, 118, 130);
-    --primary-foreground: rgb(227, 216, 198);
+    --popover: rgba(156, 161, 169, 0.632);
+    --popover-foreground: rgba(43, 97, 180, 0.532);
+    --primary: rgb(33, 34, 34);
+    --primary-foreground: #cfcfcf;
     --secondary: rgb(82, 118, 130);
     --secondary-foreground: rgb(153, 152, 151);
-    --muted: rgba(35, 45, 59, 0.785);
+    --muted: rgba(15, 15, 15, 0.785);
     --muted-foreground: rgb(227, 216, 198);
-    --accent: rgba(5, 95, 133, 0.623);
-    --accent-foreground: rgba(36, 36, 35, 0.452);
-    --destructive: 224 36 94;
-    --destructive-foreground: rgb(227, 216, 198);
-    --border: rgb(30, 31, 31);
-    --input: rgba(134, 133, 133, 0.573);
-    --ring: rgb(131, 217, 241);
+    --accent: rgb(29, 179, 243);
+    --accent-foreground: rgb(203, 206, 207);
+    --destructive: rgba(106, 6, 136, 0.368);
+    --destructive-foreground: rgba(230, 52, 250, 0.734);
+    --border: rgba(30, 31, 31, 0.897);
+    --input: rgba(3, 3, 3, 0.573);
+    --ring: rgb(7, 7, 7);
   }
 }
 
