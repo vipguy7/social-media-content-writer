@@ -9,22 +9,22 @@
     --background: 0 0 0;
     --foreground: 20 225 225;
     --card: 20 0 250;
-    --card-foreground: 70 80 90;
+    --card-foreground: 225 225 225;
     --popover: 125 125 125;
     --popover-foreground: 20 23 26;
     --primary: 255 205 255;
-    --primary-foreground: 255 235 255;
+    --primary-foreground: 0 0 0;
     --secondary: 255 255 242;
-    --secondary-foreground: 255 235 255;
+    --secondary-foreground: 0 0 0;
     --muted: 0 0 0;
-    --muted-foreground: 20 20 20;
-    --accent: 0 50 255;
-    --accent-foreground: 20 20 20;
-    --destructive: 224 36 94;
-    --destructive-foreground: 20 23 13;
-    --border: 170 184 194;
-    --input: 255 235 255;
-    --ring: 29 161 242;
+    --muted-foreground: 225 225 235;
+    --accent: 0 0 0;
+    --accent-foreground: 0 0 0;
+    --destructive: 0 0 0;
+    --destructive-foreground: 0 0 0;
+    --border: 255 255 255;
+    --input: 255 255 255;
+    --ring: 255 255 255;
     --radius: 10px; /* Kept existing radius */
 
   }
