@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -7,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Switch } from '@/components/ui/switch';
 import { Slider } from '@/components/ui/slider';
 import { Loader2, Wand2, Sparkles, Facebook } from 'lucide-react';
-import { ContentFormData } from '@/pages/Index';
+import { ContentFormData } from '@/types/content';
 import AudienceTargeting from './AudienceTargeting';
 import MarketingInsights from './MarketingInsights';
 

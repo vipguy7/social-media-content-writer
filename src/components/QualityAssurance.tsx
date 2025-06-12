@@ -1,8 +1,7 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { CheckCircle2, TrendingUp } from 'lucide-react';
-import { QAMetrics } from '@/pages/Index';
+import { QAMetrics } from '@/types/content';
 
 interface QualityAssuranceProps {
   metrics: QAMetrics;

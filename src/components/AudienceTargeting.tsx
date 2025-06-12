@@ -1,11 +1,10 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Users, Target, Heart, Zap } from 'lucide-react';
-import { ContentFormData } from '@/pages/Index';
+import { ContentFormData } from '@/types/content';
 
 interface AudienceTargetingProps {
   formData: ContentFormData;
@@ -120,7 +119,7 @@ const AudienceTargeting = ({ formData, updateFormData }: AudienceTargetingProps)
               <Target className="w-4 h-4 text-myanmar-red" />
             </div>
             <div className="flex-1">
-              <h4 className="font-medium text-sm mb-1">AI မားකတ်တင်း အကြံပေးချက်</h4>
+              <h4 className="font-medium text-sm mb-1">AI မားကတ်တင်း အကြံပေးချက်</h4>
               <p className="text-xs text-muted-foreground">
                 သင်ရွေးချယ်ထားသော ပရိသတ်အပေါ် မူတည်၍ AI သည် သင့်လျော်သော ဘရန်း အသံ၊ 
                 စိတ်ခံစားမှု လှုံ့ဆော်မှု နည်းလမ်းများနှင့် ကွန်တင့် ဖွဲ့စည်းပုံ ရွေးချယ်ပေးပါမည်။
