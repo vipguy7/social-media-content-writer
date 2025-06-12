@@ -10,10 +10,10 @@
     --foreground: 26 25 25;
 
     --card: 245 245 245;
-    --card-foreground: 87 87 87;
+    --card-foreground: 0 0 0;
 
     --popover: 245 245 245;
-    --popover-foreground: 26 25 25;
+    --popover-foreground: 0 0 0;
 
     --primary: 0 0 0;
     --primary-foreground: 255 255 255;
