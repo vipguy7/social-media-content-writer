@@ -2,63 +2,53 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Myanmar Content Crafter Design System - Minimalist Clay Aesthetic (Black & White Theme) */
+/* Myanmar Content Crafter Design System */
 
 @layer base {
   :root {
-   --background: 255 255 255;
-    --foreground: 26 25 25;
-
-    --card: 53 132 141;
-    --card-foreground: 0 0 0;
-
-    --popover: 245 245 245;
-    --popover-foreground: 0 0 0;
-
-    --primary: 0 0 0;
+    --background: 255 255 255;
+    --foreground: 20 23 26;
+    --card: 245 248 250;
+    --card-foreground: 20 23 26;
+    --popover: 255 255 255;
+    --popover-foreground: 20 23 26;
+    --primary: 29 161 242;
     --primary-foreground: 255 255 255;
-
-    --secondary: 53 132 141;
-    --secondary-foreground: 0 0 0;
-
-    --muted: 240 240 240;
-    --muted-foreground: 85 85 85;
-
-    --accent: 0 0 0;
-    --accent-foreground: 0 0 0;
-
-    --destructive: 184 248 255;
+    --secondary: 24 119 242;
+    --secondary-foreground: 255 255 255;
+    --muted: 230 236 240;
+    --muted-foreground: 101 119 134;
+    --accent: 255 173 31;
+    --accent-foreground: 255 255 255;
+    --destructive: 224 36 94;
     --destructive-foreground: 255 255 255;
-
-    --border: 26 25 25;
+    --border: 170 184 194;
     --input: 255 255 255;
-    --ring: 26 25 25;
+    --ring: 29 161 242;
+    --radius: 10px; /* Kept existing radius */
 
-    --radius: 10px;
-
-    --shadow-clay-sm: 0 2px 6px -2px rgba(0, 0, 0, 0.05);
-    --shadow-clay-md: 0 4px 12px -4px rgba(0, 0, 0, 0.07);
-    --shadow-clay-lg: 0 8px 24px -8px rgba(0, 0, 0, 0.12);
   }
 
   .dark {
-    --background: 0 0 0;
+    --background: 21 32 43;
     --foreground: 255 255 255;
-    --card: 20 20 20;
+    --card: 25 39 52;
     --card-foreground: 255 255 255;
-    --popover: 20 20 20;
+    --popover: 25 39 52;
     --popover-foreground: 255 255 255;
-    --primary: 255 255 255;
-    --primary-foreground: 0 0 0;
-    --secondary: 30 30 30;
+    --primary: 29 161 242;
+    --primary-foreground: 255 255 255;
+    --secondary: 24 119 242;
     --secondary-foreground: 255 255 255;
-    --muted: 25 25 25;
-    --muted-foreground: 170 170 170;
-    --accent: 40 40 40;
+    --muted: 56 68 77;
+    --muted-foreground: 136 153 166;
+    --accent: 255 173 31;
     --accent-foreground: 255 255 255;
-    --border: 60 60 60;
-    --input: 0 0 0;
-    --ring: 255 255 255;
+    --destructive: 224 36 94;
+    --destructive-foreground: 255 255 255;
+    --border: 56 68 77;
+    --input: 21 32 43;
+    --ring: 29 161 242;
   }
 }
 
@@ -84,32 +74,6 @@
 }
 
 @layer utilities {
-  .clay-card {
-    @apply bg-card border border-border rounded-2xl;
-    box-shadow: var(--shadow-clay-md);
-  }
-
-  .clay-card-elevated {
-    @apply clay-card;
-    box-shadow: var(--shadow-clay-lg);
-    transform: translateY(-2px);
-  }
-
-  .clay-button {
-    @apply bg-primary text-primary-foreground px-6 py-3 rounded-xl font-medium;
-    box-shadow: var(--shadow-clay-sm);
-  }
-
-  .clay-input {
-    @apply bg-input border border-border rounded-xl px-4 py-3;
-    box-shadow: inset var(--shadow-clay-sm);
-  }
-
-  .floating-clay-button {
-    @apply fixed bottom-8 right-8 w-16 h-16 bg-primary text-primary-foreground rounded-full z-50;
-    box-shadow: var(--shadow-clay-lg);
-  }
-
   .animate-fade-in {
     animation: fadeIn 0.8s ease-out;
   }
@@ -131,9 +95,7 @@
 }
 
 @media (max-width: 768px) {
-  .floating-clay-button {
-    @apply w-14 h-14 bottom-6 right-6;
-  }
+
 }
 
 ::-webkit-scrollbar {
