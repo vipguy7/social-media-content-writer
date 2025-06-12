@@ -163,7 +163,7 @@
 
   .glass-morphism {
     backdrop-filter: blur(16px);
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(211, 208, 208, 0.8);
     border: 1px solid rgba(255, 255, 255, 0.2);
   }
 
@@ -179,7 +179,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(45deg, transparent 49%, rgba(255, 255, 255, 0.03) 50%, transparent 51%);
+    background: linear-gradient(45deg, transparent 49%, rgba(233, 226, 226, 0.915) 50%, transparent 51%);
     pointer-events: none;
   }
 }
