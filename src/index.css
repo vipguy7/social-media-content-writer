@@ -7,13 +7,13 @@
 @layer base {
   :root {
    --background: 255 255 255;
-    --foreground: 255 255 255;
+    --foreground: 26 25 25;
 
     --card: 245 245 245;
     --card-foreground: 87 87 87;
 
     --popover: 245 245 245;
-    --popover-foreground: 194 194 194;
+    --popover-foreground: 26 25 25;
 
     --primary: 0 0 0;
     --primary-foreground: 255 255 255;
