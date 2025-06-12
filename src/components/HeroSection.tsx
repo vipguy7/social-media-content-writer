@@ -5,7 +5,7 @@ const HeroSection = () => {
   return (
     <div className="text-center space-y-8 mb-16 animate-fade-in">
       <div className="flex items-center justify-center gap-3 mb-6">
-        <div className="clay-card p-4 tactile-surface animate-float">
+        <div className="p-4 bg-card border rounded-lg animate-float">
           <Sparkles className="w-10 h-10 text-primary" />
         </div>
         <h1 className="text-5xl md:text-6xl font-bold myanmar-heading bg-gradient-to-r from-foreground via-muted-foreground to-primary bg-clip-text text-transparent">
@@ -19,7 +19,7 @@ const HeroSection = () => {
       </p>
 
       <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-12">
-        <div className="clay-card p-6 text-center group tactile-surface hover:clay-card-elevated transition-all duration-300">
+        <div className="p-6 text-center group bg-card border rounded-lg hover:bg-muted transition-all duration-300">
           <div className="p-3 bg-muted rounded-xl w-fit mx-auto mb-4 group-hover:bg-accent transition-colors">
             <Zap className="w-8 h-8 text-primary" />
           </div>
@@ -31,7 +31,7 @@ const HeroSection = () => {
           </p>
         </div>
 
-        <div className="clay-card p-6 text-center group tactile-surface hover:clay-card-elevated transition-all duration-300">
+        <div className="p-6 text-center group bg-card border rounded-lg hover:bg-muted transition-all duration-300">
           <div className="p-3 bg-muted rounded-xl w-fit mx-auto mb-4 group-hover:bg-accent transition-colors">
             <Target className="w-8 h-8 text-primary" />
           </div>
@@ -43,7 +43,7 @@ const HeroSection = () => {
           </p>
         </div>
 
-        <div className="clay-card p-6 text-center group tactile-surface hover:clay-card-elevated transition-all duration-300">
+        <div className="p-6 text-center group bg-card border rounded-lg hover:bg-muted transition-all duration-300">
           <div className="p-3 bg-muted rounded-xl w-fit mx-auto mb-4 group-hover:bg-accent transition-colors">
             <Sparkles className="w-8 h-8 text-primary" />
           </div>
