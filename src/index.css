@@ -6,49 +6,49 @@
 
 @layer base {
   :root {
-    --background: rgb(25, 23, 29);
-    --foreground: rgb(4, 81, 122);
-    --card: rgb(25, 116, 146);
-    --card-foreground: rgb(172, 180, 186);
+    --background: 255 255 255;
+    --foreground: 20 23 26;
+    --card: 245 248 250;
+    --card-foreground: 20 23 26;
     --popover: 255 255 255;
-    --popover-foreground: rgb(187, 205, 232);
-    --primary: rgb(24, 145, 185);
-    --primary-foreground: rgb(227, 216, 198);
-    --secondary:rgb(18, 154, 199);
-    --secondary-foreground: rgb(85, 112, 163);
-    --muted: rgb(82, 118, 130);
-    --muted-foreground: rgb(75, 103, 115);
-    --accent: rgb(5, 131, 174);
-    --accent-foreground: rgb(91, 140, 153);
-    --destructive: #bbcde8;
-    --destructive-foreground: #e3d8c6;
-    --border: hsl(214, 19%, 7%);
-    --input:rgb(9, 10, 12);
-    --ring: rgb(38, 187, 240);
+    --popover-foreground: 20 23 26;
+    --primary: 29 161 242;
+    --primary-foreground: 255 255 255;
+    --secondary: 24 119 242;
+    --secondary-foreground: 255 255 255;
+    --muted: 230 236 240;
+    --muted-foreground: 101 119 134;
+    --accent: 255 173 31;
+    --accent-foreground: 255 255 255;
+    --destructive: 224 36 94;
+    --destructive-foreground: 255 255 255;
+    --border: 170 184 194;
+    --input: 255 255 255;
+    --ring: 29 161 242;
     --radius: 10px; /* Kept existing radius */
 
   }
 
   .dark {
     --background: 21 32 43;
-    --foreground: rgb(141, 140, 140);
-    --card:rgb(5, 142, 180);
-    --card-foreground: rgb(217, 218, 219);
-    --popover: rgba(156, 161, 169, 0.632);
-    --popover-foreground: rgba(43, 97, 180, 0.532);
-    --primary: rgb(33, 34, 34);
-    --primary-foreground: #cfcfcf;
-    --secondary: rgb(82, 118, 130);
-    --secondary-foreground: rgb(153, 152, 151);
-    --muted: rgba(15, 15, 15, 0.785);
-    --muted-foreground: rgb(227, 216, 198);
-    --accent: rgb(29, 179, 243);
-    --accent-foreground: rgb(203, 206, 207);
-    --destructive: rgba(106, 6, 136, 0.368);
-    --destructive-foreground: rgba(230, 52, 250, 0.734);
-    --border: rgba(30, 31, 31, 0.897);
-    --input: rgba(3, 3, 3, 0.573);
-    --ring: rgb(7, 7, 7);
+    --foreground: 255 255 255;
+    --card: 25 39 52;
+    --card-foreground: 255 255 255;
+    --popover: 25 39 52;
+    --popover-foreground: 255 255 255;
+    --primary: 29 161 242;
+    --primary-foreground: 255 255 255;
+    --secondary: 24 119 242;
+    --secondary-foreground: 255 255 255;
+    --muted: 56 68 77;
+    --muted-foreground: 136 153 166;
+    --accent: 255 173 31;
+    --accent-foreground: 255 255 255;
+    --destructive: 224 36 94;
+    --destructive-foreground: 255 255 255;
+    --border: 56 68 77;
+    --input: 21 32 43;
+    --ring: 29 161 242;
   }
 }
 
@@ -83,9 +83,9 @@
   }
 
   .glass-morphism {
-    backdrop-filter: blur(4px);
-    background: rgb(178, 178, 178);
-    border: 1px solid rgb(209, 213, 175);
+    backdrop-filter: blur(10px);
+    background: rgba(240, 240, 240, 0.7);
+    border: 1px solid rgba(0, 0, 0, 0.05);
   }
 }
 
@@ -99,7 +99,7 @@
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
