@@ -7,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Slider } from '@/components/ui/slider';
-import { Loader2, Wand2, Sparkles, Facebook } from 'lucide-react';
+import { Loader2, Wand2, Facebook } from 'lucide-react';
 import { ContentFormData } from '@/types/content';
 import AudienceTargeting from './AudienceTargeting';
 import MarketingInsights from './MarketingInsights';
@@ -16,9 +16,7 @@ interface ContentFormConfigProps {
   formData: ContentFormData;
   setFormData: (data: ContentFormData) => void;
   onGenerate: () => void;
-  onGenerateImages: () => void;
   isLoading: boolean;
-  isGeneratingImages: boolean;
   hasContent: boolean;
 }
 
@@ -26,9 +24,7 @@ const ContentFormConfig = ({
   formData, 
   setFormData, 
   onGenerate, 
-  onGenerateImages,
   isLoading, 
-  isGeneratingImages,
   hasContent 
 }: ContentFormConfigProps) => {
   const updateFormData = (updates: Partial<ContentFormData>) => {
@@ -264,38 +260,19 @@ const ContentFormConfig = ({
             className="w-full myanmar-gradient hover:opacity-90 transition-opacity text-lg py-6"
           >
             {isLoading ? (
-              <>
-                <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                ရေးသားနေပါပြီ ခင်ဗျာ..ခဏလေးစိတ်ရှည်ပေးပါ..ပြီးတော့မှာပါ..မကြာပါဘူး....ပြီးတော့မယ်နော်...ခဏလေးနော်....
-              </>
-            ) : (
-              <>
+              <div className="flex flex-col items-center">
+                <img
+                  src="https://media1.tenor.com/m/zXhK-0R9y1gAAAAC/vengeful-notes.gif"
+                  alt="Generating content animation..."
+                  className="h-12 w-auto mx-auto mb-2"
+                />
+               ရေးနေပါပြီ ခင်ဗျာ..ခဏလေးစိတ်ရှည်ပေးပါ.မကြာပါဘူး...
+              </div>
                 <Wand2 className="w-5 h-5 mr-2" />
-                 ပိုစ့်ရေးသားပါ
+                 ပိုစ့်ရေးပါ
               </>
             )}
           </Button>
-
-          {hasContent && (
-            <Button
-              onClick={onGenerateImages}
-              disabled={isGeneratingImages || !hasContent}
-              variant="outline"
-              className="w-full border-myanmar-red text-myanmar-red hover:bg-myanmar-red hover:text-white transition-colors text-lg py-6"
-            >
-              {isGeneratingImages ? (
-                <>
-                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                  ဂရပ်ဖစ်များ ဖန်တီးနေသည်...
-                </>
-              ) : (
-                <>
-                  <Sparkles className="w-5 h-5 mr-2" />
-                  ကိုက်ညီသော ပုံများ ဖန်တီးပါ
-                </>
-              )}
-            </Button>
-          )}
         </div>
       </CardContent>
     </Card>

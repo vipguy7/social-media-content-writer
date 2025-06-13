@@ -2,66 +2,53 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Clay Design System - Tactile, Calm Aesthetic */
+/* Myanmar Content Crafter Design System */
 
 @layer base {
   :root {
-    --background: 255 255 255;
-    --foreground: 0 0 0;
-    --card: 250 250 250;
-    --card-foreground: 64 64 64;
+    --background: rgb(25, 23, 29);
+    --foreground: rgb(4, 81, 122);
+    --card: rgb(25, 116, 146);
+    --card-foreground: rgb(172, 180, 186);
     --popover: 255 255 255;
-    --popover-foreground: 0 0 0;
-    --primary: 0 0 0;
-    --primary-foreground: 255 255 255;
-    --secondary: 229 229 229;
-    --secondary-foreground: 0 0 0;
-    --muted: 245 245 245;
-    --muted-foreground: 115 115 115;
-    --accent: 64 64 64;
-    --accent-foreground: 255 255 255;
-    --destructive: 239 68 68;
-    --destructive-foreground: 255 255 255;
-    --border: 229 229 229;
-    --input: 250 250 250;
-    --ring: 64 64 64;
-    --radius: 16px;
+    --popover-foreground: rgb(187, 205, 232);
+    --primary: rgb(24, 145, 185);
+    --primary-foreground: rgb(227, 216, 198);
+    --secondary:rgb(18, 154, 199);
+    --secondary-foreground: rgb(85, 112, 163);
+    --muted: rgb(82, 118, 130);
+    --muted-foreground: rgb(75, 103, 115);
+    --accent: rgb(5, 131, 174);
+    --accent-foreground: rgb(91, 140, 153);
+    --destructive: #bbcde8;
+    --destructive-foreground: #e3d8c6;
+    --border: hsl(214, 19%, 7%);
+    --input:rgb(9, 10, 12);
+    --ring: rgb(38, 187, 240);
+    --radius: 10px; /* Kept existing radius */
 
-    /* Clay-specific design tokens */
-    --clay-shadow-sm: 0 2px 8px 0 rgba(0, 0, 0, 0.08), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-    --clay-shadow-md: 0 4px 16px 0 rgba(0, 0, 0, 0.12), 0 2px 6px 0 rgba(0, 0, 0, 0.08);
-    --clay-shadow-lg: 0 8px 24px 0 rgba(0, 0, 0, 0.15), 0 4px 12px 0 rgba(0, 0, 0, 0.10);
-    --clay-shadow-xl: 0 16px 32px 0 rgba(0, 0, 0, 0.18), 0 8px 16px 0 rgba(0, 0, 0, 0.12);
-    --clay-transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    --clay-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 
   .dark {
-    --background: 0 0 0;
-    --foreground: 255 255 255;
-    --card: 23 23 23;
-    --card-foreground: 245 245 245;
-    --popover: 23 23 23;
-    --popover-foreground: 255 255 255;
-    --primary: 255 255 255;
-    --primary-foreground: 0 0 0;
-    --secondary: 64 64 64;
-    --secondary-foreground: 255 255 255;
-    --muted: 38 38 38;
-    --muted-foreground: 163 163 163;
-    --accent: 115 115 115;
-    --accent-foreground: 255 255 255;
-    --destructive: 239 68 68;
-    --destructive-foreground: 255 255 255;
-    --border: 64 64 64;
-    --input: 38 38 38;
-    --ring: 115 115 115;
-
-    /* Dark mode clay shadows */
-    --clay-shadow-sm: 0 2px 8px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.25);
-    --clay-shadow-md: 0 4px 16px 0 rgba(0, 0, 0, 0.4), 0 2px 6px 0 rgba(0, 0, 0, 0.3);
-    --clay-shadow-lg: 0 8px 24px 0 rgba(0, 0, 0, 0.5), 0 4px 12px 0 rgba(0, 0, 0, 0.4);
-    --clay-shadow-xl: 0 16px 32px 0 rgba(0, 0, 0, 0.6), 0 8px 16px 0 rgba(0, 0, 0, 0.5);
+    --background: 21 32 43;
+    --foreground: rgb(141, 140, 140);
+    --card:rgb(5, 142, 180);
+    --card-foreground: rgb(217, 218, 219);
+    --popover: rgba(156, 161, 169, 0.632);
+    --popover-foreground: rgba(43, 97, 180, 0.532);
+    --primary: rgb(33, 34, 34);
+    --primary-foreground: #cfcfcf;
+    --secondary: rgb(82, 118, 130);
+    --secondary-foreground: rgb(153, 152, 151);
+    --muted: rgba(15, 15, 15, 0.785);
+    --muted-foreground: rgb(227, 216, 198);
+    --accent: rgb(29, 179, 243);
+    --accent-foreground: rgb(203, 206, 207);
+    --destructive: rgba(106, 6, 136, 0.368);
+    --destructive-foreground: rgba(230, 52, 250, 0.734);
+    --border: rgba(30, 31, 31, 0.897);
+    --input: rgba(3, 3, 3, 0.573);
+    --ring: rgb(7, 7, 7);
   }
 }
 
@@ -75,7 +62,6 @@
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    transition: var(--clay-transition);
   }
 
   .font-english {
@@ -88,64 +74,8 @@
 }
 
 @layer utilities {
-  /* Clay Design System Utilities */
-  .clay-card {
-    background: hsl(var(--card));
-    border-radius: var(--radius);
-    box-shadow: var(--clay-shadow-md);
-    transition: var(--clay-transition);
-    border: 1px solid hsl(var(--border) / 0.5);
-  }
-
-  .clay-card:hover {
-    box-shadow: var(--clay-shadow-lg);
-    transform: translateY(-2px);
-  }
-
-  .clay-button {
-    border-radius: calc(var(--radius) - 4px);
-    box-shadow: var(--clay-shadow-sm);
-    transition: var(--clay-transition);
-    transform: perspective(1px) translateZ(0);
-  }
-
-  .clay-button:hover {
-    box-shadow: var(--clay-shadow-md);
-    transform: translateY(-1px) scale(1.02);
-  }
-
-  .clay-button:active {
-    transform: translateY(0) scale(0.98);
-    box-shadow: var(--clay-shadow-sm);
-  }
-
-  .clay-surface {
-    background: hsl(var(--muted) / 0.3);
-    backdrop-filter: blur(8px);
-    border-radius: var(--radius);
-    box-shadow: var(--clay-shadow-sm);
-    border: 1px solid hsl(var(--border) / 0.3);
-  }
-
-  .clay-elevated {
-    box-shadow: var(--clay-shadow-xl);
-    transform: translateZ(0);
-  }
-
-  .animate-clay-float {
-    animation: clayFloat 6s ease-in-out infinite;
-  }
-
-  .animate-clay-bounce {
-    animation: clayBounce 0.6s var(--clay-bounce);
-  }
-
-  .animate-clay-pulse {
-    animation: clayPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-
   .animate-fade-in {
-    animation: fadeIn 0.8s var(--clay-transition);
+    animation: fadeIn 0.8s ease-out;
   }
 
   .myanmar-text {
@@ -153,48 +83,9 @@
   }
 
   .glass-morphism {
-    backdrop-filter: blur(16px);
-    background: hsl(var(--background) / 0.8);
-    border: 1px solid hsl(var(--border) / 0.2);
-    box-shadow: var(--clay-shadow-lg);
-  }
-}
-
-/* Clay-specific animations */
-@keyframes clayFloat {
-  0%, 100% { 
-    transform: translateY(0px) rotate(0deg);
-    box-shadow: var(--clay-shadow-md);
-  }
-  50% { 
-    transform: translateY(-10px) rotate(1deg);
-    box-shadow: var(--clay-shadow-lg);
-  }
-}
-
-@keyframes clayBounce {
-  0%, 20%, 53%, 80%, 100% {
-    transform: translate3d(0, 0, 0);
-  }
-  40%, 43% {
-    transform: translate3d(0, -8px, 0);
-  }
-  70% {
-    transform: translate3d(0, -4px, 0);
-  }
-  90% {
-    transform: translate3d(0, -2px, 0);
-  }
-}
-
-@keyframes clayPulse {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.8;
-    transform: scale(1.05);
+    backdrop-filter: blur(4px);
+    background: rgb(178, 178, 178);
+    border: 1px solid rgb(209, 213, 175);
   }
 }
 
@@ -204,28 +95,21 @@
 }
 
 @media (max-width: 768px) {
-  .clay-card:hover {
-    transform: none;
-    box-shadow: var(--clay-shadow-md);
-  }
+
 }
 
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
   background: hsl(var(--muted));
-  border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
   background: hsl(var(--border));
-  border-radius: 6px;
-  box-shadow: var(--clay-shadow-sm);
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--muted-foreground));
-  box-shadow: var(--clay-shadow-md);
 }

@@ -9,71 +9,78 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      cities: {
+      "Mizzima News In Burmese Facebook Page": {
         Row: {
-          country_id: number
-          id: number
-          name: string
+          "3-second video views": number | null
+          Comments: number | null
+          "Link Clicks": number | null
+          "Matched Audience Targeting Consumption (Photo Click)": number | null
+          Permalink: string | null
+          "Post type": string | null
+          "Publish time": string | null
+          Reach: number | null
+          Reactions: number | null
+          "Reactions, Comments and Shares": number | null
+          Shares: number | null
+          Title: string | null
         }
         Insert: {
-          country_id: number
-          id?: never
-          name: string
+          "3-second video views"?: number | null
+          Comments?: number | null
+          "Link Clicks"?: number | null
+          "Matched Audience Targeting Consumption (Photo Click)"?: number | null
+          Permalink?: string | null
+          "Post type"?: string | null
+          "Publish time"?: string | null
+          Reach?: number | null
+          Reactions?: number | null
+          "Reactions, Comments and Shares"?: number | null
+          Shares?: number | null
+          Title?: string | null
         }
         Update: {
-          country_id?: number
-          id?: never
-          name?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "cities_country_id_fkey"
-            columns: ["country_id"]
-            isOneToOne: false
-            referencedRelation: "countries"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      countries: {
-        Row: {
-          code: string
-          id: number
-          name: string
-        }
-        Insert: {
-          code: string
-          id?: never
-          name: string
-        }
-        Update: {
-          code?: string
-          id?: never
-          name?: string
+          "3-second video views"?: number | null
+          Comments?: number | null
+          "Link Clicks"?: number | null
+          "Matched Audience Targeting Consumption (Photo Click)"?: number | null
+          Permalink?: string | null
+          "Post type"?: string | null
+          "Publish time"?: string | null
+          Reach?: number | null
+          Reactions?: number | null
+          "Reactions, Comments and Shares"?: number | null
+          Shares?: number | null
+          Title?: string | null
         }
         Relationships: []
       }
-      table_name: {
+      news_scripts: {
         Row: {
-          data: Json | null
-          id: number
-          inserted_at: string
-          name: string | null
-          updated_at: string
+          content: string
+          created_at: string | null
+          id: string
+          input_content: string
+          input_type: string
+          title: string
+          user_id: string
         }
         Insert: {
-          data?: Json | null
-          id?: number
-          inserted_at?: string
-          name?: string | null
-          updated_at?: string
+          content: string
+          created_at?: string | null
+          id?: string
+          input_content: string
+          input_type: string
+          title: string
+          user_id: string
         }
         Update: {
-          data?: Json | null
-          id?: number
-          inserted_at?: string
-          name?: string | null
-          updated_at?: string
+          content?: string
+          created_at?: string | null
+          id?: string
+          input_content?: string
+          input_type?: string
+          title?: string
+          user_id?: string
         }
         Relationships: []
       }

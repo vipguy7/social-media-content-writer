@@ -193,11 +193,29 @@ function getRefinedBurmeseContentPrompt(body: RequestBody, fbAnalysis?: Facebook
 
   const ctaExamples = {
     'awareness': 'သိထားသင့်တဲ့အချက်လေးပါ။',
-    'engagement': 'ကျွန်တော်တို့ကို ယနေ့လိုမျိုး follow လုပ်ထားပါ။',
+    'engagement': {
+      male: "ကျွန်တော်တို့ရဲ့ Page ကို Like & Follow လုပ်ထားဖို့ မမေ့နဲ့ဦးနော်။",
+      female: "ကျွန်မတို့ရဲ့ Page ကို Like & Follow လုပ်ထားဖို့ မမေ့နဲ့ဦးနော်။",
+      neutral: "Page ကို Follow လုပ်ထားပြီး အသစ်သစ်သော အကြောင်းအရာများကို စောင့်မျှော်လိုက်ပါ။"
+    },
     'conversion': 'အခုဝယ်လိုက်တော့ နောက်ကျမယ်နော်။',
     'retention': 'စိတ်ဝင်စားရင် inbox ထဲလာမေးနိုင်ပါတယ်နော်။',
     'traffic': 'နောက်မကျခင် အမြန်ဆုံးလက်ခံလိုက်နော်။'
   };
+
+  let chosenCTA;
+  if (body.objective === 'engagement') {
+    const engagementCTAs = ctaExamples.engagement;
+    if (body.brandGender === 'male') {
+      chosenCTA = engagementCTAs.male;
+    } else if (body.brandGender === 'female') {
+      chosenCTA = engagementCTAs.female;
+    } else {
+      chosenCTA = engagementCTAs.neutral;
+    }
+  } else {
+    chosenCTA = ctaExamples[body.objective as keyof typeof ctaExamples] || 'ဆက်လက် လိုက်လာပါ။';
+  }
 
   let basePrompt = `
 # မြန်မာ ဆိုရှယ်မီဒီယာ ကွန်တင့် အဆင့်မြင့် ဖန်တီးမှု - Marketing AI Agent
@@ -237,7 +255,7 @@ ${insights ? getAdvancedBrandVoiceGuidelines(body, insights) : ''}
 ${contentTypeMapping[body.contentType as keyof typeof contentTypeMapping] || body.contentType} အတွက် ကွန်တင့် ဖန်တီးပါ။
 
 ### 4. မားကတ်တင်း ရည်ရွယ်ချက်အပေါ် မူတည်သော CTA
-သင့် ရည်ရွယ်ချက် **${body.objective}** အတွက် သင့်လျော်သော CTA: **"${ctaExamples[body.objective as keyof typeof ctaExamples] || 'ဆက်လက် လိုက်လာပါ။'}"**
+သင့် ရည်ရွယ်ချက် **${body.objective}** အတွက် သင့်လျော်သော CTA: **"${chosenCTA}"**
 
 ### 5. အင်္ဂါရပ်များ
 ${body.includeEmojis ? '- ပရိသတ်နှင့် သင့်လျော်သော emojis များကို မဟာဗျူဟာအလိုက် အသုံးပြုပါ' : '- Emojis များ မထည့်ပါနှင့်'}
