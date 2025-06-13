@@ -1,5 +1,5 @@
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState, useMemo } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -32,6 +32,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);
+    }).catch(error => {
+      console.error("Error fetching initial session:", error);
+      // setLoading(false) might also be considered here if an error means loading is done.
+      // For now, just logging, as onAuthStateChange will also set loading.
     });
 
     return () => subscription.unsubscribe();
@@ -41,12 +45,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     await supabase.auth.signOut();
   };
 
-  const value = {
+  const value = useMemo(() => ({
     user,
     session,
     loading,
     signOut,
-  };
+  }), [user, session, loading]);
 
   return (
     <AuthContext.Provider value={value}>

@@ -17,6 +17,8 @@ const Auth = () => {
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
   const [activeTab, setActiveTab] = useState('login');
+  const [passwordStrength, setPasswordStrength] = useState(''); // e.g., '', 'Weak', 'Medium', 'Strong'
+  const [passwordFeedback, setPasswordFeedback] = useState(''); // e.g., 'Minimum 8 characters'
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -57,11 +59,19 @@ const Auth = () => {
         navigate('/');
       }
     } catch (err) {
-      toast({
-        variant: "destructive",
-        title: "အမှားတစ်ခု ဖြစ်ပေါ်ခဲ့သည်",
-        description: "ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ",
-      });
+      if (err instanceof Error && err.message === 'Failed to fetch') {
+        toast({
+          variant: "destructive",
+          title: "ကွန်ရက်ချိတ်ဆက်မှု အမှား", // Network Connection Error
+          description: "သင်၏ ကွန်ရက်ချိတ်ဆက်မှုကို စစ်ဆေးပြီး ထပ်မံကြိုးစားပါ။" // Please check your internet connection and try again.
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "အမှားတစ်ခု ဖြစ်ပေါ်ခဲ့သည်",
+          description: "ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ",
+        });
+      }
     } finally {
       setIsLoading(false);
     }
@@ -70,6 +80,18 @@ const Auth = () => {
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+
+    // Client-side password strength check
+    const strengthCheck = checkPasswordStrength(password);
+    if (strengthCheck.strength === 'Weak') {
+      toast({
+        variant: "destructive",
+        title: "စကားဝှက် အားနည်းလွန်းပါသည်",
+        description: "ကျေးဇူးပြု၍ လမ်းညွှန်ချက်များအတိုင်း ပိုမိုခိုင်မာသော စကားဝှက်ကို ရွေးချယ်ပါ။",
+      });
+      setIsLoading(false);
+      return;
+    }
 
     try {
       const { error } = await supabase.auth.signUp({
@@ -99,14 +121,47 @@ const Auth = () => {
         setActiveTab('login');
       }
     } catch (err) {
-      toast({
-        variant: "destructive",
-        title: "အမှားတစ်ခု ဖြစ်ပေါ်ခဲ့သည်",
-        description: "ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ",
-      });
+      if (err instanceof Error && err.message === 'Failed to fetch') {
+        toast({
+          variant: "destructive",
+          title: "ကွန်ရက်ချိတ်ဆက်မှု အမှား", // Network Connection Error
+          description: "သင်၏ ကွန်ရက်ချိတ်ဆက်မှုကို စစ်ဆေးပြီး ထပ်မံကြိုးစားပါ။" // Please check your internet connection and try again.
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "အမှားတစ်ခု ဖြစ်ပေါ်ခဲ့သည်",
+          description: "ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ",
+        });
+      }
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const checkPasswordStrength = (password: string): { strength: string, feedback: string } => {
+    const minLength = 8;
+    const hasNumber = /\d/.test(password);
+    const hasSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(password);
+
+    if (password.length < minLength) {
+      return { strength: 'Weak', feedback: 'အနည်းဆုံး စာလုံး ၈ လုံး လိုအပ်ပါသည်။' };
+    } else if (password.length >= minLength && (hasNumber || hasSpecialChar)) {
+      if (hasNumber && hasSpecialChar) {
+        return { strength: 'Strong', feedback: 'ခိုင်မာသော စကားဝှက်။' };
+      }
+      return { strength: 'Medium', feedback: 'ကောင်းပါပြီ။ နံပါတ်များနှင့် အထူးအက္ခရာများ ထည့်သွင်းရန် စဉ်းစားပါ။' };
+    } else { // Only length requirement met
+      return { strength: 'Weak', feedback: 'နံပါတ် သို့မဟုတ် အထူးအက္ခရာတစ်ခု ထည့်သွင်းပါ။' };
+    }
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    const { strength, feedback } = checkPasswordStrength(newPassword);
+    setPasswordStrength(strength);
+    setPasswordFeedback(feedback);
   };
 
   return (
@@ -218,10 +273,9 @@ const Auth = () => {
                       id="signupPassword"
                       type={showPassword ? "text" : "password"}
                       value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      placeholder="စကားဝှက် ထည့်ပါ (အနည်းဆုံး ၆ လုံး)"
+                      onChange={handlePasswordChange}
+                      placeholder="စကားဝှက် ထည့်ပါ"
                       required
-                      minLength={6}
                     />
                     <Button
                       type="button"
@@ -237,6 +291,15 @@ const Auth = () => {
                       )}
                     </Button>
                   </div>
+                  {passwordFeedback && (
+                    <p className={`text-sm mt-1 ${
+                      passwordStrength === 'Weak' ? 'text-red-500' :
+                      passwordStrength === 'Medium' ? 'text-orange-500' :
+                      passwordStrength === 'Strong' ? 'text-green-500' : ''
+                    }`}>
+                      {passwordFeedback}
+                    </p>
+                  )}
                 </div>
                 
                 <Button
