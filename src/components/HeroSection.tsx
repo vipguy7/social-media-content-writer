@@ -23,7 +23,7 @@ const HeroSection = () => {
           <div className="p-3 bg-muted rounded-xl w-fit mx-auto mb-4 group-hover:bg-accent transition-colors">
             <Zap className="w-8 h-8 text-primary" />
           </div>
-          <h3 className="font-bold text-lg myanmar-heading text-foreground mb-2">
+          <h3 className="font-bold text-xl myanmar-heading text-foreground mb-2">
             လျင်မြန်သော ဖန်တီးမှု
           </h3>
           <p className="text-muted-foreground myanmar-text">
@@ -35,7 +35,7 @@ const HeroSection = () => {
           <div className="p-3 bg-muted rounded-xl w-fit mx-auto mb-4 group-hover:bg-accent transition-colors">
             <Target className="w-8 h-8 text-primary" />
           </div>
-          <h3 className="font-bold text-lg myanmar-heading text-foreground mb-2">
+          <h3 className="font-bold text-xl myanmar-heading text-foreground mb-2">
             ပစ်မှတ် ပရိသတ် ထိရောက်မှု
           </h3>
           <p className="text-muted-foreground myanmar-text">
@@ -47,7 +47,7 @@ const HeroSection = () => {
           <div className="p-3 bg-muted rounded-xl w-fit mx-auto mb-4 group-hover:bg-accent transition-colors">
             <Sparkles className="w-8 h-8 text-primary" />
           </div>
-          <h3 className="font-bold text-lg myanmar-heading text-foreground mb-2">
+          <h3 className="font-bold text-xl myanmar-heading text-foreground mb-2">
             ယဉ်ကျေးမှု သင့်လျော်မှု
           </h3>
           <p className="text-muted-foreground myanmar-text">

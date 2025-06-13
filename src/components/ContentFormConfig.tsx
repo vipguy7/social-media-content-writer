@@ -260,10 +260,14 @@ const ContentFormConfig = ({
             className="w-full myanmar-gradient hover:opacity-90 transition-opacity text-lg py-6"
           >
             {isLoading ? (
-              <>
-                <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+              <div className="flex flex-col items-center">
+                <img
+                  src="https://media1.tenor.com/m/zXhK-0R9y1gAAAAC/vengeful-notes.gif"
+                  alt="Generating content animation..."
+                  className="h-12 w-auto mx-auto mb-2"
+                />
                 သင်အတွက် ပိုစ့်ကို ဖန်တီးနေသည်...
-              </>
+              </div>
             ) : (
               <>
                 <Wand2 className="w-5 h-5 mr-2" />

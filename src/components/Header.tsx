@@ -11,7 +11,7 @@ const Header = () => {
               <Sparkles className="w-8 h-8 text-primary animate-float" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold myanmar-heading text-foreground">
+              <h1 className="text-4xl font-bold myanmar-heading text-foreground">
                 မြန်မာ ကွန်တင့် ကျွမ်းကျင်သူ
               </h1>
               <p className="text-muted-foreground text-lg font-english mt-1">
