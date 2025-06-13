@@ -1,68 +1,71 @@
 
-import { Sparkles, FileText, Users, Globe } from 'lucide-react';
-import { useAuth } from '@/contexts/AuthContext'; // Added
-import { Button } from '@/components/ui/button'; // Added
-import { Link, useNavigate } from 'react-router-dom'; // Added
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '@/hooks/useAuth';
+import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { User, LogOut, Settings } from 'lucide-react';
 
 const Header = () => {
-  const { user, logout, loading } = useAuth(); // Added
-  const navigate = useNavigate(); // Added
+  const { user, signOut } = useAuth();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+  const handleSignOut = async () => {
+    setIsLoggingOut(true);
+    try {
+      await signOut();
+    } finally {
+      setIsLoggingOut(false);
+    }
+  };
+
   return (
-    <header className="bg-background border-b border-border text-foreground">
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4 animate-slide-in-left">
-            <div className="p-3 bg-card border rounded-lg">
-              <Sparkles className="w-8 h-8 text-primary animate-float" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold myanmar-heading text-foreground">
-                လက်ထောက် စာရေးလေး
-              </h1>
-              <p className="text-muted-foreground text-lg font-english mt-1">
-                AI ဖြင့် မြန်မာဘာသာပိုစ့်များ ရေးသားခြင်း
-              </p>
-            </div>
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-16 items-center justify-between">
+        <Link to="/" className="flex items-center space-x-2">
+          <div className="h-8 w-8 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600"></div>
+          <span className="font-bold text-xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            Myanmar Content Generator
+          </span>
+        </Link>
+
+        {user && (
+          <div className="flex items-center space-x-4">
+            <span className="text-sm text-muted-foreground hidden md:block">
+              ကြိုဆိုပါသည်, {user.user_metadata?.full_name || user.email}
+            </span>
+            
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage src={user.user_metadata?.avatar_url} alt={user.user_metadata?.full_name} />
+                    <AvatarFallback>
+                      {user.user_metadata?.full_name ? 
+                        user.user_metadata.full_name.charAt(0).toUpperCase() : 
+                        user.email?.charAt(0).toUpperCase()
+                      }
+                    </AvatarFallback>
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56" align="end" forceMount>
+                <DropdownMenuItem className="flex items-center">
+                  <User className="mr-2 h-4 w-4" />
+                  <div className="flex flex-col space-y-1">
+                    <p className="text-sm font-medium leading-none">{user.user_metadata?.full_name}</p>
+                    <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
+                  </div>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={handleSignOut} disabled={isLoggingOut}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  {isLoggingOut ? 'အကောင့်ထွက်နေသည်...' : 'အကောင့်ထွက်ရန်'}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
-          
-          <div className="flex items-center gap-4 text-sm animate-slide-in-right">
-            {loading ? (
-              <p>Loading...</p>
-            ) : user ? (
-              <>
-                <Link to="/history">
-                  <Button variant="ghost">History</Button>
-                </Link>
-                <span className="text-muted-foreground hidden sm:inline">{user.email}</span>
-                <Button variant="outline" onClick={async () => { await logout(); navigate('/'); }}>Logout</Button>
-              </>
-            ) : (
-              <>
-                <Link to="/login">
-                  <Button variant="outline">Login</Button>
-                </Link>
-                <Link to="/signup">
-                  <Button>Sign Up</Button>
-                </Link>
-              </>
-            )}
-            {/* The following links can be kept or moved into a user dropdown if needed */}
-            {/*
-            <div className="hidden lg:flex items-center gap-3 p-3 bg-card border rounded-lg hover:bg-muted transition-all duration-300">
-                <FileText className="w-5 h-5 text-primary" />
-                <span className="myanmar-text font-medium text-foreground">ပရော်ဖက်ရှင်နယ် ပိုစ့်</span>
-              </div>
-              <div className="hidden lg:flex items-center gap-3 p-3 bg-card border rounded-lg hover:bg-muted transition-all duration-300">
-                <Users className="w-5 h-5 text-primary" />
-                <span className="myanmar-text font-medium text-foreground">ယဉ်ကျေးမှု အလေးပေးမှု</span>
-              </div>
-              <div className="hidden lg:flex items-center gap-3 p-3 bg-card border rounded-lg hover:bg-muted transition-all duration-300">
-                <Globe className="w-5 h-5 text-primary" />
-                <span className="myanmar-text font-medium text-foreground">ဒေသဆိုင်ရာ ဗဟုသုတ</span>
-              </div>
-            */}
-          </div>
-        </div>
+        )}
       </div>
     </header>
   );
