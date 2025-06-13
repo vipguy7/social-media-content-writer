@@ -6,9 +6,9 @@ const HeroSection = () => {
     <div className="text-center space-y-8 mb-16 animate-fade-in">
       <div className="flex items-center justify-center gap-4 mb-8">
         <div className="clay-card p-6 animate-clay-float">
-          <Sparkles className="w-12 h-12 text-primary animate-clay-pulse" />
+          <Sparkles className="w-12 h-12 text-foreground animate-clay-pulse" />
         </div>
-        <h1 className="text-6xl md:text-7xl font-bold myanmar-heading bg-gradient-to-br from-primary via-accent to-primary/70 bg-clip-text text-transparent">
+        <h1 className="text-6xl md:text-7xl font-bold myanmar-heading bg-gradient-to-br from-foreground via-accent to-foreground/70 bg-clip-text text-transparent">
           စာရေးလေး
         </h1>
       </div>
@@ -20,8 +20,8 @@ const HeroSection = () => {
 
       <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mt-16">
         <div className="clay-card p-8 text-center group hover:clay-elevated transition-all duration-500">
-          <div className="clay-card p-4 bg-gradient-to-br from-primary/10 to-accent/10 rounded-2xl w-fit mx-auto mb-6 group-hover:animate-clay-bounce">
-            <Zap className="w-10 h-10 text-primary" />
+          <div className="clay-card p-4 bg-gradient-to-br from-foreground/10 to-accent/10 rounded-2xl w-fit mx-auto mb-6 group-hover:animate-clay-bounce">
+            <Zap className="w-10 h-10 text-foreground" />
           </div>
           <h3 className="font-bold text-xl myanmar-heading text-foreground mb-4">
             မြန်ဆန်သော ရေးသားမှု
@@ -32,8 +32,8 @@ const HeroSection = () => {
         </div>
 
         <div className="clay-card p-8 text-center group hover:clay-elevated transition-all duration-500">
-          <div className="clay-card p-4 bg-gradient-to-br from-primary/10 to-accent/10 rounded-2xl w-fit mx-auto mb-6 group-hover:animate-clay-bounce">
-            <Target className="w-10 h-10 text-primary" />
+          <div className="clay-card p-4 bg-gradient-to-br from-foreground/10 to-accent/10 rounded-2xl w-fit mx-auto mb-6 group-hover:animate-clay-bounce">
+            <Target className="w-10 h-10 text-foreground" />
           </div>
           <h3 className="font-bold text-xl myanmar-heading text-foreground mb-4">
             ရည်မှန်းပရိသတ်နှင့် ကိုက်ညီမှု
@@ -44,8 +44,8 @@ const HeroSection = () => {
         </div>
 
         <div className="clay-card p-8 text-center group hover:clay-elevated transition-all duration-500">
-          <div className="clay-card p-4 bg-gradient-to-br from-primary/10 to-accent/10 rounded-2xl w-fit mx-auto mb-6 group-hover:animate-clay-bounce">
-            <Sparkles className="w-10 h-10 text-primary" />
+          <div className="clay-card p-4 bg-gradient-to-br from-foreground/10 to-accent/10 rounded-2xl w-fit mx-auto mb-6 group-hover:animate-clay-bounce">
+            <Sparkles className="w-10 h-10 text-foreground" />
           </div>
           <h3 className="font-bold text-xl myanmar-heading text-foreground mb-4">
             ယဉ်ကျေးမှု သင့်လျော်မှု
