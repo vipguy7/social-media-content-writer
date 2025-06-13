@@ -21,7 +21,7 @@ const GeneratedContentOutput = ({ content, onCopy, onExportAll }: GeneratedConte
             <div>
               <CardTitle className="flex items-center gap-2">
                 <FileText className="w-5 h-5 text-myanmar-red" />
-               ကဲ..ပိုစ့်ကို ရေးပြီးပါပြီခင်ဗျ. 
+                ဖန်တီးပြီး ကွန်တင့်
               </CardTitle>
               <CardDescription>
                 အသုံးပြုရန် အဆင်သင့် ပရော်ဖက်ရှင်နယ် ရွေးချယ်စရာ {content.length} မျိုး

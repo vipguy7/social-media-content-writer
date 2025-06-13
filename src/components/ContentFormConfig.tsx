@@ -39,7 +39,7 @@ const ContentFormConfig = ({
           အရေးအသား ဖွဲ့စည်းမှု
         </CardTitle>
         <CardDescription>
-        ပိုစ့်ရေးဖို့အတွက် အချက်အလက်များ ထည့်သွင်းရွေးချယ်ပါ.
+        ဆိုရှယ်မီဒီယာပို့စ်များ ဖန်တီးရန်အတွက် အချက်အလက်များ ထည့်သွင်းရွေးချယ်ပါ.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -65,7 +65,7 @@ const ContentFormConfig = ({
             <Label htmlFor="contentType">ပိုစ့်အမျိုးအစား</Label>
             <Select value={formData.contentType} onValueChange={(value) => updateFormData({ contentType: value })}>
               <SelectTrigger>
-                <SelectValue placeholder="ပိုစ့်အမျိုးအစား ရွေးချယ်ပါ" />
+                <SelectValue placeholder="ကွန်တင့်အမျိုးအစား ရွေးချယ်ပါ" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="promotional">ကြော်ငြာ ပိုစ့်</SelectItem>
@@ -86,7 +86,7 @@ const ContentFormConfig = ({
               id="productName"
               value={formData.productName}
               onChange={(e) => updateFormData({ productName: e.target.value })}
-              placeholder="သင့်ထုတ်ကုန် သို့မဟုတ် လုပ်ငန်းအမည်ကို ထည့်ပါ"
+              placeholder="သင့်ထုတ်ကုန် သို့မဟုတ် ဝန်ဆောင်မှု အမည်ကို ထည့်ပါ"
               className="focus:ring-myanmar-red focus:border-myanmar-red"
             />
           </div>
@@ -97,7 +97,7 @@ const ContentFormConfig = ({
               id="keyMessage"
               value={formData.keyMessage}
               onChange={(e) => updateFormData({ keyMessage: e.target.value })}
-              placeholder="အဓိက ဘာပြောချင်တာလဲ?"
+              placeholder="သင် ပေးပို့လိုသော အဓိက မက်ဆေ့ခ်မှာ ဘာလဲ?"
               rows={3}
               className="focus:ring-myanmar-red focus:border-myanmar-red"
             />
@@ -138,11 +138,11 @@ const ContentFormConfig = ({
               <SelectContent>
                 <SelectItem value="male">ယောက်ျား (ကျွန်တော်၊ သူ)</SelectItem>
                 <SelectItem value="female">မိန်းမ (ကျွန်မ၊ သူမ)</SelectItem>
-                <SelectItem value="neutral">နပုန်းနာမ် (ကျွန်ုပ်၊ ကျွန်တော်တို့)</SelectItem>
+                <SelectItem value="neutral">ကြားခံ (ကျွန်ုပ်၊ ကျွန်တော်တို့)</SelectItem>
               </SelectContent>
             </Select>
             <p className="text-xs text-muted-foreground">
-              လုပ်ငန်းအမည် ကိုယ်စားပြုနာမ်အရ သင့်လျော်သော စကားလုံးများ အသုံးပြုပါမည်
+              ဘရန်း၏ ကိုယ်စားပြုနာမ်အရ သင့်လျော်သော စကားလုံးများ အသုံးပြုပါမည်
             </p>
           </div>
 
@@ -153,11 +153,11 @@ const ContentFormConfig = ({
                 <SelectValue placeholder="ရည်ရွယ်ချက် ရွေးချယ်ပါ" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="awareness">လုပ်ငန်းကို လူများများသိစေချင်</SelectItem>
-                <SelectItem value="engagement">ပရိသတ်တွေဆီ like/comment လိုချင်</SelectItem>
-                <SelectItem value="conversion">ကြော်ငြာကနေ တစ်ခါတည်းဝယ်စေချင်</SelectItem>
-                <SelectItem value="retention">ဖောက်သည်တွေကိုပဲ အသိပေးချင်</SelectItem>
-                <SelectItem value="traffic">ကိုယ့်ပိုစ့်ကို ပရိသတ်များများ ဖတ်စေချင်</SelectItem>
+                <SelectItem value="awareness">ဘရန်း သိရှိမှု</SelectItem>
+                <SelectItem value="engagement">ပရိသတ် ပါဝင်မှု</SelectItem>
+                <SelectItem value="conversion">ရောင်းချမှု ပြောင်းလဲမှု</SelectItem>
+                <SelectItem value="retention">ဖောက်သည် ထိန်းသိမ်းမှု</SelectItem>
+                <SelectItem value="traffic">ဖတ်ရှုနှုန်းတိုးတက်မှု</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -266,10 +266,12 @@ const ContentFormConfig = ({
                   alt="Generating content animation..."
                   className="h-12 w-auto mx-auto mb-2"
                 />
-               ရေးနေပါပြီ ခင်ဗျာ..ခဏလေးစိတ်ရှည်ပေးပါ.မကြာပါဘူး...
+                သင်အတွက် ပိုစ့်ကို ဖန်တီးနေသည်...
               </div>
+            ) : (
+              <>
                 <Wand2 className="w-5 h-5 mr-2" />
-                 ပိုစ့်ရေးပါ
+                 ပိုစ့်ရေးသားပါ
               </>
             )}
           </Button>
