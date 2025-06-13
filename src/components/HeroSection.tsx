@@ -8,14 +8,14 @@ const HeroSection = () => {
         <div className="p-4 bg-card border rounded-lg animate-float">
           <Sparkles className="w-10 h-10 text-primary" />
         </div>
-        <h1 className="text-5xl md:text-6xl font-bold myanmar-heading bg-gradient-to-r from-foreground via-muted-foreground to-primary bg-clip-text text-transparent">
-          မြန်မာ ကွန်တင့် ကျွမ်းကျင်သူ
+        <h1 className="text-5xl md:text-6xl font-bold myanmar-heading bg-gradient-to-r from-foreground via-muted-foreground to-primary bg-clip-text text-solid">
+          စာရေးလေး
         </h1>
       </div>
       
       <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto myanmar-text leading-relaxed">
-        အဆင့်မြင့် AI နည်းပညာဖြင့် ပရော်ဖက်ရှင်နယ် မြန်မာဘာသာ ဆိုရှယ်မီဒီယာ ကွန်တင့်များ ဖန်တီးပါ။
-        မြန်မာ လုပ်ငန်း အောင်မြင်မှုအတွက် ယဉ်ကျေးမှုနှင့် ကိုက်ညီသော ဘရန်းအသံဖြင့် ဖန်တီးပေးပါမည်။
+       မြန်မာဆိုရှယ်မီဒီယာပိုစ့်တွေရေးဖို့ AI လက်ထောက်စာရေးလေးပါခင်ဗျာ. 
+       မြန်မာယဉ်ကျေးမှုနှင့် ကိုက်ညီတဲ့ ပိုစ့်တွေကို အကန့်အသတ်မရှိ ကူညီရေးသားပေးနိုင်ပါတယ်။
       </p>
 
       <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-12">
@@ -23,11 +23,11 @@ const HeroSection = () => {
           <div className="p-3 bg-muted rounded-xl w-fit mx-auto mb-4 group-hover:bg-accent transition-colors">
             <Zap className="w-8 h-8 text-primary" />
           </div>
-          <h3 className="font-bold text-xl myanmar-heading text-foreground mb-2">
-            လျင်မြန်သော ဖန်တီးမှု
+          <h3 className="font-bold text-lg myanmar-heading text-foreground mb-2">
+            မြန်ဆန်သော ရေးသားမှု
           </h3>
           <p className="text-muted-foreground myanmar-text">
-            စက္ကန့်ပိုင်းအတွင်း ပရော်ဖက်ရှင်နယ် ကွန်တင့်များ ရရှိပါ
+            စက္ကန့်ပိုင်းအတွင်း ပရော်ဖက်ရှင်နယ်ပိုစ့်များကို ရေးသားလိုက်ပါ
           </p>
         </div>
 
@@ -35,11 +35,11 @@ const HeroSection = () => {
           <div className="p-3 bg-muted rounded-xl w-fit mx-auto mb-4 group-hover:bg-accent transition-colors">
             <Target className="w-8 h-8 text-primary" />
           </div>
-          <h3 className="font-bold text-xl myanmar-heading text-foreground mb-2">
-            ပစ်မှတ် ပရိသတ် ထိရောက်မှု
+          <h3 className="font-bold text-lg myanmar-heading text-foreground mb-2">
+            ရည်မှန်းပရိသတ်နှင့် ကိုက်ညီမှု
           </h3>
           <p className="text-muted-foreground myanmar-text">
-            သင့်ပရိသတ်နှင့် အံဝင်ခွင်ကျ ဖန်တီးပေးပါမည်
+            သင့်ပရိသတ်အတွက် အထူးပြုရေးသားလိုက်ပါ
           </p>
         </div>
 
@@ -51,7 +51,7 @@ const HeroSection = () => {
             ယဉ်ကျေးမှု သင့်လျော်မှု
           </h3>
           <p className="text-muted-foreground myanmar-text">
-            မြန်မာယဉ်ကျေးမှုနှင့် အပြည့်အဝ ကိုက်ညီပါသည်
+            မြန်မာယဉ်ကျေးမှုနှင့် လိုက်လျောညီထွေစွာ ရေးသားလိုက်ပါ
           </p>
         </div>
       </div>
