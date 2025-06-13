@@ -1,5 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react'; // Added useEffect
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext'; // Added
+import { supabase } from '@/integrations/supabase/client'; // Added
+import { ContentHistoryItemInsert } from '@/types/history'; // Added
 import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
 import ContentGeneratorForm from '@/components/ContentGeneratorForm';
@@ -10,6 +13,7 @@ import { ContentFormData, QAMetrics, MarketingInsights } from '@/types/content';
 
 const Index = () => {
   const { toast } = useToast();
+  const { user } = useAuth(); // Added
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>('');
   const [generatedContent, setGeneratedContent] = useState<string[]>([]);
@@ -49,7 +53,7 @@ const Index = () => {
     setIsLoading(true);
     
     try {
-      console.log('Starting enhanced content generation...');
+      // console.log('Starting enhanced content generation...'); // Removed
       
       const response = await fetch(`https://xlowbgltztktrejjifie.supabase.co/functions/v1/generate-content`, {
         method: 'POST',
@@ -71,8 +75,31 @@ const Index = () => {
         throw new Error(data.error || 'ကွန်တင့် ဖန်တီးမှု မအောင်မြင်ပါ');
       }
 
-      setGeneratedContent(data.variations || []);
+      const currentGeneratedVariations = data.variations || [];
+      setGeneratedContent(currentGeneratedVariations);
       setMarketingInsights(data.marketingInsights || null);
+
+      if (user && currentGeneratedVariations.length > 0) {
+        const historyEntry: ContentHistoryItemInsert = {
+          user_id: user.id,
+          generated_content: currentGeneratedVariations.join('\n---\n'), // Store all variations concatenated
+          inputs: formData,
+          title: formData.productName || 'Generated Content',
+        };
+
+        const { error: insertError } = await supabase
+          .from('content_history')
+          .insert(historyEntry);
+
+        if (insertError) {
+          console.error('Error saving content to history:', insertError);
+          // Optionally show a toast, but be mindful of toast fatigue
+          // toast({ title: "Error", description: "Could not save content to history.", variant: "destructive" });
+        }
+        // else { // Removed else block with console.log
+          // toast({ title: "Saved", description: "Content saved to history." });
+        // }
+      }
       
       const mockQA: QAMetrics = {
         grammar: Math.floor(Math.random() * 10) + 90,
