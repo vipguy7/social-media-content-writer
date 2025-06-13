@@ -1,5 +1,5 @@
 
-import { FileText, Users, Globe } from 'lucide-react';
+import { Sparkles, FileText, Users, Globe } from 'lucide-react';
 
 const Header = () => {
   return (
@@ -8,18 +8,14 @@ const Header = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4 animate-slide-in-left">
             <div className="p-3 bg-card border rounded-lg">
-              <img
-                src="https://media1.tenor.com/m/OrSyAesEiZQAAAAC/lovely-tuji-bunny.gif"
-                alt="Animated bunny icon"
-                className="w-8 h-8"
-              />
+              <Sparkles className="w-8 h-8 text-primary animate-float" />
             </div>
             <div>
-              <h1 className="text-4xl font-bold myanmar-heading text-foreground">
-                မြန်မာ ကွန်တင့် ကျွမ်းကျင်သူ
+              <h1 className="text-3xl font-bold myanmar-heading text-foreground">
+                လက်ထောက် စာရေးလေး
               </h1>
               <p className="text-muted-foreground text-lg font-english mt-1">
-                Professional Burmese Content Generation Platform
+                AI ဖြင့် မြန်မာဘာသာပိုစ့်များ ရေးသားခြင်း
               </p>
             </div>
           </div>
@@ -27,7 +23,7 @@ const Header = () => {
           <div className="hidden lg:flex items-center gap-6 text-sm animate-slide-in-right">
             <div className="flex items-center gap-3 p-3 bg-card border rounded-lg hover:bg-muted transition-all duration-300">
               <FileText className="w-5 h-5 text-primary" />
-              <span className="myanmar-text font-medium text-foreground">ပရော်ဖက်ရှင်နယ် ကွန်တင့်</span>
+              <span className="myanmar-text font-medium text-foreground">ပရော်ဖက်ရှင်နယ် ပိုစ့်</span>
             </div>
             <div className="flex items-center gap-3 p-3 bg-card border rounded-lg hover:bg-muted transition-all duration-300">
               <Users className="w-5 h-5 text-primary" />

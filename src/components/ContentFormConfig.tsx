@@ -7,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Slider } from '@/components/ui/slider';
-import { Loader2, Wand2, Facebook } from 'lucide-react';
+import { Loader2, Wand2, Sparkles, Facebook } from 'lucide-react';
 import { ContentFormData } from '@/types/content';
 import AudienceTargeting from './AudienceTargeting';
 import MarketingInsights from './MarketingInsights';
@@ -16,7 +16,9 @@ interface ContentFormConfigProps {
   formData: ContentFormData;
   setFormData: (data: ContentFormData) => void;
   onGenerate: () => void;
+  onGenerateImages: () => void;
   isLoading: boolean;
+  isGeneratingImages: boolean;
   hasContent: boolean;
 }
 
@@ -24,7 +26,9 @@ const ContentFormConfig = ({
   formData, 
   setFormData, 
   onGenerate, 
+  onGenerateImages,
   isLoading, 
+  isGeneratingImages,
   hasContent 
 }: ContentFormConfigProps) => {
   const updateFormData = (updates: Partial<ContentFormData>) => {
@@ -39,7 +43,7 @@ const ContentFormConfig = ({
           အရေးအသား ဖွဲ့စည်းမှု
         </CardTitle>
         <CardDescription>
-        ဆိုရှယ်မီဒီယာပို့စ်များ ဖန်တီးရန်အတွက် အချက်အလက်များ ထည့်သွင်းရွေးချယ်ပါ.
+        ပိုစ့်ရေးဖို့အတွက် အချက်အလက်များ ထည့်သွင်းရွေးချယ်ပါ.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -65,7 +69,7 @@ const ContentFormConfig = ({
             <Label htmlFor="contentType">ပိုစ့်အမျိုးအစား</Label>
             <Select value={formData.contentType} onValueChange={(value) => updateFormData({ contentType: value })}>
               <SelectTrigger>
-                <SelectValue placeholder="ကွန်တင့်အမျိုးအစား ရွေးချယ်ပါ" />
+                <SelectValue placeholder="ပိုစ့်အမျိုးအစား ရွေးချယ်ပါ" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="promotional">ကြော်ငြာ ပိုစ့်</SelectItem>
@@ -86,7 +90,7 @@ const ContentFormConfig = ({
               id="productName"
               value={formData.productName}
               onChange={(e) => updateFormData({ productName: e.target.value })}
-              placeholder="သင့်ထုတ်ကုန် သို့မဟုတ် ဝန်ဆောင်မှု အမည်ကို ထည့်ပါ"
+              placeholder="သင့်ထုတ်ကုန် သို့မဟုတ် လုပ်ငန်းအမည်ကို ထည့်ပါ"
               className="focus:ring-myanmar-red focus:border-myanmar-red"
             />
           </div>
@@ -97,7 +101,7 @@ const ContentFormConfig = ({
               id="keyMessage"
               value={formData.keyMessage}
               onChange={(e) => updateFormData({ keyMessage: e.target.value })}
-              placeholder="သင် ပေးပို့လိုသော အဓိက မက်ဆေ့ခ်မှာ ဘာလဲ?"
+              placeholder="အဓိက ဘာပြောချင်တာလဲ?"
               rows={3}
               className="focus:ring-myanmar-red focus:border-myanmar-red"
             />
@@ -138,11 +142,11 @@ const ContentFormConfig = ({
               <SelectContent>
                 <SelectItem value="male">ယောက်ျား (ကျွန်တော်၊ သူ)</SelectItem>
                 <SelectItem value="female">မိန်းမ (ကျွန်မ၊ သူမ)</SelectItem>
-                <SelectItem value="neutral">ကြားခံ (ကျွန်ုပ်၊ ကျွန်တော်တို့)</SelectItem>
+                <SelectItem value="neutral">နပုန်းနာမ် (ကျွန်ုပ်၊ ကျွန်တော်တို့)</SelectItem>
               </SelectContent>
             </Select>
             <p className="text-xs text-muted-foreground">
-              ဘရန်း၏ ကိုယ်စားပြုနာမ်အရ သင့်လျော်သော စကားလုံးများ အသုံးပြုပါမည်
+              လုပ်ငန်းအမည် ကိုယ်စားပြုနာမ်အရ သင့်လျော်သော စကားလုံးများ အသုံးပြုပါမည်
             </p>
           </div>
 
@@ -153,11 +157,11 @@ const ContentFormConfig = ({
                 <SelectValue placeholder="ရည်ရွယ်ချက် ရွေးချယ်ပါ" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="awareness">ဘရန်း သိရှိမှု</SelectItem>
-                <SelectItem value="engagement">ပရိသတ် ပါဝင်မှု</SelectItem>
-                <SelectItem value="conversion">ရောင်းချမှု ပြောင်းလဲမှု</SelectItem>
-                <SelectItem value="retention">ဖောက်သည် ထိန်းသိမ်းမှု</SelectItem>
-                <SelectItem value="traffic">ဖတ်ရှုနှုန်းတိုးတက်မှု</SelectItem>
+                <SelectItem value="awareness">လုပ်ငန်းကို လူများများသိစေချင်</SelectItem>
+                <SelectItem value="engagement">ပရိသတ်တွေဆီ like/comment လိုချင်</SelectItem>
+                <SelectItem value="conversion">ကြော်ငြာကနေ တစ်ခါတည်းဝယ်စေချင်</SelectItem>
+                <SelectItem value="retention">ဖောက်သည်တွေကိုပဲ အသိပေးချင်</SelectItem>
+                <SelectItem value="traffic">ကိုယ့်ပိုစ့်ကို ပရိသတ်များများ ဖတ်စေချင်</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -260,14 +264,10 @@ const ContentFormConfig = ({
             className="w-full myanmar-gradient hover:opacity-90 transition-opacity text-lg py-6"
           >
             {isLoading ? (
-              <div className="flex flex-col items-center">
-                <img
-                  src="https://media1.tenor.com/m/zXhK-0R9y1gAAAAC/vengeful-notes.gif"
-                  alt="Generating content animation..."
-                  className="h-12 w-auto mx-auto mb-2"
-                />
-                သင်အတွက် ပိုစ့်ကို ဖန်တီးနေသည်...
-              </div>
+              <>
+                <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                ရေးသားနေပါပြီ ခင်ဗျာ..ခဏလေးစိတ်ရှည်ပေးပါ..ပြီးတော့မှာပါ..မကြာပါဘူး....ပြီးတော့မယ်နော်...ခဏလေးနော်....
+              </>
             ) : (
               <>
                 <Wand2 className="w-5 h-5 mr-2" />
@@ -275,6 +275,27 @@ const ContentFormConfig = ({
               </>
             )}
           </Button>
+
+          {hasContent && (
+            <Button
+              onClick={onGenerateImages}
+              disabled={isGeneratingImages || !hasContent}
+              variant="outline"
+              className="w-full border-myanmar-red text-myanmar-red hover:bg-myanmar-red hover:text-white transition-colors text-lg py-6"
+            >
+              {isGeneratingImages ? (
+                <>
+                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                  ဂရပ်ဖစ်များ ဖန်တီးနေသည်...
+                </>
+              ) : (
+                <>
+                  <Sparkles className="w-5 h-5 mr-2" />
+                  ကိုက်ညီသော ပုံများ ဖန်တီးပါ
+                </>
+              )}
+            </Button>
+          )}
         </div>
       </CardContent>
     </Card>

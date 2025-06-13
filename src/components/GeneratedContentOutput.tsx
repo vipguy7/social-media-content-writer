@@ -1,15 +1,16 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Copy, Download, FileText } from 'lucide-react';
+import { Copy, Download, FileText, Sparkles } from 'lucide-react';
 
 interface GeneratedContentOutputProps {
   content: string[];
+  images?: string[];
   onCopy: (content: string) => void;
   onExportAll: () => void;
 }
 
-const GeneratedContentOutput = ({ content, onCopy, onExportAll }: GeneratedContentOutputProps) => {
+const GeneratedContentOutput = ({ content, images = [], onCopy, onExportAll }: GeneratedContentOutputProps) => {
   if (content.length === 0) return null;
 
   return (
@@ -21,7 +22,7 @@ const GeneratedContentOutput = ({ content, onCopy, onExportAll }: GeneratedConte
             <div>
               <CardTitle className="flex items-center gap-2">
                 <FileText className="w-5 h-5 text-myanmar-red" />
-                ဖန်တီးပြီး ကွန်တင့်
+               ကဲ..ပိုစ့်ကို ရေးပြီးပါပြီခင်ဗျ. 
               </CardTitle>
               <CardDescription>
                 အသုံးပြုရန် အဆင်သင့် ပရော်ဖက်ရှင်နယ် ရွေးချယ်စရာ {content.length} မျိုး
@@ -66,6 +67,55 @@ const GeneratedContentOutput = ({ content, onCopy, onExportAll }: GeneratedConte
           ))}
         </CardContent>
       </Card>
+
+      {/* Generated Images */}
+      {images.length > 0 && (
+        <Card className="glass-card animate-slide-up">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-myanmar-red" />
+              ဖန်တီးပြီး ဂရပ်ဖစ်များ
+            </CardTitle>
+            <CardDescription>
+              ဆိုရှယ်မီဒီယာအတွက် အဆင်သင့် ပရော်ဖက်ရှင်နယ် ဂရပ်ဖစ် {images.length} ခု
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {images.map((image, index) => (
+                <div
+                  key={index}
+                  className="relative group overflow-hidden rounded-lg border border-slate-200 hover:shadow-lg transition-shadow"
+                >
+                  <img
+                    src={image}
+                    alt={`ဖန်တီးပြီး ဂရပ်ဖစ် ${index + 1}`}
+                    className="w-full h-48 object-cover"
+                  />
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <Button
+                      onClick={() => {
+                        const link = document.createElement('a');
+                        link.href = image;
+                        link.download = `myanmar-graphic-${index + 1}.png`;
+                        link.click();
+                      }}
+                      variant="secondary"
+                      size="sm"
+                    >
+                      <Download className="w-4 h-4 mr-2" />
+                      ဒေါင်းလုဒ်
+                    </Button>
+                  </div>
+                  <div className="absolute top-2 left-2 bg-white/90 text-xs px-2 py-1 rounded">
+                    ဂရပ်ဖစ် {index + 1}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 };
