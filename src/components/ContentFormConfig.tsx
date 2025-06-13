@@ -266,10 +266,12 @@ const ContentFormConfig = ({
                   alt="Generating content animation..."
                   className="h-12 w-auto mx-auto mb-2"
                 />
-               ရေးနေပါပြီ ခင်ဗျာ..ခဏလေးစိတ်ရှည်ပေးပါ.မကြာပါဘူး...
+                <span>ရေးနေပါပြီ ခင်ဗျာ..ခဏလေးစိတ်ရှည်ပေးပါ.မကြာပါဘူး...</span>
               </div>
+            ) : (
+              <>
                 <Wand2 className="w-5 h-5 mr-2" />
-                 ပိုစ့်ရေးပါ
+                ပိုစ့်ရေးပါ
               </>
             )}
           </Button>
