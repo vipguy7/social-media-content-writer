@@ -22,7 +22,7 @@
     --accent-foreground: rgb(91, 140, 153);
     --destructive: #bbcde8;
     --destructive-foreground: #e3d8c6;
-    --border: hsl(214, 19%, 7%);
+    --border: rgb(14, 17, 21)255.686);
     --input:rgb(9, 10, 12);
     --ring: rgba(17, 19, 19, 0.8);
     --radius: 10px; /* Kept existing radius */
@@ -30,11 +30,11 @@
   }
 
   .dark {
-    --background: rgba(23, 22, 21, 0.815);
-    --foreground: rgb(84, 83, 83);
+    --background: rgb(23, 22, 21);
+    --foreground: rgb(133, 130, 130);
     --card:rgb(53, 88, 97);
     --card-foreground: rgb(33, 40, 46);
-    --popover: rgb(223, 227, 235);
+    --popover: rgb(164, 167, 172);
     --popover-foreground: rgb(43, 98, 180);
     --primary: rgb(170, 170, 170);
     --primary-foreground: #040404;
@@ -47,8 +47,8 @@
     --destructive: rgb(106, 6, 136);
     --destructive-foreground: rgb(230, 52, 250);
     --border: rgb(30, 31, 31);
-    --input: rgba(63, 62, 62, 0.845);
-    --ring: rgb(86, 84, 84);
+    --input: rgb(63, 62, 62);
+    --ring: rgb(34, 34, 34);
   }
 }
 
