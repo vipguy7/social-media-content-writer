@@ -13,7 +13,7 @@ export const contentFrameworks = [
       "Desire: Show how your product solves their needs or triggers aspirations.",
       "Action: Close with a strong call-to-action (CTA) in Burmese context."
     ],
-    sample: "ဥပမာ: သတင်းစကားဖွင့်ရာမှ စိတ်ဝင်စားစေပြီး၊ ထုတ်ကုန်အကျိုးကျေးဇူးကို ဖော်ပြ၍၊ ဝယ်ယူရန် တိုင်ကြားပါ။"
+    sample: "ဥပမာ:ပိုစ့် intro တွင် စိတ်ဝင်စားစေပြီး၊ ထုတ်ကုန်အကျိုးကျေးဇူးကို ဖော်ပြ၍၊ ဝယ်ယူရန်တိုက်တွန်းသည့် ရေးသားမှုပုံစံ။"
   },
   {
     title: "PAS Framework",
@@ -23,7 +23,7 @@ export const contentFrameworks = [
       "Agitation: Illustrate the impact or emotional cost.",
       "Solution: Present your product/service as the best fix."
     ],
-    sample: "ဥပမာ: အသုံးပြုမြန်သော laundry service မရှိလို့ အချိန်ကုန်နေရင်... (agitate) ... ကျွန်ုပ်တို့ 24hr laundry solutions ကို စမ်းကြည့်ပါ။"
+    sample: "ဥပမာ: laundry service မရှိလို့ ကိုယ်တိုင်လုပ်ရတာ အချိန်ကုန်နေရင်... (agitate) ... ကျွန်ုပ်တို့ 24hr laundry solutions ကို စမ်းကြည့်ပါ။"
   },
   {
     title: "BAB (Before-After-Bridge)",
@@ -33,7 +33,7 @@ export const contentFrameworks = [
       "After: Paint the improved scenario.",
       "Bridge: Explain how your offering is the missing link."
     ],
-    sample: "ဥပမာ: ပင်ပန်းစရာ အလုပ်များထားရှိရင်း... (before) ... အားလပ်ချိန်မှာ အားလပ်အောင် နေမယ် (after) ... ကျွန်ုပ်တို့ service နဲ့ ဒီအခြေအနေကိုရယူပါ။"
+    sample: "ဥပမာ: စိတ်ပင်ပန်းပြီး အလုပ်တွေများနေရင်.. (before) ... ကိုယ့်အားလပ်ချိန်ကို ပိုင်ဆိုင်နိုင်အောင် (after) ... ကျွန်ုပ်တို့ service ကိုရယူပါ။"
   },
 ];
 
@@ -47,7 +47,7 @@ export const platformBestPractices = [
           "Short, catchy intros – avoid walls of text.",
           "Local words/emojis for relatability.",
           "Include a question or CTA.",
-          "Use culturally resonant hashtags (#မြန်မာထောက်ခံသည်, etc)."
+          "Use culturally resonant hashtags (#မြန်မာ, etc)."
         ]
       },
       { 
@@ -78,7 +78,7 @@ export const platformBestPractices = [
 ];
 
 export const culturalContextGuidelines = [
-  "Adapt CTA to polite Myanmar forms (e.g., 'စမ္းကြည့်ပါ', 'ဝယ်ယူလိုက်ပါ', 'အကြံပြုပါ').",
+  "Adapt CTA to polite Myanmar forms (e.g., 'ကြည့်ပါ', 'ဝယ်ယူလိုက်ပါ', 'အကြံပြုပါ').",
   "Reference Myanmar seasonal holidays/events when possible.",
   "Combine both traditional values and modern aspirations in language.",
   "Avoid sensitive topics or political issues.",
