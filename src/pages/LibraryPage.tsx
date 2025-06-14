@@ -8,15 +8,17 @@ import { useNavigate } from "react-router-dom";
 
 const LibraryPage = () => {
   const { signIn, isSignedIn, listContentFiles, downloadContent } = useGoogleDrive();
-  const [files, setFiles] = useState<any[]>([]);
+  type DriveFile = { id: string; name: string };
+  const [files, setFiles] = useState<DriveFile[]>([]);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isSignedIn) {
       setLoading(true);
       listContentFiles().then(setFiles).finally(() => setLoading(false));
     }
-  }, [isSignedIn]);
+  }, [isSignedIn, listContentFiles]);
 
   return (
     <div className="min-h-screen bg-[#f1f7fb] py-12 px-4">
@@ -30,7 +32,7 @@ const LibraryPage = () => {
             <Save className="w-5 h-5 mr-2" /> Sign in with Google Drive
           </Button>
         ) : (
-          <>
+          <div>
             <Button
               onClick={() => window.location.reload()}
               className="mb-4 float-right"
@@ -58,13 +60,13 @@ const LibraryPage = () => {
                 ))
               )}
             </div>
-          </>
+            <div className="mt-8 text-center">
+              <Button variant="secondary" onClick={() => navigate("/")}>
+                ← မူလစာမျက်နှာသို့
+              </Button>
+            </div>
+          </div>
         )}
-        <div className="mt-8 text-center">
-          <Button variant="secondary" onClick={() => useNavigate()("/")}>
-            ← မူလစာမျက်နှာသို့
-          </Button>
-        </div>
       </div>
     </div>
   );
