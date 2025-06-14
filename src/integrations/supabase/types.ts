@@ -53,6 +53,36 @@ export type Database = {
         }
         Relationships: []
       }
+      generated_content_history: {
+        Row: {
+          created_at: string | null
+          data: Json | null
+          generated_text: string | null
+          id: number
+          inserted_at: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          data?: Json | null
+          generated_text?: string | null
+          id?: number
+          inserted_at?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          data?: Json | null
+          generated_text?: string | null
+          id?: number
+          inserted_at?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -109,7 +139,24 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      count_total_users: {
+        Args: Record<PropertyKey, never>
+        Returns: number
+      }
+      custom_access_token_hook: {
+        Args: { event: Json }
+        Returns: Json
+      }
+      delete_old_generated_content: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      update_user_profile: {
+        Args:
+          | Record<PropertyKey, never>
+          | { user_id: number; new_username: string; new_email: string }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never

@@ -9,6 +9,7 @@ import ResultsPanel from '@/components/ResultsPanel';
 import ErrorDisplay from '@/components/ErrorDisplay';
 import FloatingActionButton from '@/components/FloatingActionButton';
 import { ContentFormData, QAMetrics, MarketingInsights } from '@/types/content';
+import KnowledgeBasePanel from '@/components/KnowledgeBasePanel';
 
 const Index = () => {
   const { toast } = useToast();
@@ -163,6 +164,11 @@ const Index = () => {
       <Header />
       
       <main className="container mx-auto px-4 py-12 space-y-12">
+        {/* Add Knowledge Base Panel at top for easy access */}
+        <div className="mb-8">
+          <KnowledgeBasePanel />
+        </div>
+
         <HeroSection />
 
         <ErrorDisplay error={error} />
@@ -189,7 +195,6 @@ const Index = () => {
           </div>
         </div>
       </main>
-
       <FloatingActionButton
         onClick={handleGenerateContent}
         isLoading={isLoading}
