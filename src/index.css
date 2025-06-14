@@ -30,11 +30,11 @@
   }
 
   .dark {
-    --background: rgb(195, 189, 175);
-    --foreground: rgb(141, 140, 140);
-    --card:rgb(107, 172, 190);
+    --background: rgb(53, 52, 50);
+    --foreground: rgb(181, 180, 180);
+    --card:rgb(53, 88, 97);
     --card-foreground: rgb(217, 218, 219);
-    --popover: rgb(156, 161, 169);
+    --popover: rgb(107, 109, 113);
     --popover-foreground: rgba(43, 97, 180, 0.532);
     --primary: rgb(33, 34, 34);
     --primary-foreground: #757474;
@@ -59,7 +59,7 @@
 
   body {
     @apply bg-background text-foreground font-myanmar;
-    line-height: 1.6;
+    line-height: 1.8;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -83,9 +83,9 @@
   }
 
   .glass-morphism {
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(10px);
     background: rgb(178, 178, 178);
-    border: 1px solid rgb(209, 213, 175);
+    border: 2px solid rgb(56, 56, 56);
   }
 }
 
