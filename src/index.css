@@ -8,8 +8,8 @@
   :root {
     --background: rgb(180, 178, 185);
     --foreground: rgb(44, 46, 46);
-    --card: rgba(25, 116, 146, 0.812);
-    --card-foreground: rgba(24, 25, 26, 0.942);
+    --card: rgb(25, 116, 146);
+    --card-foreground: rgb(24, 25, 26);
     --popover: rgb(71, 154, 181);
     --popover-foreground: rgb(20, 39, 42);
     --primary: rgba(24, 145, 185, 0.779);
@@ -83,7 +83,8 @@
   }
 
   .glass-morphism {
-    backdrop-filter: blur(1px);
+    background: #e5e7eb;
+    border: 4px solid #d1d5db;
     background: rgba(21, 20, 20, 0.892);
     border: 4px solid rgb(120, 118, 118);
   }
