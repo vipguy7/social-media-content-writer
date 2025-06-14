@@ -7,12 +7,12 @@
 @layer base {
   :root {
     --background: rgb(180, 178, 185);
-    --foreground: rgb(16, 17, 17);
-    --card: rgb(25, 116, 146);
-    --card-foreground: rgba(24, 25, 26, 0.242);
-    --popover: rgba(71, 154, 181, 0.33);
+    --foreground: rgb(44, 46, 46);
+    --card: rgba(25, 116, 146, 0.812);
+    --card-foreground: rgba(24, 25, 26, 0.942);
+    --popover: rgb(71, 154, 181);
     --popover-foreground: rgb(20, 39, 42);
-    --primary: rgb(24, 145, 185);
+    --primary: rgba(24, 145, 185, 0.779);
     --primary-foreground: rgb(227, 216, 198);
     --secondary:rgb(18, 154, 199);
     --secondary-foreground: rgb(85, 112, 163);
@@ -24,18 +24,18 @@
     --destructive-foreground: #e3d8c6;
     --border: hsl(214, 19%, 7%);
     --input:rgb(9, 10, 12);
-    --ring: rgb(38, 187, 240);
+    --ring: rgba(17, 19, 19, 0.8);
     --radius: 10px; /* Kept existing radius */
 
   }
 
   .dark {
-    --background: rgb(53, 52, 50);
-    --foreground: rgb(181, 180, 180);
+    --background: rgba(23, 22, 21, 0.815);
+    --foreground: rgb(84, 83, 83);
     --card:rgb(53, 88, 97);
-    --card-foreground: rgb(217, 218, 219);
-    --popover: rgb(107, 109, 113);
-    --popover-foreground: rgba(43, 97, 180, 0.532);
+    --card-foreground: rgb(33, 40, 46);
+    --popover: rgb(223, 227, 235);
+    --popover-foreground: rgb(43, 98, 180);
     --primary: rgb(170, 170, 170);
     --primary-foreground: #040404;
     --secondary: rgb(82, 118, 130);
