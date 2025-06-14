@@ -9,8 +9,8 @@
     --background: rgb(180, 178, 185);
     --foreground: rgb(16, 17, 17);
     --card: rgb(25, 116, 146);
-    --card-foreground: rgb(172, 180, 186);
-    --popover: rgb(71, 154, 181);
+    --card-foreground: rgba(24, 25, 26, 0.242);
+    --popover: rgba(71, 154, 181, 0.33);
     --popover-foreground: rgb(20, 39, 42);
     --primary: rgb(24, 145, 185);
     --primary-foreground: rgb(227, 216, 198);
