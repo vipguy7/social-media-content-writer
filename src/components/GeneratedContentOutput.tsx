@@ -58,10 +58,10 @@ const GeneratedContentOutput = ({ content, onCopy, onExportAll, onSave }: Genera
             <div>
               <CardTitle className="flex items-center gap-2">
                 <FileText className="w-5 h-5 text-myanmar-red" />
-               ကဲ..ပိုစ့်ကို ရေးပြီးပါပြီခင်ဗျ. 
+               ရေးပြီးပါပြီ
               </CardTitle>
               <CardDescription>
-                အသုံးပြုရန် အဆင့်သင့် ပရော်ဖက်ရှင်နယ် ရွေးချယ်စရာ {content.length} မျိုး
+                အဆင့်သင့် အသုံးပြုရန် ပိုစ့် {content.length} မျိုး
               </CardDescription>
             </div>
             <div className="flex gap-2">

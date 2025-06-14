@@ -14,7 +14,7 @@ const KnowledgeBasePanel = () => {
           Content Frameworks & Cultural Tips
         </CardTitle>
         <CardDescription>
-          <span className="font-bold text-blue-500">ကုန်ကြမ်းမဟုတ်သော</span> တောင်သူ၏အိုင်ဒီယာနှင့် AI ကျွမ်းကျင်မှုပေါင်းစပ်မှု!
+          <span className="font-bold text-blue-500">မိမိလုပ်ငန်းကို အမြန်ဆုံးလူသိများစေဖို့ </span> ရင်းနှီးပြီးသား မြန်မာစကားအသုံးအနှုန်းများနှင့် AI ပေါင်းစပ်မှု!
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-8">

@@ -44,7 +44,8 @@ const MarketingInsights = ({ insights }: MarketingInsightsProps) => {
           AI မားကတ်တင်း ခွဲခြမ်းစိတ်ဖြာမှု
         </CardTitle>
         <CardDescription>
-          သင့်ပရိသတ်နှင့် ထုတ်ကုန်အတွက် အဆင့်မြင့် မားကတ်တင်း ထိုးထွင်းမြင်မှုများ
+          မိမိလုပ်ငန်းကို အမြန်ဆုံးလူသိများစေဖို့ AI မားကတ်တင်း ခွဲခြမ်းစိတ်ဖြာမှုများကို လေ့လာပါ။
+          <span className="font-bold text-blue-500"> ပရိသတ်ကို နားလည်ပြီး</span> မိမိလုပ်ငန်းအတွက် အထူးသင့်လျော်သော မားကတ်တင်း ဗျူဟာများ ဖန်တီးပါ။
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">

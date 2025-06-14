@@ -45,7 +45,7 @@ const QualityAssurance = ({ metrics }: QualityAssuranceProps) => {
           အရည်အသွေး စစ်ဆေးမှု
         </CardTitle>
         <CardDescription className="myanmar-text">
-          AI စွမ်းအင်ဖြင့် ကွန်တင့် အရည်အသွေး အကဲဖြတ်ချက်
+          ပိုစ့် အရေးအသား အကဲဖြတ်ချက်
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-8">
@@ -101,8 +101,8 @@ const QualityAssurance = ({ metrics }: QualityAssuranceProps) => {
                 အကြံပြုချက်
               </h4>
               <p className="text-sm text-myanmar-gray myanmar-text leading-relaxed">
-                ၈၅% နှင့်အထက် ရမှတ်များသည် ထုတ်ဝေရန် အဆင်သင့် အရည်အသွေးမြင့် ကွန်တင့်များ ဖြစ်ပါသည်။ 
-                နိမ့်သော ရမှတ်များသည် မွမ်းမံရန် လိုအပ်သော နေရာများကို ညွှန်ပြပါသည်။
+                ၈၅% နှင့်အထက် ရမှတ်များသည် အွန်လိုင်းတွင် အသုံးပြုရန် အရည်အသွေး ပြည့်မှီသော ပိုစ့်ဖြစ်ပါသည်။ 
+                ရမှတ် ၆၀% အောက်ကို ရောက်ရှိခဲ့လျှင် မွမ်းမံရန် လိုအပ်သော Key-point များဖြစ်သည်။
               </p>
             </div>
           </div>

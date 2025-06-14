@@ -6,12 +6,12 @@
 
 @layer base {
   :root {
-    --background: rgb(25, 23, 29);
-    --foreground: rgb(4, 81, 122);
+    --background: rgb(180, 178, 185);
+    --foreground: rgb(16, 17, 17);
     --card: rgb(25, 116, 146);
     --card-foreground: rgb(172, 180, 186);
-    --popover: 255 255 255;
-    --popover-foreground: rgb(187, 205, 232);
+    --popover: rgb(71, 154, 181);
+    --popover-foreground: rgb(20, 39, 42);
     --primary: rgb(24, 145, 185);
     --primary-foreground: rgb(227, 216, 198);
     --secondary:rgb(18, 154, 199);
@@ -36,8 +36,8 @@
     --card-foreground: rgb(217, 218, 219);
     --popover: rgb(107, 109, 113);
     --popover-foreground: rgba(43, 97, 180, 0.532);
-    --primary: rgb(33, 34, 34);
-    --primary-foreground: #757474;
+    --primary: rgb(170, 170, 170);
+    --primary-foreground: #040404;
     --secondary: rgb(82, 118, 130);
     --secondary-foreground: rgb(153, 152, 151);
     --muted: rgb(15, 15, 15);
@@ -46,7 +46,7 @@
     --accent-foreground: rgb(203, 206, 207);
     --destructive: rgb(106, 6, 136);
     --destructive-foreground: rgb(230, 52, 250);
-    --border: rgba(30, 31, 31, 0.897);
+    --border: rgb(30, 31, 31);
     --input: rgba(63, 62, 62, 0.845);
     --ring: rgb(86, 84, 84);
   }
@@ -65,7 +65,7 @@
   }
 
   .font-english {
-    @apply font-inter;
+    font-family: 'Inter', sans-serif;
   }
 
   .font-myanmar {
@@ -85,7 +85,7 @@
   .glass-morphism {
     backdrop-filter: blur(10px);
     background: rgb(178, 178, 178);
-    border: 2px solid rgb(56, 56, 56);
+    border: 4px solid rgb(56, 56, 56);
   }
 }
 
