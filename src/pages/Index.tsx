@@ -10,6 +10,8 @@ import ErrorDisplay from '@/components/ErrorDisplay';
 import FloatingActionButton from '@/components/FloatingActionButton';
 import { ContentFormData, QAMetrics, MarketingInsights } from '@/types/content';
 import KnowledgeBasePanel from '@/components/KnowledgeBasePanel';
+import { Book, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   const { toast } = useToast();
@@ -162,9 +164,29 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       <Header />
-      
+
       <main className="container mx-auto px-4 py-12 space-y-12">
         <HeroSection />
+
+        {/* Navigation Buttons for Knowledge Base and Library */}
+        <div className="flex flex-col md:flex-row gap-6 justify-center mt-4 mb-8 w-full max-w-3xl mx-auto">
+          <Link
+            to="/knowledge-base"
+            className="flex-1 flex items-center justify-center gap-4 bg-gradient-to-r from-[#fbe7ee] to-[#e7f5fc] border-2 border-pink-300 hover:border-pink-400 rounded-2xl p-6 shadow hover:scale-[1.03] transition group"
+            aria-label="Go to Content Strategy Knowledge Base"
+          >
+            <Sparkles className="w-8 h-8 text-pink-500 drop-shadow-glow group-hover:animate-bounce" />
+            <span className="text-xl font-bold text-pink-600 capitalize">Content Strategy Knowledge Base</span>
+          </Link>
+          <Link
+            to="/library"
+            className="flex-1 flex items-center justify-center gap-4 bg-gradient-to-r from-[#e4eafc] to-[#fdf6ec] border-2 border-blue-300 hover:border-blue-400 rounded-2xl p-6 shadow hover:scale-[1.03] transition group"
+            aria-label="Go to My Personal Content Library"
+          >
+            <Book className="w-8 h-8 text-blue-600 drop-shadow-glow group-hover:animate-bounce" />
+            <span className="text-xl font-bold text-blue-700 capitalize">My Personal Content Library</span>
+          </Link>
+        </div>
 
         <ErrorDisplay error={error} />
 
