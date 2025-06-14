@@ -1,17 +1,15 @@
-
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Save, Book } from "lucide-react";
 import { useGoogleDrive } from "@/hooks/useGoogleDrive";
 import { Card } from "@/components/ui/card";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const LibraryPage = () => {
   const { signIn, isSignedIn, listContentFiles, downloadContent } = useGoogleDrive();
   type DriveFile = { id: string; name: string };
   const [files, setFiles] = useState<DriveFile[]>([]);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (isSignedIn) {
@@ -61,8 +59,8 @@ const LibraryPage = () => {
               )}
             </div>
             <div className="mt-8 text-center">
-              <Button variant="secondary" onClick={() => navigate("/")}>
-                ← မူလစာမျက်နှာသို့
+              <Button asChild variant="secondary">
+                <Link to="/">← မူလစာမျက်နှာသို့</Link>
               </Button>
             </div>
           </div>
