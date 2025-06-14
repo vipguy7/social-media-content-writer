@@ -54,11 +54,13 @@
 
 @layer base {
   * {
-    @apply border-border;
+    border-color: var(--border);
   }
 
   body {
-    @apply bg-background text-foreground font-myanmar;
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: 'Noto Sans Myanmar', 'Pyidaungsu', sans-serif;
     line-height: 1.8;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -85,8 +87,8 @@
   .glass-morphism {
     background: #e5e7eb;
     border: 4px solid #d1d5db;
-    background: rgba(21, 20, 20, 0.892);
-    border: 4px solid rgb(120, 118, 118);
+    background: rgb(21, 20, 20);
+    border: 4px solid rgb(59, 58, 58);
   }
 }
 
