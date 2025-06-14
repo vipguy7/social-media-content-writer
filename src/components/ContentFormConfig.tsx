@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -34,31 +33,41 @@ const ContentFormConfig = ({
   return (
     <Card className="glass-card animate-fade-in">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Wand2 className="w-5 h-5 text-myanmar-red" />
-          အရေးအသား ဖွဲ့စည်းမှု
+        <CardTitle className="flex items-center gap-2 text-xl">
+          <Wand2 className="w-7 h-7 text-myanmar-red drop-shadow-glow" />
+          <span>ပိုစ့်အမျိုးအစားရွေးပါ၊ ပိုမိုတော့ အံ့သြဖွယ် <span className="text-myanmar-red">AI</span> ဖန်တီးမှု!</span>
         </CardTitle>
-        <CardDescription>
-        ပိုစ့်ရေးဖို့အတွက် အချက်အလက်များ ထည့်သွင်းရွေးချယ်ပါ.
+        <CardDescription className="font-medium text-base">
+          သင့် Facebook ပိုစ့် သို့မဟုတ် TikTok ဗီဒီယို စကားပြောဆိုမှုအတွက် အချက်အလက်များ ဖြည့်ဆိုပြီး စတင်ရေးသားပါ။
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Platform and Content Type */}
         <div className="grid md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="platform">ပလပ်ဖောင်း</Label>
+            <Label htmlFor="platform">ပလပ်ဖောင်း 
+              <span className="ml-2 rounded bg-blue-100 px-2 py-0.5 text-xs text-blue-700 font-semibold">NEW</span>
+            </Label>
             <Select value={formData.platform} onValueChange={(value) => updateFormData({ platform: value })}>
               <SelectTrigger>
                 <SelectValue placeholder="ပလပ်ဖောင်း ရွေးချယ်ပါ" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="facebook">Facebook</SelectItem>
-                <SelectItem value="instagram">Instagram</SelectItem>
-                <SelectItem value="twitter">Twitter</SelectItem>
-                <SelectItem value="linkedin">LinkedIn</SelectItem>
-                <SelectItem value="tiktok">TikTok</SelectItem>
+                <SelectItem value="facebook">
+                  <span className="flex items-center gap-2">
+                    <img src="/facebook_logo.png" alt="Facebook" className="w-4 h-4 inline-block"/> Facebook (ပုံမှန် ပိုစ့်)
+                  </span>
+                </SelectItem>
+                <SelectItem value="tiktok">
+                  <span className="flex items-center gap-2">
+                    <img src="/tiktok_logo.png" alt="TikTok" className="w-4 h-4 inline-block"/> TikTok (ဗီဒီယို Script)
+                  </span>
+                </SelectItem>
               </SelectContent>
             </Select>
+            <p className="text-xs text-muted-foreground mt-1">
+              Facebook: ပုံမှန် ပိုစ့် အတွက် ချစ်ခင်ဖွယ် အကြောင်းအရာ။ TikTok: ဗီဒီယိုအတွက် စကားပြောနည်း script!
+            </p>
           </div>
 
           <div className="space-y-2">
