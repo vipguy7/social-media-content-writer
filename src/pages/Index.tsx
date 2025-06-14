@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/integrations/supabase/client';
 import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
 import ContentGeneratorForm from '@/components/ContentGeneratorForm';
@@ -9,7 +10,6 @@ import ResultsPanel from '@/components/ResultsPanel';
 import ErrorDisplay from '@/components/ErrorDisplay';
 import FloatingActionButton from '@/components/FloatingActionButton';
 import { ContentFormData, QAMetrics, MarketingInsights } from '@/types/content';
-import KnowledgeBasePanel from '@/components/KnowledgeBasePanel';
 import { Book, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -114,6 +114,38 @@ const Index = () => {
     }
   };
 
+  const handleSaveContent = async (selectedContent: string[], title: string) => {
+    if (!user) return;
+    
+    try {
+      const contentToSave = selectedContent.join('\n\n---\n\n');
+      
+      const { error } = await supabase
+        .from('generated_content')
+        .insert({
+          user_id: user.id,
+          title,
+          content: contentToSave,
+          platform: formData.platform,
+          content_type: formData.contentType
+        });
+
+      if (error) throw error;
+
+      toast({
+        title: "Content saved successfully!",
+        description: `${selectedContent.length} variation(s) saved to your library`,
+      });
+    } catch (err) {
+      console.error('Error saving content:', err);
+      toast({
+        variant: "destructive",
+        title: "Save failed",
+        description: "Failed to save content to your library",
+      });
+    }
+  };
+
   const copyToClipboard = async (content: string) => {
     try {
       await navigator.clipboard.writeText(content);
@@ -208,6 +240,7 @@ const Index = () => {
               generatedContent={generatedContent}
               onCopy={copyToClipboard}
               onExportAll={exportAllContent}
+              onSave={handleSaveContent}
             />
           </div>
         </div>

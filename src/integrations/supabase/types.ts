@@ -53,6 +53,36 @@ export type Database = {
         }
         Relationships: []
       }
+      generated_content: {
+        Row: {
+          content: string
+          content_type: string | null
+          created_at: string
+          id: string
+          platform: string | null
+          title: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          content_type?: string | null
+          created_at?: string
+          id?: string
+          platform?: string | null
+          title: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          content_type?: string | null
+          created_at?: string
+          id?: string
+          platform?: string | null
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       generated_content_history: {
         Row: {
           created_at: string | null
