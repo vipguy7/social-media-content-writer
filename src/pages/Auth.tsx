@@ -21,16 +21,18 @@ const Auth = () => {
       }
     };
     checkUser();
+    // Set dark mode by default for the auth page
+    document.documentElement.classList.add('dark');
   }, [navigate]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4">
-      <Card className="w-full max-w-md animate-fade-in rounded-2xl shadow-2xl shadow-gray-200/40 dark:shadow-black/20">
+    <div className="min-h-screen flex items-center justify-center bg-transparent px-4">
+      <Card className="w-full max-w-md animate-fade-in rounded-2xl glass-card gradient-border">
         <CardHeader className="text-center p-8">
-          <CardTitle className="text-3xl font-bold tracking-tight text-foreground">
+          <CardTitle className="text-h1 font-bold tracking-tight bg-gradient-to-br from-white to-slate-400 bg-clip-text text-transparent">
             Myanmar Content Generator
           </CardTitle>
-          <CardDescription className="pt-2 font-myanmar">
+          <CardDescription className="pt-2 font-myanmar text-slate-400">
             မြန်မာ ဆိုရှယ်မီဒီယာ ကွန်တင့် ဖန်တီးသူ
           </CardDescription>
         </CardHeader>

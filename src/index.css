@@ -2,77 +2,77 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Modern & Adorable Theme */
+/* Modern & Sleek Theme */
 
 @layer base {
   :root {
-    --background: rgb(249, 250, 251);
-    --foreground: rgb(17, 24, 39);
+    --background: rgb(245, 245, 245);
+    --foreground: rgb(10, 10, 10);
 
     --card: rgb(255, 255, 255);
-    --card-foreground: rgb(17, 24, 39);
+    --card-foreground: rgb(10, 10, 10);
 
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    /* Primary theme: Adorable Pink/Rose */
-    --primary: rgb(234, 88, 122);
+    /* Primary theme: Sleek Blue */
+    --primary: rgb(59, 130, 246); /* blue-500 */
     --primary-foreground: rgb(255, 255, 255);
     
-    --secondary: rgb(243, 244, 246);
-    --secondary-foreground: rgb(55, 65, 81);
+    --secondary: rgb(243, 244, 246); /* gray-100 */
+    --secondary-foreground: rgb(17, 24, 39); /* gray-900 */
 
     --muted: rgb(243, 244, 246);
-    --muted-foreground: rgb(107, 114, 128);
+    --muted-foreground: rgb(107, 114, 128); /* gray-500 */
 
-    --accent: rgb(56, 189, 248);
+    --accent: rgb(96, 165, 250); /* blue-400 */
     --accent-foreground: rgb(17, 24, 39);
 
-    --destructive: rgb(239, 68, 68);
+    --destructive: rgb(239, 68, 68); /* red-500 */
     --destructive-foreground: rgb(255, 255, 255);
 
-    --border: rgb(229, 231, 235);
+    --border: rgb(229, 231, 235); /* gray-200 */
     --input: rgb(255, 255, 255);
-    --ring: rgb(234, 88, 122);
+    --ring: rgb(59, 130, 246);
     --radius: 12px;
     
-    --adorable-pink: rgb(234, 88, 122);
-    --adorable-purple: rgb(192, 132, 252);
-    --adorable-shadow: 0 4px 14px 0 rgba(234, 88, 122, 0.15), 0 1px 3px 0 rgba(0,0,0,0.07);
+    --futuristic-glow: 0 4px 14px 0 rgba(59, 130, 246, 0.15), 0 1px 3px 0 rgba(0,0,0,0.07);
+    --futuristic-cyan: rgb(22, 163, 74);
+    --futuristic-purple: rgb(139, 92, 246);
   }
 
   .dark {
-    --background: rgb(17, 24, 39);
-    --foreground: rgb(229, 231, 235);
+    --background: rgb(3, 7, 18); /* slate-950 */
+    --foreground: rgb(226, 232, 240); /* slate-200 */
 
-    --card: rgb(31, 41, 55);
-    --card-foreground: rgb(229, 231, 235);
+    --card: rgb(15, 23, 42); /* slate-900 */
+    --card-foreground: rgb(226, 232, 240);
 
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: rgb(251, 146, 169);
-    --primary-foreground: rgb(17, 24, 39);
+    --primary: rgb(96, 165, 250); /* blue-400 */
+    --primary-foreground: rgb(3, 7, 18);
     
-    --secondary: rgb(55, 65, 81);
-    --secondary-foreground: rgb(229, 231, 235);
+    --secondary: rgb(30, 41, 59); /* slate-800 */
+    --secondary-foreground: rgb(226, 232, 240);
 
-    --muted: rgb(55, 65, 81);
-    --muted-foreground: rgb(156, 163, 175);
+    --muted: rgb(30, 41, 59);
+    --muted-foreground: rgb(148, 163, 184); /* slate-400 */
 
-    --accent: rgb(125, 211, 252);
-    --accent-foreground: rgb(17, 24, 39);
+    --accent: rgb(29, 78, 216); /* blue-700 */
+    --accent-foreground: rgb(226, 232, 240);
 
-    --destructive: rgb(248, 113, 113);
-    --destructive-foreground: rgb(17, 24, 39);
+    --destructive: rgb(220, 38, 38); /* red-600 */
+    --destructive-foreground: rgb(226, 232, 240);
 
-    --border: rgb(55, 65, 81);
-    --input: rgb(55, 65, 81);
-    --ring: rgb(251, 146, 169);
+    --border: rgb(51, 65, 85); /* slate-700 */
+    --input: rgb(30, 41, 59);
+    --ring: rgb(96, 165, 250);
 
-    --adorable-pink: rgb(251, 146, 169);
-    --adorable-purple: rgb(209, 173, 255);
-    --adorable-shadow: 0 4px 14px 0 rgba(251, 146, 169, 0.2), 0 1px 3px 0 rgba(255,255,255,0.1);
+    --futuristic-glow: 0 4px 20px 0 rgba(96, 165, 250, 0.2), 0 2px 5px 0 rgba(255,255,255,0.1);
+    --futuristic-cyan: rgb(45, 212, 191); /* teal-400 */
+    --futuristic-purple: rgb(167, 139, 250); /* violet-400 */
   }
 }
 
@@ -87,6 +87,12 @@
     line-height: 1.7;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Add futuristic background */
+    background-color: var(--background);
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
   }
   
   .font-english {
@@ -121,21 +127,21 @@
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: var(--radius);
-    box-shadow: var(--adorable-shadow);
+    box-shadow: var(--futuristic-glow);
     transition: box-shadow 0.21s cubic-bezier(.4,0,.2,1), border-color 0.21s cubic-bezier(.4,0,.2,1);
   }
 
   .dark .glass-card {
-    background: hsla(220, 14%, 16%, 0.6);
+    background: hsla(222, 47%, 11%, 0.6);
   }
 
   .glass-card:hover, .glass-card:focus-within {
-    box-shadow: 0 8px 24px 0 rgba(234, 88, 122, 0.22), 0 2px 6px 0 rgba(0,0,0,0.1);
-    border-color: rgba(234, 88, 122, 0.2);
+    box-shadow: 0 8px 24px 0 rgba(96, 165, 250, 0.22), 0 2px 6px 0 rgba(0,0,0,0.1);
+    border-color: rgba(96, 165, 250, 0.2);
   }
 
   .adorable-gradient {
-    background: linear-gradient(108deg, var(--adorable-pink) 0%, var(--adorable-purple) 90%);
+    background: linear-gradient(108deg, var(--futuristic-cyan) 0%, var(--futuristic-purple) 90%);
   }
 
   .gradient-border {
@@ -151,7 +157,7 @@
     z-index: -1;
     margin: -2px;
     border-radius: inherit;
-    background: linear-gradient(108deg, var(--adorable-pink) 0%, var(--adorable-purple) 90%);
+    background: linear-gradient(108deg, var(--futuristic-cyan) 0%, var(--futuristic-purple) 90%);
   }
 
   .hover-scale {

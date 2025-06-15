@@ -144,6 +144,7 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab }: SignUpFormProps) 
             onChange={handlePasswordChange}
             placeholder="စကားဝှက် ထည့်ပါ"
             required
+            className="pr-10"
           />
           <Button
             type="button"
@@ -162,8 +163,8 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab }: SignUpFormProps) 
         {passwordFeedback && (
           <p className={`text-sm mt-1 ${
             passwordStrength === 'Weak' ? 'text-destructive' :
-            passwordStrength === 'Medium' ? 'text-orange-500' :
-            'text-green-500'
+            passwordStrength === 'Medium' ? 'text-yellow-400' :
+            'text-cyan-400'
           }`}>
             {passwordFeedback}
           </p>
