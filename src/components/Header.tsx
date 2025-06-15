@@ -1,57 +1,14 @@
 
-import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { LogOut, User, Sparkles } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
+import { useAppLogo } from '@/hooks/useAppLogo';
 
 const Header = () => {
   const { user, signOut } = useAuth();
   const { toast } = useToast();
-  const [logoUrl, setLogoUrl] = useState<string | null>(null);
-  const [isGeneratingLogo, setIsGeneratingLogo] = useState(false);
-
-  useEffect(() => {
-    // Try to get existing logo from localStorage
-    const savedLogo = localStorage.getItem('app-logo');
-    if (savedLogo) {
-      setLogoUrl(savedLogo);
-    } else {
-      generateLogo();
-    }
-  }, []);
-
-  const generateLogo = async () => {
-    setIsGeneratingLogo(true);
-    try {
-      const response = await fetch(`https://xlowbgltztktrejjifie.supabase.co/functions/v1/generate-logo`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      const data = await response.json();
-      
-      if (data.success && data.image) {
-        setLogoUrl(data.image);
-        localStorage.setItem('app-logo', data.image);
-        toast({
-          title: "လိုဂို အောင်မြင်စွာ ဖန်တီးပြီးပါပြီ!",
-          description: "သင့်အက်ပ်လိုဂို အသစ်ကို ဖန်တီးပေးပြီးပါပြီ",
-        });
-      }
-    } catch (error) {
-      console.error('Logo generation failed:', error);
-      toast({
-        variant: "destructive",
-        title: "လိုဂို ဖန်တီးမှု မအောင်မြင်ပါ",
-        description: "လိုဂို ဖန်တီးရာတွင် အမှားအယွင်း ဖြစ်ပွားခဲ့ပါသည်",
-      });
-    } finally {
-      setIsGeneratingLogo(false);
-    }
-  };
+  const { logoUrl, isGenerating, generateLogo } = useAppLogo();
 
   const handleSignOut = async () => {
     try {
@@ -77,11 +34,17 @@ const Header = () => {
             <img 
               src={logoUrl} 
               alt="Myanmar Content Crafter Logo" 
-              className="w-10 h-10 rounded-lg object-cover shadow-md"
+              className="w-10 h-10 rounded-lg object-cover shadow-md cursor-pointer hover:shadow-lg transition-shadow"
+              onClick={generateLogo}
+              title="Click to regenerate logo"
             />
           ) : (
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-              {isGeneratingLogo ? (
+            <div 
+              className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center cursor-pointer hover:shadow-lg transition-shadow"
+              onClick={generateLogo}
+              title="Click to generate logo"
+            >
+              {isGenerating ? (
                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
               ) : (
                 <Sparkles className="w-5 h-5 text-white" />
