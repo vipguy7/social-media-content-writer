@@ -11,6 +11,7 @@ import NotFound from "./pages/NotFound";
 import KnowledgeBasePage from "./pages/KnowledgeBasePage";
 import LibraryPage from "./pages/LibraryPage";
 import BillingPage from "./pages/BillingPage";
+import ProtectedRoute from "@/components/ProtectedRoute";
 // import AnalyticsPage from "./pages/AnalyticsPage"; // REMOVED
 
 const queryClient = new QueryClient();
@@ -26,7 +27,14 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/knowledge-base" element={<KnowledgeBasePage />} />
             <Route path="/library" element={<LibraryPage />} />
-            <Route path="/billing" element={<BillingPage />} />
+            <Route
+              path="/billing"
+              element={
+                <ProtectedRoute>
+                  <BillingPage />
+                </ProtectedRoute>
+              }
+            />
             {/* Removed Analytics Page Route */}
             <Route path="/auth" element={<Auth />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
@@ -39,4 +47,3 @@ const App = () => (
 );
 
 export default App;
-
