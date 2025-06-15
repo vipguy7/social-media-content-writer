@@ -11,15 +11,16 @@
     --foreground: rgb(20, 30, 58);
     --card: rgb(255, 255, 255);
     --card-foreground: rgb(30, 34, 56);
-    --popover: rgb(255, 255, 255);
-    --popover-foreground: rgb(30, 41, 59);
-    --primary: rgb(43, 91, 180); /* deeper, elegant blue */
+    /* FIX: Use HSL color for popover and popover-foreground */
+    --popover: 0 0% 100%; /* hsl(0, 0%, 100%) = white */
+    --popover-foreground: 222 47% 18%; /* hsl(222, 47%, 18%) */
+    --primary: rgb(43, 91, 180);
     --primary-foreground: rgb(255, 255, 255);
     --secondary: rgb(236, 241, 249);
     --secondary-foreground: rgb(30, 41, 59);
     --muted: rgb(228, 234, 243);
-    --muted-foreground: rgb(84, 104, 134); /* stronger muted text */
-    --accent: rgb(251, 191, 36); /* myanmar-gold */
+    --muted-foreground: rgb(84, 104, 134);
+    --accent: rgb(251, 191, 36);
     --accent-foreground: rgb(24, 21, 0);
     --destructive: rgb(239, 68, 68);
     --destructive-foreground: rgb(255, 255, 255);
@@ -37,8 +38,9 @@
     --foreground: rgb(246, 248, 252);
     --card: rgb(23, 30, 51);
     --card-foreground: rgb(243, 244, 246);
-    --popover: rgb(26, 32, 45);
-    --popover-foreground: rgb(196, 209, 233);
+    /* FIX: Use HSL color for dark mode popover and popover-foreground */
+    --popover: 224 26% 13%; /* hsl(224, 26%, 13%) */
+    --popover-foreground: 213 38% 83%; /* hsl(213, 38%, 83%) */
     --primary: rgb(59, 130, 246);
     --primary-foreground: rgb(255, 255, 255);
     --secondary: rgb(30, 34, 56);
