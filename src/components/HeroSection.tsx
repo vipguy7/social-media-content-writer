@@ -1,4 +1,3 @@
-
 import { Sparkles, Zap, Target } from 'lucide-react';
 
 const HeroSection = () => {
@@ -8,12 +7,12 @@ const HeroSection = () => {
         <div className="p-4 bg-card border rounded-lg animate-float">
           <Sparkles className="w-10 h-10 text-primary" />
         </div>
-        <h1 className="text-5xl md:text-6xl font-bold myanmar-heading bg-gradient-to-r from-foreground via-muted-foreground to-primary bg-clip-text text-solid">
+        <h1 className="text-display myanmar-heading bg-gradient-to-r from-foreground via-muted-foreground to-primary bg-clip-text text-solid text-balance">
           စာရေးလေး
         </h1>
       </div>
       
-      <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto myanmar-text leading-relaxed">
+      <p className="text-h3 text-muted-foreground max-w-4xl mx-auto myanmar-text leading-relaxed text-balance">
        မြန်မာဆိုရှယ်မီဒီယာပိုစ့်တွေရေးဖို့ AI လက်ထောက်စာရေးလေးပါခင်ဗျာ. 
        မြန်မာယဉ်ကျေးမှုနှင့် ကိုက်ညီတဲ့ ပိုစ့်တွေကို အကန့်အသတ်မရှိ ကူညီရေးသားပေးနိုင်ပါတယ်။
       </p>

@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -19,6 +18,16 @@ export default {
 			}
 		},
 		extend: {
+			fontSize: {
+        'display': ['clamp(2.5rem, 1.5rem + 4vw, 3.5rem)', { lineHeight: '1.1', fontWeight: '700' }],
+        'h1': ['clamp(2rem, 1.25rem + 3vw, 3rem)', { lineHeight: '1.2', fontWeight: '700' }],
+        'h2': ['clamp(1.5rem, 1rem + 2vw, 2.25rem)', { lineHeight: '1.3', fontWeight: '600' }],
+        'h3': ['clamp(1.25rem, 1rem + 1vw, 1.75rem)', { lineHeight: '1.4', fontWeight: '600' }],
+        'body-lg': ['1.125rem', { lineHeight: '1.75' }],
+        'body': ['1rem', { lineHeight: '1.75' }],
+        'body-sm': ['0.9rem', { lineHeight: '1.6' }],
+        'caption': ['0.8rem', { lineHeight: '1.5' }],
+      },
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',

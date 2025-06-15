@@ -1,4 +1,3 @@
-
 import { Button } from '@/components/ui/button';
 import { LogOut, User, Sparkles } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
@@ -52,10 +51,10 @@ const Header = () => {
             </div>
           )}
           <div>
-            <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <h1 className="text-lg md:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               Myanmar Content Writer
             </h1>
-            <p className="text-xs text-muted-foreground">မြန်မာအွန်လိုင်းစီးပွားရေးများအတွက် အထူးလုပ်ဆောင်ပေးနိုင်သည့် AI </p>
+            <p className="text-caption md:text-body-sm text-muted-foreground">မြန်မာအွန်လိုင်းစီးပွားရေးများအတွက် အထူးလုပ်ဆောင်ပေးနိုင်သည့် AI </p>
           </div>
         </div>
 
@@ -64,7 +63,7 @@ const Header = () => {
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2 text-sm">
                 <User className="w-4 h-4" />
-                <span className="hidden md:inline text-muted-foreground">
+                <span className="hidden md:inline text-body-sm text-muted-foreground">
                   {user.email}
                 </span>
               </div>

@@ -33,7 +33,7 @@ const ContentFormConfig = ({
   return (
     <Card className="glass-card animate-fade-in">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-xl">
+        <CardTitle className="flex items-center gap-2">
           <Wand2 className="w-7 h-7 text-myanmar-red drop-shadow-glow" />
           <span>ပိုစ့်အမျိုးအစားရွေးပါ၊ </span>
         </CardTitle>
@@ -65,7 +65,7 @@ const ContentFormConfig = ({
                 </SelectItem>
               </SelectContent>
             </Select>
-            <p className="text-xs text-muted-foreground mt-1">
+            <p className="text-caption text-muted-foreground mt-1">
               Facebook ပိုစ့်အတွက် အဆင်သင့်သုံး စာသား ။ TikTok ဗီဒီယိုအတွက် စကားပြောscript!
             </p>
           </div>
@@ -124,7 +124,7 @@ const ContentFormConfig = ({
               placeholder="https://facebook.com/yourpage (ဘရန်းခွဲခြမ်းစိတ်ဖြာမှုအတွက်)"
               className="focus:ring-myanmar-red focus:border-myanmar-red"
             />
-            <p className="text-xs text-muted-foreground">
+            <p className="text-caption text-muted-foreground">
               သင့် Facebook Page လင့်ခ်ကို ထည့်ပါ။ AI သည် သင့်ဘရန်း၏ စာရေးပုံစံ၊ အပြုအမူနှင့် ပရိသတ်တုံ့ပြန်မှုများကို ခွဲခြမ်းစိတ်ဖြာ၍ ပိုမိုက်ညီသော ပိုစ့်များ ဖန်တီးပေးပါမည်။
             </p>
           </div>
@@ -150,7 +150,7 @@ const ContentFormConfig = ({
                 <SelectItem value="neutral">နပုန်းနာမ် (ကျွန်ုပ်၊ ကျွန်တော်တို့)</SelectItem>
               </SelectContent>
             </Select>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-caption text-muted-foreground">
               လုပ်ငန်းအမည် ကိုယ်စားပြုနာမ်အရ သင့်လျော်သော စကားလုံးများ အသုံးပြုပါမည်
             </p>
           </div>
