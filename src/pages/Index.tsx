@@ -1,11 +1,10 @@
-
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import Header from '@/components/Header';
-import HeroSection from '@/components/HeroSection';
+import AnimatedLoader from '@/components/AnimatedLoader';
 import ContentGeneratorForm from '@/components/ContentGeneratorForm';
 import ResultsPanel from '@/components/ResultsPanel';
 import ErrorDisplay from '@/components/ErrorDisplay';
@@ -166,15 +165,9 @@ const Index = () => {
     });
   };
 
+  // Show full-screen loading animation before hydration and login checking.
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-white">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-          <p>Loading...</p>
-        </div>
-      </div>
-    );
+    return <AnimatedLoader />;
   }
 
   if (!user) {
@@ -182,12 +175,11 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div className="min-h-screen flex flex-col bg-white animate-fade-in">
       <Header />
 
-      <main className="flex flex-col w-full flex-1 px-0 sm:px-4 py-4 sm:py-12 space-y-6 sm:space-y-12 max-w-[640px] mx-auto relative">
-        <HeroSection />
-
+      <main className="flex flex-col w-full flex-1 px-0 sm:px-4 py-3 sm:py-8 space-y-5 sm:space-y-10 max-w-[640px] mx-auto relative">
+        {/* Removed <HeroSection /> per requirements */}
         {/* Analytics Dashboard Entry */}
         <div className="flex justify-end max-w-full sm:max-w-5xl mx-auto px-2">
           <a
@@ -201,10 +193,10 @@ const Index = () => {
         </div>
 
         {/* Navigation Buttons for Knowledge Base and Library */}
-        <div className="flex flex-col gap-4 md:flex-row md:gap-6 justify-center mt-2 mb-4 w-full max-w-full sm:max-w-3xl mx-auto px-2">
+        <div className="flex flex-col gap-3 md:flex-row md:gap-5 justify-center mt-1 mb-2 w-full max-w-full sm:max-w-3xl mx-auto px-2">
           <Link
             to="/knowledge-base"
-            className="flex-1 flex items-center justify-center gap-3 bg-gradient-to-r from-[#fbe7ee] to-[#e7f5fc] border-2 border-pink-300 hover:border-pink-400 rounded-2xl p-4 sm:p-6 shadow hover:scale-[1.03] transition group"
+            className="flex-1 flex items-center justify-center gap-3 bg-gradient-to-r from-[#fbe7ee] to-[#e7f5fc] border-2 border-pink-300 hover:border-pink-400 rounded-2xl p-3 sm:p-5 shadow hover:scale-[1.03] transition group"
             aria-label="Go to Content Strategy Knowledge Base"
           >
             <Sparkles className="w-7 h-7 text-pink-500 drop-shadow-glow group-hover:animate-bounce" />
@@ -212,7 +204,7 @@ const Index = () => {
           </Link>
           <Link
             to="/library"
-            className="flex-1 flex items-center justify-center gap-3 bg-gradient-to-r from-[#e4eafc] to-[#fdf6ec] border-2 border-blue-300 hover:border-blue-400 rounded-2xl p-4 sm:p-6 shadow hover:scale-[1.03] transition group"
+            className="flex-1 flex items-center justify-center gap-3 bg-gradient-to-r from-[#e4eafc] to-[#fdf6ec] border-2 border-blue-300 hover:border-blue-400 rounded-2xl p-3 sm:p-5 shadow hover:scale-[1.03] transition group"
             aria-label="Go to My Personal Content Library"
           >
             <Book className="w-7 h-7 text-blue-600 drop-shadow-glow group-hover:animate-bounce" />
@@ -222,7 +214,7 @@ const Index = () => {
 
         <ErrorDisplay error={error} />
 
-        <div className="flex-1 flex flex-col gap-8 sm:grid sm:grid-cols-3 sm:gap-8">
+        <div className="flex-1 flex flex-col gap-6 sm:grid sm:grid-cols-3 sm:gap-8">
           <div className="sm:col-span-2 animate-slide-in-left flex-1 flex flex-col">
             <ContentGeneratorForm
               formData={formData}
