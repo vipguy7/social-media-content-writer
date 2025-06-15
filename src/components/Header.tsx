@@ -63,7 +63,7 @@ const Header = () => {
               <h1 className="text-lg md:text-xl font-bold bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent">
                 Content Writer AI
               </h1>
-              <p className="text-caption md:text-body-sm text-muted-foreground">မြန်မာဘာသာဖြင့် ဖန်တီးမှုများအတွက်</p>
+              <p className="text-caption md:text-body-sm text-muted-foreground">မြန်မာဘာသာဖြင့် ရေးသားနိုင်</p>
             </div>
           </Link>
         </div>
