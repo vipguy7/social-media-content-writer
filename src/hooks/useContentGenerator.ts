@@ -1,11 +1,10 @@
-
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { ContentFormData, QAMetrics, MarketingInsights } from '@/types/content';
 import { User } from '@supabase/supabase-js';
 
-export const useContentGenerator = (user: User | null, fetchProfile: () => Promise<void>) => {
+export const useContentGenerator = (user: User | null, fetchProfile?: () => Promise<void>) => {
   const { toast } = useToast();
   
   const [isLoading, setIsLoading] = useState(false);
@@ -94,7 +93,9 @@ export const useContentGenerator = (user: User | null, fetchProfile: () => Promi
       };
       setQAMetrics(mockQA);
       
-      await fetchProfile();
+      if (fetchProfile) {
+        await fetchProfile();
+      }
 
       setShowInterstitialAd(true);
 

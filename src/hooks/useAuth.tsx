@@ -1,4 +1,3 @@
-
 import { createContext, useContext, useEffect, useState, useMemo, useCallback } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
@@ -90,27 +89,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     setLoading(true);
-    const checkUser = async () => {
-      const { data: { session: initialSession } } = await supabase.auth.getSession();
-      setSession(initialSession);
-      setUser(initialSession?.user ?? null);
-      if (initialSession?.user) {
-        try {
-          await Promise.all([fetchProfile(), checkSubscription()]);
-        } catch (error) {
-          console.error("Error fetching initial user data:", error);
-          setProfile(null);
-          setSubscription(null);
-        }
-      }
-      setLoading(false);
-    };
-    checkUser();
-
+    
     const { data: { subscription: authSubscription } } = supabase.auth.onAuthStateChange(
       async (_event, newSession) => {
         setSession(newSession);
         setUser(newSession?.user ?? null);
+        
         if (newSession?.user) {
           try {
             await Promise.all([fetchProfile(), checkSubscription()]);
@@ -123,6 +107,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           setProfile(null);
           setSubscription(null);
         }
+        
         setLoading(false);
       }
     );

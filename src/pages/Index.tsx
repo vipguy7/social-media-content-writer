@@ -33,7 +33,7 @@ const Index = () => {
     exportAllContent,
     showInterstitialAd,
     setShowInterstitialAd,
-  } = useContentGenerator(user, fetchProfile!);
+  } = useContentGenerator(user, fetchProfile);
 
   useEffect(() => {
     if (!loading && !user) {
