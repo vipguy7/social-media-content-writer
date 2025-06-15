@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/button';
 import { LogOut, Sparkles, Coins } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
-import { useAppLogo } from '@/hooks/useAppLogo';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Tooltip,
@@ -13,9 +12,8 @@ import {
 import { Link } from 'react-router-dom';
 
 const Header = () => {
-  const { user, signOut, profile } = useAuth();
+  const { user, signOut, profile, subscription } = useAuth();
   const { toast } = useToast();
-  const { logoUrl, isGenerating, generateLogo } = useAppLogo();
 
   const handleSignOut = async () => {
     try {
@@ -33,38 +31,36 @@ const Header = () => {
     }
   };
 
+  const subscriptionText = subscription?.isSubscribed && subscription.tier !== 'trial'
+    ? 'Unlimited'
+    : `${profile?.credits ?? '...'} Credits`;
+
+  let subscriptionLabel = '';
+  if (subscription?.isSubscribed) {
+    if (subscription.tier === 'trial') {
+        subscriptionLabel = '(Trial)';
+    } else {
+        const tierName = subscription.tier ? subscription.tier.charAt(0).toUpperCase() + subscription.tier.slice(1) : 'Pro';
+        subscriptionLabel = `(${tierName})`;
+    }
+  }
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          {logoUrl ? (
-            <img 
-              src={logoUrl} 
-              alt="Myanmar Content Crafter Logo" 
-              className="w-10 h-10 rounded-lg object-cover shadow-md cursor-pointer hover:shadow-lg transition-shadow"
-              onClick={generateLogo}
-              title="Click to regenerate logo"
-            />
-          ) : (
-            <div 
-              className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center cursor-pointer hover:shadow-lg transition-shadow"
-              onClick={generateLogo}
-              title="Click to generate logo"
-            >
-              {isGenerating ? (
-                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-              ) : (
-                <Sparkles className="w-5 h-5 text-white" />
-              )}
-            </div>
-          )}
+        <Link to="/" className="flex items-center gap-3 group">
+          <div 
+            className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center transition-shadow group-hover:shadow-lg"
+          >
+            <Sparkles className="w-5 h-5 text-white" />
+          </div>
           <div>
             <h1 className="text-lg md:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               Myanmar Content Writer
             </h1>
             <p className="text-caption md:text-body-sm text-muted-foreground">မြန်မာအွန်လိုင်းစီးပွားရေးများအတွက် အထူးလုပ်ဆောင်ပေးနိုင်သည့် AI </p>
           </div>
-        </div>
+        </Link>
 
         <div className="flex items-center gap-4">
           {user && (
@@ -74,7 +70,8 @@ const Header = () => {
                   <TooltipTrigger asChild>
                     <Link to="/billing" className="flex cursor-pointer items-center gap-2 rounded-full bg-accent px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent/80">
                       <Coins className="h-4 w-4 text-yellow-500" />
-                      <span>{profile.credits} Credits</span>
+                      <span>{subscriptionText}</span>
+                      {subscriptionLabel && <span className="hidden sm:inline text-xs opacity-75 ml-1">{subscriptionLabel}</span>}
                     </Link>
                   </TooltipTrigger>
                   <TooltipContent>
@@ -113,4 +110,3 @@ const Header = () => {
 };
 
 export default Header;
-
