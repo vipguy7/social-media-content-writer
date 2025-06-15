@@ -1,161 +1,164 @@
-
-import React, { useState, useRef } from 'react';
-import { useAuth } from '@/hooks/useAuth';
-import { supabase } from '@/integrations/supabase/client';
+import React, { useState, useEffect } from 'react';
+import { useToast } from './ui/use-toast';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
+import { Label } from './ui/label';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { toast } from 'sonner';
-import { Camera, CheckCircle2, Gift } from 'lucide-react';
-import { Label } from './ui/label';
-
-interface Profile {
-    full_name: string | null;
-    avatar_url: string | null;
-    profile_completion_bonus_awarded: boolean;
-}
+import { supabase } from '@/integrations/supabase/client';
+import { Award, Upload } from 'lucide-react';
 
 interface ProfileEditorProps {
-    profile: Profile;
+    profile: {
+        full_name: string | null;
+        avatar_url: string | null;
+        profile_completion_bonus_awarded: boolean;
+    };
     onUpdate: () => Promise<void>;
 }
 
 const ProfileEditor: React.FC<ProfileEditorProps> = ({ profile, onUpdate }) => {
-    const { user } = useAuth();
-    const [fullName, setFullName] = useState(profile.full_name || '');
-    const [isUploading, setIsUploading] = useState(false);
-    const [isSaving, setIsSaving] = useState(false);
-    const fileInputRef = useRef<HTMLInputElement>(null);
+    const [fullName, setFullName] = useState('');
+    const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false);
+    const [uploading, setUploading] = useState(false);
+    const { toast: shadcnToast } = useToast();
 
-    const handleAvatarClick = () => {
-        fileInputRef.current?.click();
-    };
+    useEffect(() => {
+        if (profile.full_name) setFullName(profile.full_name);
+        if (profile.avatar_url) setAvatarUrl(profile.avatar_url);
+    }, [profile]);
 
-    const handleAvatarUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (!event.target.files || event.target.files.length === 0 || !user) {
-            return;
-        }
-
-        const file = event.target.files[0];
-        const fileExt = file.name.split('.').pop();
-        const fileName = `${user.id}-${Math.random()}.${fileExt}`;
-        const filePath = `${fileName}`;
-        
-        setIsUploading(true);
+    const handleUpdateProfile = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
         try {
-            const { error: uploadError } = await supabase.storage
-                .from('avatars')
-                .upload(filePath, file, { upsert: true });
+            const { data: { user } } = await supabase.auth.getUser();
+            if (!user) throw new Error("You must be logged in to update your profile.");
 
-            if (uploadError) throw uploadError;
+            const updates = {
+                id: user.id,
+                full_name: fullName,
+                avatar_url: avatarUrl,
+                updated_at: new Date(),
+            };
 
-            const { data: { publicUrl } } = supabase.storage
-                .from('avatars')
-                .getPublicUrl(filePath);
-            
-            await handleProfileUpdate({ avatar_url: publicUrl }, true);
-            
-        } catch (error: any) {
-            toast.error('Avatar Upload Failed', { description: error.message });
-        } finally {
-            setIsUploading(false);
-        }
-    };
-
-    const handleProfileUpdate = async (updates: { full_name?: string; avatar_url?: string }, isAvatarUpdate = false) => {
-        if (!user) return;
-        setIsSaving(true);
-        try {
-            const { error } = await supabase.from('profiles').update(updates).eq('id', user.id);
+            const { error } = await supabase.from('profiles').upsert(updates);
             if (error) throw error;
             
-            if(!isAvatarUpdate) {
-                toast.success('Profile Updated!', { description: "Your name has been saved."});
-            } else {
-                toast.success('Avatar Updated!', { description: "Your new avatar has been saved."});
+            // Check for bonus AFTER successful profile update
+            if (updates.full_name && updates.avatar_url && !profile.profile_completion_bonus_awarded) {
+                const { data: bonusResult, error: bonusError } = await supabase.functions.invoke('award_profile_completion_bonus');
+                
+                if (bonusError) {
+                    // Fail silently, main profile update still worked
+                    console.error('Error awarding bonus:', bonusError);
+                }
+                
+                if (bonusResult) {
+                    // The function returns JSON, we need to cast it to access its properties.
+                    const resultData = bonusResult as { success: boolean; message: string };
+                    if (resultData.success) {
+                        toast.success('Bonus Awarded!', { description: resultData.message });
+                    }
+                }
             }
             
             await onUpdate();
-            // Check for bonus after update, but wait for state to propagate
-            setTimeout(checkForBonus, 500);
-
+            shadcnToast({
+                title: 'Profile Updated',
+                description: 'Your profile has been successfully updated.',
+            });
         } catch (error: any) {
             toast.error('Update Failed', { description: error.message });
         } finally {
-            setIsSaving(false);
-        }
-    };
-    
-    const checkForBonus = async () => {
-        if (profile.profile_completion_bonus_awarded) return;
-
-        const { data, error } = await supabase.rpc('award_profile_completion_bonus');
-        
-        if (error) {
-            console.error("Error checking for bonus:", error.message);
-        } else if (data.success) {
-            toast.success('Bonus Credits Awarded!', { description: data.message });
-            await onUpdate(); // Re-fetch profile to get updated credits & bonus status
-        }
-    }
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        if(fullName.trim() && fullName !== profile.full_name) {
-            handleProfileUpdate({ full_name: fullName });
+            setLoading(false);
         }
     };
 
-    const bonusAwarded = profile.profile_completion_bonus_awarded;
+    const uploadAvatar = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (!file) return;
+
+        setUploading(true);
+        try {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (!user) throw new Error("You must be logged in to upload an avatar.");
+
+            const fileExt = file.name.split('.').pop();
+            const filePath = `${user.id}/${Math.random()}.${fileExt}`;
+
+            const { error: uploadError } = await supabase.storage
+                .from('avatars')
+                .upload(filePath, file);
+
+            if (uploadError) throw uploadError;
+
+            const publicUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/avatars/${filePath}`;
+            setAvatarUrl(publicUrl);
+            toast.success('Avatar Uploaded', { description: 'Your avatar has been successfully uploaded.' });
+        } catch (error: any) {
+            toast.error('Upload Failed', { description: error.message });
+        } finally {
+            setUploading(false);
+        }
+    };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-6">
-             <div className="relative mx-auto w-32 h-32 cursor-pointer group" onClick={handleAvatarClick}>
-                <Avatar className="w-full h-full text-lg">
-                    <AvatarImage src={profile.avatar_url ?? undefined} alt="User Avatar" />
-                    <AvatarFallback>{(fullName || '...').substring(0, 2).toUpperCase()}</AvatarFallback>
-                </Avatar>
-                <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Camera className="text-white w-8 h-8"/>
-                </div>
-                <input
-                    type="file"
-                    accept="image/*"
-                    ref={fileInputRef}
-                    onChange={handleAvatarUpload}
-                    className="hidden"
-                    disabled={isUploading}
-                />
-            </div>
-            {isUploading && <p className="text-sm text-center text-muted-foreground">Uploading...</p>}
-
-            <div className="space-y-2">
+        <form onSubmit={handleUpdateProfile} className="space-y-6">
+            <div>
                 <Label htmlFor="fullName">Full Name</Label>
                 <Input
                     id="fullName"
                     type="text"
+                    placeholder="Enter your full name"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
-                    placeholder="Your full name"
-                    disabled={isSaving}
                 />
             </div>
-            
-            <Button type="submit" className="w-full" disabled={isSaving || isUploading || fullName === profile.full_name || !fullName.trim()}>
-                {isSaving ? 'Saving...' : 'Save Changes'}
-            </Button>
-            
-            {bonusAwarded ? (
-                <div className="flex items-center gap-2 text-sm p-3 rounded-md bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400">
-                    <CheckCircle2 className="w-5 h-5" />
-                    <p>You've received 5 bonus credits for completing your profile!</p>
+            <div>
+                <Label>Avatar</Label>
+                <div className="flex items-center gap-4">
+                    <Avatar className="h-12 w-12">
+                        {avatarUrl ? (
+                            <AvatarImage src={avatarUrl} alt="Avatar" />
+                        ) : (
+                            <AvatarFallback>{profile.full_name?.substring(0, 2).toUpperCase()}</AvatarFallback>
+                        )}
+                    </Avatar>
+                    <Input
+                        type="file"
+                        id="avatar"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={uploadAvatar}
+                    />
+                    <Button variant="outline" asChild disabled={uploading}>
+                        <label htmlFor="avatar" className="cursor-pointer">
+                            {uploading ? (
+                                <>
+                                    <Upload className="mr-2 h-4 w-4 animate-spin" />
+                                    Uploading...
+                                </>
+                            ) : (
+                                <>
+                                    <Upload className="mr-2 h-4 w-4" />
+                                    Upload
+                                </>
+                            )}
+                        </label>
+                    </Button>
                 </div>
-            ) : (
-                <div className="flex items-center gap-2 text-sm p-3 rounded-md bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400">
-                    <Gift className="w-5 h-5" />
-                    <p>Complete your profile (name & avatar) to earn 5 free credits.</p>
+            </div>
+            {!profile.profile_completion_bonus_awarded && fullName && avatarUrl && (
+                <div className="rounded-md bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 p-3 flex items-center gap-3">
+                    <Award className="h-5 w-5 flex-shrink-0" />
+                    <p className="text-sm">Complete your profile to receive a bonus of 10 free credits!</p>
                 </div>
             )}
+            <Button type="submit" disabled={loading}>
+                {loading ? 'Updating...' : 'Update Profile'}
+            </Button>
         </form>
     );
 };

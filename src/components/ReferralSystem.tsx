@@ -40,12 +40,15 @@ const ReferralSystem: React.FC<ReferralSystemProps> = ({ profile, onUpdate }) =>
 
             if (error) throw new Error(error.message);
             
-            if (data.success) {
-                toast.success('Referral Success!', { description: data.message });
+            // The RPC function returns JSON, so we cast `data` to use its properties.
+            const result = data as { success: boolean; message: string };
+            
+            if (result.success) {
+                toast.success('Referral Success!', { description: result.message });
                 await onUpdate();
                 setFriendCode('');
             } else {
-                toast.error('Referral Failed', { description: data.message });
+                toast.error('Referral Failed', { description: result.message });
             }
 
         } catch (error: any) {
