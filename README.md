@@ -1,73 +1,69 @@
-# Welcome to your Lovable project
+Social Media Content Writer App
+Project Overview
+The Social Media Content Writer app is designed to streamline and supercharge the process of creating engaging, platform-specific content for social media. By leveraging advanced AI (Google Gemini AI, OpenAI APIs) and modern frontend frameworks, the app enables users to generate, refine, and deploy posts efficiently.
 
-## Project info
+1. Creation Strategy: From Idea to Working App
+  a. Starting with One Core Idea
+      Objective: Help users generate high-quality, relevant, and consistent social media posts with minimal effort.
+      Initial Logic: Begin by identifying common pain points—writer’s block, platform-specific requirements, and time constraints.
+  b. Defining the Generating Logic
+      Content Input: Users provide a topic, keywords, or a brief description.
+      Processing Pipeline:
+      Prompt Engineering: Structure user input into an optimized prompt for AI text generation.
+      AI Text Generation: Use Google Gemini AI or OpenAI APIs to generate draft content.
+      Platform Adaptation: Format output according to target platform (Twitter, LinkedIn, Instagram, etc.), respecting character limits and tone.
+      UI Feedback Loop: Display generated content, allowing users to edit, regenerate, or approve.
+      Iteration: Enable users to tweak input, regenerate suggestions, and save or schedule posts.
+  c. Development Steps
 
-**URL**: https://lovable.dev/projects/0d62df6a-7918-4c71-934d-f327493eeb59
+UI/UX Design
+Use Figma for wireframes and interface design, focusing on clarity and ease of use.
+  Reference: Figma UI Development Documentation
+Frontend Development  
+  Tech stack: Vite, React, TypeScript, shadcn-ui, Tailwind CSS.
+Structure app for rapid preview and hot-reloading during development.
 
-## How can I edit this code?
+Content Generation Logic
+  Integrate with Google Gemini AI (or OpenAI) for text generation.
+Modularize code for easy updates to generation logic and API providers.
 
-There are several ways of editing your application.
+Editing & Feedback
+  Allow users to review and edit AI-generated content inside the app before publishing.
 
-**Use Lovable**
+Deployment & Customization
+  Deploy via Lovable (or your preferred platform).
+Support for custom domains and easy sharing.
+  Reference: Digital Ocean Docs, AWS Web Docs
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/0d62df6a-7918-4c71-934d-f327493eeb59) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
+2. Technologies Used
+   Frontend: Vite, TypeScript, React, shadcn-ui, Tailwind CSS
+   AI Integration: Google Gemini AI, OpenAI API
+   Hosting/Deployment: Lovable platform (with custom domain support)
+3. How to Run and Edit the App
+    Option 1: Using Lovable
+              Visit your Lovable Project and edit via the online editor.
+    Option 2: Local Development
+              Clone the repository:
+sh
 git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
 cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+npm install
 npm run dev
-```
+Edit with your preferred IDE.
 
-**Edit a file directly in GitHub**
+Option 3: GitHub or Codespaces
+          Edit files directly in GitHub or use Codespaces for a cloud-based IDE.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+5. Deploying and Customizing
+    To publish, use the “Share → Publish” feature in Lovable.
+Connect a custom domain via Project > Settings > Domains.
+    Reference: Setting up a custom domain
 
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/0d62df6a-7918-4c71-934d-f327493eeb59) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+6. References
+Google AI Research
+OPENAI Docs
+Figma UI Docs
+AWS Web Docs
+Digital Ocean Docs
+Google Play Reference
+Apple Store Reference
