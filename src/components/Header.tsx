@@ -1,11 +1,18 @@
+
 import { Button } from '@/components/ui/button';
-import { LogOut, User, Sparkles } from 'lucide-react';
+import { LogOut, Sparkles, Coins } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { useAppLogo } from '@/hooks/useAppLogo';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const Header = () => {
-  const { user, signOut } = useAuth();
+  const { user, signOut, profile } = useAuth();
   const { toast } = useToast();
   const { logoUrl, isGenerating, generateLogo } = useAppLogo();
 
@@ -60,13 +67,33 @@ const Header = () => {
 
         <div className="flex items-center gap-4">
           {user && (
-            <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 text-sm">
-                <User className="w-4 h-4" />
-                <span className="hidden md:inline text-body-sm text-muted-foreground">
-                  {user.email}
+            <>
+              {profile && (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="flex cursor-help items-center gap-2 rounded-full bg-accent px-3 py-1.5 text-sm font-medium text-muted-foreground">
+                      <Coins className="h-4 w-4 text-yellow-500" />
+                      <span>{profile.credits} Credits</span>
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Get more credits by subscribing to a plan.</p>
+                  </TooltipContent>
+                </Tooltip>
+              )}
+
+              <div className="flex items-center gap-2">
+                <Avatar className="h-9 w-9">
+                  <AvatarImage src={profile?.avatar_url ?? ''} alt={profile?.full_name ?? user.email ?? 'User'} />
+                  <AvatarFallback>
+                    {profile?.full_name ? profile.full_name.substring(0, 2) : user.email?.substring(0, 2).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+                <span className="hidden md:inline text-body-sm font-medium">
+                  {profile?.full_name || user.email}
                 </span>
               </div>
+              
               <Button 
                 variant="outline" 
                 size="sm" 
@@ -76,7 +103,7 @@ const Header = () => {
                 <LogOut className="w-4 h-4" />
                 <span className="hidden md:inline">ထွက်ရန်</span>
               </Button>
-            </div>
+            </>
           )}
         </div>
       </div>
