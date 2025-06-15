@@ -1,4 +1,3 @@
-
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -86,11 +85,11 @@ const BillingPage = () => {
   const isSubscribed = subscription?.isSubscribed ?? false;
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50/50">
+    <div className="min-h-screen flex flex-col bg-gray-50/50 dark:bg-background">
       <Header />
       <main className="flex-1 w-full max-w-5xl mx-auto py-8 sm:py-12 px-4">
         <div className="text-center mb-10">
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-gray-900">Subscription & Credits</h1>
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-gray-900 dark:text-gray-50">Subscription & Credits</h1>
           <p className="mt-3 max-w-2xl mx-auto text-lg text-muted-foreground">
             Choose the best plan for you, or find ways to earn more free credits.
           </p>
@@ -114,20 +113,20 @@ const BillingPage = () => {
           <Card className="lg:col-span-1 glass-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Gift className="w-6 h-6 text-myanmar-red" />
+                <Gift className="w-6 h-6 text-primary" />
                 <span>Get Free Credits</span>
               </CardTitle>
               <CardDescription>Earn credits without paying.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                  <h3 className="font-semibold text-gray-800">Refer a Friend</h3>
+                  <h3 className="font-semibold text-foreground/90">Refer a Friend</h3>
                   <p className="text-sm text-muted-foreground">
                     Invite your friends to join and you'll both get 10 free credits when they sign up! (Coming soon)
                   </p>
               </div>
               <div>
-                  <h3 className="font-semibold text-gray-800">Complete Your Profile</h3>
+                  <h3 className="font-semibold text-foreground/90">Complete Your Profile</h3>
                   <p className="text-sm text-muted-foreground">
                     Add a profile picture and fill out your details to receive 5 bonus credits. (Coming soon)
                   </p>
@@ -135,7 +134,7 @@ const BillingPage = () => {
             </CardContent>
           </Card>
 
-          <Card className={`lg:col-span-1 border-2 shadow-lg ${isSubscribed && subscription?.tier !== 'trial' ? 'border-green-500' : isSubscribed && subscription?.tier === 'trial' ? 'border-blue-500' : 'border-primary myanmar-gradient-border'}`}>
+          <Card className={`lg:col-span-1 shadow-lg gradient-border ${isSubscribed && subscription?.tier !== 'trial' ? 'border-green-500' : isSubscribed && subscription?.tier === 'trial' ? 'border-blue-500' : 'border-primary'}`}>
             <CardHeader className="text-center">
               {isSubscribed ? (
                 <p className="text-sm font-semibold uppercase tracking-wide text-green-600">Your Current Plan</p>
@@ -172,13 +171,13 @@ const BillingPage = () => {
                 </Button>
               ) : (
                 <>
-                  <Button className="w-full text-lg py-6 myanmar-gradient hover:opacity-90" onClick={handleSubscribe} disabled={!!isLoading}>
+                  <Button className="w-full text-lg py-6 adorable-gradient text-white hover:opacity-90" onClick={handleSubscribe} disabled={!!isLoading}>
                     {isLoading === 'subscribe' ? 'Processing...' : 'Subscribe Now'}
                   </Button>
                   <div className="w-full flex gap-2">
                     <Input 
                       placeholder="Enter a promo code" 
-                      className="bg-white"
+                      className="bg-white dark:bg-input"
                       value={promoCode}
                       onChange={(e) => setPromoCode(e.target.value)}
                       disabled={!!isLoading}

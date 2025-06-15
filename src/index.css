@@ -1,96 +1,95 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Enhanced Myanmar Content Crafter Design System — Elegant Business Theme */
+/* Modern & Adorable Theme */
 
 @layer base {
   :root {
-    --background: rgb(246, 248, 252);
-    --foreground: rgb(19, 23, 38);
+    --background: rgb(249, 250, 251);
+    --foreground: rgb(17, 24, 39);
 
-    /* Elevated card backgrounds for higher contrast and elegance */
     --card: rgb(255, 255, 255);
-    --card-foreground: rgb(20, 30, 58);
+    --card-foreground: rgb(17, 24, 39);
 
-    /* Popover menu fix: strong white for background, dark navy for text */
-    --popover: 0 0% 100%; /* hsl(0, 0%, 100%) */
-    --popover-foreground: 221 43% 16%; /* hsl(221,43%,16%) */
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
 
-    /* Primary theme: rich blue with gold accent */
-    --primary: rgb(43, 91, 180);
+    /* Primary theme: Adorable Pink/Rose */
+    --primary: rgb(234, 88, 122);
     --primary-foreground: rgb(255, 255, 255);
-    --secondary: rgb(239, 243, 250);
-    --secondary-foreground: rgb(28, 42, 68);
+    
+    --secondary: rgb(243, 244, 246);
+    --secondary-foreground: rgb(55, 65, 81);
 
-    /* More visible muted backgrounds/text */
-    --muted: rgb(232, 237, 244);
-    --muted-foreground: rgb(76, 90, 110);
+    --muted: rgb(243, 244, 246);
+    --muted-foreground: rgb(107, 114, 128);
 
-    --accent: rgb(251, 191, 36);
-    --accent-foreground: rgb(32, 28, 0);
+    --accent: rgb(56, 189, 248);
+    --accent-foreground: rgb(17, 24, 39);
 
     --destructive: rgb(239, 68, 68);
     --destructive-foreground: rgb(255, 255, 255);
 
-    --border: rgb(190, 202, 223);
-    --input: rgb(251, 254, 255);
-    --ring: rgb(43, 91, 180);
-    --radius: 14px;
-    --myanmar-red: rgb(220, 38, 127);
-    --myanmar-gold: rgb(251, 191, 36);
-    --business-shadow: 0 6px 24px 0 rgba(43, 91, 180, 0.11), 0 1.5px 4px 0 rgba(19,23,38,0.09);
+    --border: rgb(229, 231, 235);
+    --input: rgb(255, 255, 255);
+    --ring: rgb(234, 88, 122);
+    --radius: 12px;
+    
+    --adorable-pink: rgb(234, 88, 122);
+    --adorable-purple: rgb(192, 132, 252);
+    --adorable-shadow: 0 4px 14px 0 rgba(234, 88, 122, 0.15), 0 1px 3px 0 rgba(0,0,0,0.07);
   }
 
   .dark {
-    --background: rgb(13, 18, 26);
-    --foreground: rgb(240, 244, 252);
+    --background: rgb(17, 24, 39);
+    --foreground: rgb(229, 231, 235);
 
-    /* Higher contrast card in dark mode */
-    --card: rgb(27, 33, 49);
-    --card-foreground: rgb(220, 227, 241);
+    --card: rgb(31, 41, 55);
+    --card-foreground: rgb(229, 231, 235);
 
-    /* Popover: deep navy/charcoal with bright foreground */
-    --popover: 224 25% 17%; /* hsl(224,25%,17%) */
-    --popover-foreground: 211 35% 94%; /* hsl(211,35%,94%) */
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: rgb(59, 130, 246);
-    --primary-foreground: rgb(255, 255, 255);
-    --secondary: rgb(36, 42, 63);
-    --secondary-foreground: rgb(209, 219, 233);
+    --primary: rgb(251, 146, 169);
+    --primary-foreground: rgb(17, 24, 39);
+    
+    --secondary: rgb(55, 65, 81);
+    --secondary-foreground: rgb(229, 231, 235);
 
-    --muted: rgb(36, 41, 57);
-    --muted-foreground: rgb(157, 172, 198);
+    --muted: rgb(55, 65, 81);
+    --muted-foreground: rgb(156, 163, 175);
 
-    --accent: rgb(251, 191, 36);
-    --accent-foreground: rgb(40, 30, 8);
+    --accent: rgb(125, 211, 252);
+    --accent-foreground: rgb(17, 24, 39);
 
-    --destructive: rgb(239, 68, 68);
-    --destructive-foreground: rgb(255, 255, 255);
+    --destructive: rgb(248, 113, 113);
+    --destructive-foreground: rgb(17, 24, 39);
 
-    --border: rgb(64, 77, 99);
-    --input: rgb(30, 41, 59);
-    --ring: rgb(59, 130, 246);
-    --myanmar-red: rgb(236, 72, 153);
-    --myanmar-gold: rgb(251, 191, 36);
-    --business-shadow: 0 6px 24px 0 rgba(59, 130, 246, 0.16), 0 1.5px 4px 0 rgba(255,255,255,0.12);
+    --border: rgb(55, 65, 81);
+    --input: rgb(55, 65, 81);
+    --ring: rgb(251, 146, 169);
+
+    --adorable-pink: rgb(251, 146, 169);
+    --adorable-purple: rgb(209, 173, 255);
+    --adorable-shadow: 0 4px 14px 0 rgba(251, 146, 169, 0.2), 0 1px 3px 0 rgba(255,255,255,0.1);
   }
 }
 
 @layer base {
   * {
-    border-color: hsl(var(--border));
+    @apply border-border;
   }
 
   body {
-    background-color: hsl(var(--background));
-    color: hsl(var(--foreground));
-    font-family: 'Noto Sans Myanmar', 'Pyidaungsu', sans-serif;
-    line-height: 1.8;
+    @apply bg-background text-foreground;
+    font-family: 'Inter', 'Noto Sans Myanmar', 'Pyidaungsu', sans-serif;
+    line-height: 1.7;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-
+  
   .font-english {
     font-family: 'Inter', sans-serif;
   }
@@ -113,39 +112,43 @@
     @apply font-myanmar text-base text-foreground;
   }
 
-  /* Adjust: Use bg-card and text-card-foreground for best contrast */
   .glass-card {
-    background: linear-gradient(140deg, rgba(255,255,255,0.98) 70%, rgba(251,191,36,0.08) 100%);
-    backdrop-filter: blur(14px);
-    border: 1.5px solid rgba(43, 91, 180, 0.10);
+    background: hsla(0, 0%, 100%, 0.8);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: var(--radius);
-    box-shadow: var(--business-shadow);
+    box-shadow: var(--adorable-shadow);
     transition: box-shadow 0.21s cubic-bezier(.4,0,.2,1), border-color 0.21s cubic-bezier(.4,0,.2,1);
   }
 
+  .dark .glass-card {
+    background: hsla(220, 14%, 16%, 0.6);
+  }
+
   .glass-card:hover, .glass-card:focus-within {
-    box-shadow: 0 12px 32px 0 rgba(43,91,180,0.19), 0 2px 8px 0 rgba(20,30,58,0.17);
-    border-color: rgba(43, 91, 180, 0.22);
+    box-shadow: 0 8px 24px 0 rgba(234, 88, 122, 0.22), 0 2px 6px 0 rgba(0,0,0,0.1);
+    border-color: rgba(234, 88, 122, 0.2);
   }
 
-  .business-gradient {
-    background: linear-gradient(108deg, rgb(43,91,180) 0%, rgb(251, 191, 36) 80%);
+  .adorable-gradient {
+    background: linear-gradient(108deg, var(--adorable-pink) 0%, var(--adorable-purple) 90%);
   }
 
-  .text-myanmar-red {
-    color: rgb(220, 38, 127);
+  .gradient-border {
+    position: relative;
+    background: var(--card);
+    background-clip: padding-box;
+    border: solid 2px transparent;
   }
-
-  .text-myanmar-gold {
-    color: rgb(251, 191, 36);
-  }
-
-  .drop-shadow-glow {
-    filter: drop-shadow(0 0 12px rgba(43,91,180, 0.26));
-  }
-
-  .shadow-x4 {
-    box-shadow: 0 8px 34px 0 rgba(43,91,180,0.22), 0 2.5px 7px 0 rgba(220, 38, 127, 0.09);
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    z-index: -1;
+    margin: -2px;
+    border-radius: inherit;
+    background: linear-gradient(108deg, var(--adorable-pink) 0%, var(--adorable-purple) 90%);
   }
 
   .hover-scale {
@@ -154,7 +157,7 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px);}
+  from { opacity: 0; transform: translateY(10px);}
   to { opacity: 1; transform: translateY(0);}
 }
 
@@ -167,23 +170,22 @@
   animation: float 6s ease-in-out infinite;
 }
 
-/* Enhanced scrollbar for business elegance */
 ::-webkit-scrollbar {
-  width: 9px;
-  background: hsl(var(--background));
+  width: 8px;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-track {
-  background: hsl(var(--muted));
+  background: hsl(var(--secondary));
   border-radius: 8px;
-  box-shadow: 0 0 6px rgba(43,91,180,0.12);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, hsl(var(--border)), hsl(var(--primary))/60%);
+  background: hsl(var(--primary) / 0.6);
   border-radius: 5px;
+  border: 2px solid hsl(var(--secondary));
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(108deg, hsl(var(--primary)), hsl(var(--primary-foreground))/60%);
+  background: hsl(var(--primary));
 }

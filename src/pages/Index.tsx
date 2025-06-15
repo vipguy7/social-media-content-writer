@@ -79,7 +79,7 @@ const Index = () => {
               <AlertTitle>Credit Depleted</AlertTitle>
               <AlertDescription className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <span>You've run out of credits. Please subscribe or earn more to continue generating content.</span>
-                <Button onClick={() => navigate('/billing')} className="myanmar-gradient hover:opacity-90 whitespace-nowrap mt-2 sm:mt-0">
+                <Button onClick={() => navigate('/billing')} className="adorable-gradient text-white hover:opacity-90 whitespace-nowrap mt-2 sm:mt-0">
                   Go to Billing Page
                 </Button>
               </AlertDescription>

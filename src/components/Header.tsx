@@ -1,8 +1,8 @@
 
 import { Button } from '@/components/ui/button';
-import { LogOut, Sparkles, Coins } from 'lucide-react';
+import { LogOut, Sparkles, Coins, Library, CreditCard } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Tooltip,
@@ -19,20 +19,16 @@ import { cn } from '@/lib/utils';
 
 const Header = () => {
   const { user, signOut, profile, subscription } = useAuth();
-  const { toast } = useToast();
 
   const handleSignOut = async () => {
     try {
       await signOut();
-      toast({
-        title: "အောင်မြင်စွာ ထွက်ခွာပြီးပါပြီ",
-        description: "သင့်အကောင့်မှ အောင်မြင်စွာ ထွက်ခွာပြီးပါပြီ",
+      toast.success("Signed Out Successfully", {
+        description: "You have been successfully signed out.",
       });
     } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "ထွက်ခွာမှု မအောင်မြင်ပါ",
-        description: "အကောင့်မှ ထွက်ခွာရာတွင် အမှားအယွင်း ဖြစ်ပွားခဲ့ပါသည်",
+      toast.error("Sign Out Failed", {
+        description: "There was an error while signing out.",
       });
     }
   };
@@ -51,87 +47,110 @@ const Header = () => {
     }
   }
 
-  const navLinkClass = "text-sm font-medium text-muted-foreground transition-colors hover:text-primary";
-  const activeNavLinkClass = "text-primary font-semibold";
+  const navLinkClass = "text-muted-foreground transition-colors hover:text-primary";
+  const activeNavLinkClass = "text-primary";
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-6">
+    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container mx-auto px-4 h-16 flex items-center">
+        <div className="flex-1 flex items-center gap-6">
           <Link to="/" className="flex items-center gap-3 group">
             <div 
-              className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center transition-shadow group-hover:shadow-lg"
+              className="w-10 h-10 rounded-lg bg-gradient-to-br from-pink-400 to-purple-500 flex items-center justify-center transition-all duration-300 group-hover:shadow-lg group-hover:scale-105"
             >
               <Sparkles className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h1 className="text-lg md:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Myanmar Content Writer
+              <h1 className="text-lg md:text-xl font-bold bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent">
+                Content Writer AI
               </h1>
-              <p className="text-caption md:text-body-sm text-muted-foreground">မြန်မာအွန်လိုင်းစီးပွားရေးများအတွက် အထူးလုပ်ဆောင်ပေးနိုင်သည့် AI </p>
+              <p className="text-caption md:text-body-sm text-muted-foreground">မြန်မာဘာသာဖြင့် ဖန်တီးမှုများအတွက်</p>
             </div>
           </Link>
-          <NavigationMenu className="hidden md:flex">
-            <NavigationMenuList className="gap-6">
+        </div>
+
+        <div className="flex-none flex items-center gap-2 md:gap-4">
+          <NavigationMenu>
+            <NavigationMenuList className="gap-1 md:gap-2">
               <NavigationMenuItem>
-                <NavLink 
-                  to="/library" 
-                  className={({ isActive }) => cn(navLinkClass, isActive && activeNavLinkClass)}
-                >
-                  Library
-                </NavLink>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <NavLink 
+                      to="/library" 
+                      className={({ isActive }) => cn(navLinkClass, 'h-10 w-10 flex items-center justify-center rounded-full', isActive && activeNavLinkClass)}
+                    >
+                      <Library className="h-5 w-5" />
+                      <span className="sr-only">Library</span>
+                    </NavLink>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>View your saved content</p>
+                  </TooltipContent>
+                </Tooltip>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <NavLink 
-                  to="/billing" 
-                  className={({ isActive }) => cn(navLinkClass, isActive && activeNavLinkClass)}
-                >
-                  Billing
-                </NavLink>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <NavLink 
+                      to="/billing" 
+                      className={({ isActive }) => cn(navLinkClass, 'h-10 w-10 flex items-center justify-center rounded-full', isActive && activeNavLinkClass)}
+                    >
+                      <CreditCard className="h-5 w-5" />
+                       <span className="sr-only">Billing</span>
+                    </NavLink>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Manage subscription and credits</p>
+                  </TooltipContent>
+                </Tooltip>
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
-        </div>
 
-        <div className="flex items-center gap-4">
           {user && (
             <>
               {profile && (
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Link to="/billing" className="flex cursor-pointer items-center gap-2 rounded-full bg-accent px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent/80">
-                      <Coins className="h-4 w-4 text-yellow-500" />
-                      <span>{subscriptionText}</span>
+                    <Link to="/billing" className="hidden sm:flex cursor-pointer items-center gap-2 rounded-full bg-secondary px-3 py-1.5 text-sm font-medium text-secondary-foreground transition-colors hover:bg-secondary/80">
+                      <Coins className="h-4 w-4 text-yellow-400" />
+                      <span className="font-semibold">{subscriptionText}</span>
                       {subscriptionLabel && <span className="hidden sm:inline text-xs opacity-75 ml-1">{subscriptionLabel}</span>}
                     </Link>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>Click to manage subscription and get more credits.</p>
+                    <p>Click to manage subscription.</p>
                   </TooltipContent>
                 </Tooltip>
               )}
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3">
                 <Avatar className="h-9 w-9">
                   <AvatarImage src={profile?.avatar_url ?? ''} alt={profile?.full_name ?? user.email ?? 'User'} />
                   <AvatarFallback>
                     {profile?.full_name ? profile.full_name.substring(0, 2) : user.email?.substring(0, 2).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
-                <span className="hidden md:inline text-body-sm font-medium">
+                <span className="hidden lg:inline text-body-sm font-medium">
                   {profile?.full_name || user.email}
                 </span>
               </div>
               
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={handleSignOut}
-                className="flex items-center gap-2"
-              >
-                <LogOut className="w-4 h-4" />
-                <span className="hidden md:inline">ထွက်ရန်</span>
-              </Button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                    <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        onClick={handleSignOut}
+                    >
+                        <LogOut className="w-5 h-5" />
+                        <span className="sr-only">Sign Out</span>
+                    </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                    <p>Sign Out</p>
+                </TooltipContent>
+              </Tooltip>
             </>
           )}
         </div>
