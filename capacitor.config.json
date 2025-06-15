@@ -1,0 +1,10 @@
+
+{
+  "appId": "app.lovable.0d62df6a79184c71934df327493eeb59",
+  "appName": "social-media-content-writer",
+  "webDir": "dist",
+  "server": {
+    "url": "https://0d62df6a-7918-4c71-934d-f327493eeb59.lovableproject.com?forceHideBadge=true",
+    "cleartext": true
+  }
+}

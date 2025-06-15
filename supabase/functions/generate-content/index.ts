@@ -331,22 +331,45 @@ serve(async (req) => {
       Deno.env.get('SUPABASE_URL')!,
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     );
+    
+    const { data: subscriber, error: subscriberError } = await supabaseAdmin
+      .from('subscribers')
+      .select('subscribed, subscription_tier, subscription_end')
+      .eq('user_id', user.id)
+      .maybeSingle();
 
-    const { data: creditsDecremented, error: rpcError } = await supabaseAdmin.rpc(
-      'decrement_user_credits', 
-      { p_user_id: user.id }
-    );
-
-    if (rpcError) {
-      console.error('Error decrementing credits:', rpcError);
-      throw new Error('Could not process credits.');
+    if (subscriberError) {
+      console.error('Error fetching subscriber data:', subscriberError);
+      throw new Error('Could not verify subscription status.');
     }
 
-    if (!creditsDecremented) {
-      return new Response(JSON.stringify({ success: false, error: 'Not enough credits.' }), {
-        status: 402, // Payment Required
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+    let hasUnlimitedAccess = false;
+    if (subscriber?.subscribed) {
+      if (subscriber.subscription_tier === 'trial' && subscriber.subscription_end && new Date(subscriber.subscription_end) < new Date()) {
+        await supabaseAdmin.from('subscribers').update({ subscribed: false, subscription_tier: null, subscription_end: null }).eq('user_id', user.id);
+        hasUnlimitedAccess = false;
+      } else {
+        hasUnlimitedAccess = true;
+      }
+    }
+
+    if (!hasUnlimitedAccess) {
+      const { data: creditsDecremented, error: rpcError } = await supabaseAdmin.rpc(
+        'decrement_user_credits', 
+        { p_user_id: user.id }
+      );
+
+      if (rpcError) {
+        console.error('Error decrementing credits:', rpcError);
+        throw new Error('Could not process credits.');
+      }
+
+      if (!creditsDecremented) {
+        return new Response(JSON.stringify({ success: false, error: 'Not enough credits. Please visit the Billing page to subscribe or earn more credits.' }), {
+          status: 402, // Payment Required
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
     }
 
     const body: RequestBody = await req.json();
