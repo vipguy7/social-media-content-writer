@@ -9,7 +9,13 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuList,
+} from "@/components/ui/navigation-menu";
+import { cn } from '@/lib/utils';
 
 const Header = () => {
   const { user, signOut, profile, subscription } = useAuth();
@@ -45,22 +51,47 @@ const Header = () => {
     }
   }
 
+  const navLinkClass = "text-sm font-medium text-muted-foreground transition-colors hover:text-primary";
+  const activeNavLinkClass = "text-primary font-semibold";
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-3 group">
-          <div 
-            className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center transition-shadow group-hover:shadow-lg"
-          >
-            <Sparkles className="w-5 h-5 text-white" />
-          </div>
-          <div>
-            <h1 className="text-lg md:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Myanmar Content Writer
-            </h1>
-            <p className="text-caption md:text-body-sm text-muted-foreground">မြန်မာအွန်လိုင်းစီးပွားရေးများအတွက် အထူးလုပ်ဆောင်ပေးနိုင်သည့် AI </p>
-          </div>
-        </Link>
+        <div className="flex items-center gap-6">
+          <Link to="/" className="flex items-center gap-3 group">
+            <div 
+              className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center transition-shadow group-hover:shadow-lg"
+            >
+              <Sparkles className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h1 className="text-lg md:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                Myanmar Content Writer
+              </h1>
+              <p className="text-caption md:text-body-sm text-muted-foreground">မြန်မာအွန်လိုင်းစီးပွားရေးများအတွက် အထူးလုပ်ဆောင်ပေးနိုင်သည့် AI </p>
+            </div>
+          </Link>
+          <NavigationMenu className="hidden md:flex">
+            <NavigationMenuList className="gap-6">
+              <NavigationMenuItem>
+                <NavLink 
+                  to="/library" 
+                  className={({ isActive }) => cn(navLinkClass, isActive && activeNavLinkClass)}
+                >
+                  Library
+                </NavLink>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavLink 
+                  to="/billing" 
+                  className={({ isActive }) => cn(navLinkClass, isActive && activeNavLinkClass)}
+                >
+                  Billing
+                </NavLink>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+        </div>
 
         <div className="flex items-center gap-4">
           {user && (
