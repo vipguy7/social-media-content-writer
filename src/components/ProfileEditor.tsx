@@ -40,7 +40,7 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ profile, onUpdate }) => {
                 id: user.id,
                 full_name: fullName,
                 avatar_url: avatarUrl,
-                updated_at: new Date(),
+                updated_at: new Date().toISOString(),
             };
 
             const { error } = await supabase.from('profiles').upsert(updates);
