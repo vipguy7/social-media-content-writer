@@ -3,49 +3,50 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Myanmar Content Crafter Design System */
+/* Enhanced Myanmar Content Crafter Design System — Elegant Business Theme */
 
 @layer base {
   :root {
-    --background: rgb(248, 250, 252);
-    --foreground: rgb(15, 23, 42);
+    --background: rgb(246, 248, 252);
+    --foreground: rgb(20, 30, 58);
     --card: rgb(255, 255, 255);
-    --card-foreground: rgb(15, 23, 42);
+    --card-foreground: rgb(30, 34, 56);
     --popover: rgb(255, 255, 255);
-    --popover-foreground: rgb(15, 23, 42);
-    --primary: rgb(59, 130, 246);
+    --popover-foreground: rgb(30, 41, 59);
+    --primary: rgb(43, 91, 180); /* deeper, elegant blue */
     --primary-foreground: rgb(255, 255, 255);
-    --secondary: rgb(241, 245, 249);
-    --secondary-foreground: rgb(51, 65, 85);
-    --muted: rgb(241, 245, 249);
-    --muted-foreground: rgb(100, 116, 139);
-    --accent: rgb(241, 245, 249);
-    --accent-foreground: rgb(51, 65, 85);
+    --secondary: rgb(236, 241, 249);
+    --secondary-foreground: rgb(30, 41, 59);
+    --muted: rgb(228, 234, 243);
+    --muted-foreground: rgb(84, 104, 134); /* stronger muted text */
+    --accent: rgb(251, 191, 36); /* myanmar-gold */
+    --accent-foreground: rgb(24, 21, 0);
     --destructive: rgb(239, 68, 68);
     --destructive-foreground: rgb(255, 255, 255);
-    --border: rgb(226, 232, 240);
-    --input: rgb(255, 255, 255);
-    --ring: rgb(59, 130, 246);
-    --radius: 10px;
+    --border: rgb(196, 209, 233);
+    --input: rgb(251, 254, 255);
+    --ring: rgb(43, 91, 180);
+    --radius: 14px;
     --myanmar-red: rgb(220, 38, 127);
     --myanmar-gold: rgb(251, 191, 36);
+    --business-shadow: 0 6px 24px 0 rgba(43, 91, 180, 0.10), 0 1.5px 4px 0 rgba(20,30,58,0.07);
   }
 
   .dark {
-    --background: rgb(2, 6, 23);
-    --foreground: rgb(248, 250, 252);
-    --card: rgb(15, 23, 42);
-    --card-foreground: rgb(248, 250, 252);
-    --popover: rgb(15, 23, 42);
-    --popover-foreground: rgb(248, 250, 252);
+    --background: rgb(10, 18, 34);
+    --foreground: rgb(246, 248, 252);
+    --card: rgb(23, 30, 51);
+    --card-foreground: rgb(243, 244, 246);
+    --popover: rgb(26, 32, 45);
+    --popover-foreground: rgb(196, 209, 233);
     --primary: rgb(59, 130, 246);
     --primary-foreground: rgb(255, 255, 255);
-    --secondary: rgb(30, 41, 59);
+    --secondary: rgb(30, 34, 56);
     --secondary-foreground: rgb(203, 213, 225);
-    --muted: rgb(30, 41, 59);
-    --muted-foreground: rgb(148, 163, 184);
-    --accent: rgb(30, 41, 59);
-    --accent-foreground: rgb(203, 213, 225);
+    --muted: rgb(34, 38, 52);
+    --muted-foreground: rgb(138, 163, 194);
+    --accent: rgb(251, 191, 36);
+    --accent-foreground: rgb(34, 32, 16);
     --destructive: rgb(239, 68, 68);
     --destructive-foreground: rgb(255, 255, 255);
     --border: rgb(51, 65, 85);
@@ -53,6 +54,7 @@
     --ring: rgb(59, 130, 246);
     --myanmar-red: rgb(236, 72, 153);
     --myanmar-gold: rgb(251, 191, 36);
+    --business-shadow: 0 6px 24px 0 rgba(59, 130, 246, 0.16), 0 1.5px 4px 0 rgba(255,255,255,0.10);
   }
 }
 
@@ -81,7 +83,7 @@
 
 @layer utilities {
   .animate-fade-in {
-    animation: fadeIn 0.8s ease-out;
+    animation: fadeIn 0.8s cubic-bezier(0.4,0,0.2,1);
   }
 
   .myanmar-text {
@@ -89,14 +91,21 @@
   }
 
   .glass-card {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(140deg, rgba(255,255,255,0.96) 70%, rgba(251,191,36,0.06) 100%);
+    backdrop-filter: blur(14px);
+    border: 1.5px solid rgba(43, 91, 180, 0.07);
+    border-radius: var(--radius);
+    box-shadow: var(--business-shadow);
+    transition: box-shadow 0.21s cubic-bezier(.4,0,.2,1), border-color 0.21s cubic-bezier(.4,0,.2,1);
+  }
+
+  .glass-card:hover, .glass-card:focus-within {
+    box-shadow: 0 12px 32px 0 rgba(43,91,180,0.16), 0 2px 8px 0 rgba(20,30,58,0.13);
+    border-color: rgba(43, 91, 180, 0.18);
   }
 
   .business-gradient {
-    background: linear-gradient(135deg, rgb(59, 130, 246) 0%, rgb(147, 51, 234) 100%);
+    background: linear-gradient(108deg, rgb(43,91,180) 0%, rgb(251, 191, 36) 80%);
   }
 
   .text-myanmar-red {
@@ -108,37 +117,50 @@
   }
 
   .drop-shadow-glow {
-    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.3));
+    filter: drop-shadow(0 0 12px rgba(43,91,180, 0.25));
+  }
+
+  .shadow-x4 {
+    box-shadow: 0 8px 34px 0 rgba(43,91,180,0.17), 0 2.5px 7px 0 rgba(220, 38, 127, 0.07);
+  }
+
+  .hover-scale {
+    @apply transition-transform duration-200 hover:scale-105;
   }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(20px);}
+  to { opacity: 1; transform: translateY(0);}
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  0%, 100% { transform: translateY(0px);}
+  50% { transform: translateY(-10px);}
 }
 
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
 
+/* Enhanced scrollbar for business elegance */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 9px;
+  background: hsl(var(--background));
 }
 
 ::-webkit-scrollbar-track {
   background: hsl(var(--muted));
+  border-radius: 8px;
+  box-shadow: 0 0 6px rgba(43,91,180,0.09);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--border));
-  border-radius: 4px;
+  background: linear-gradient(135deg, hsl(var(--border)), hsl(var(--primary))/60%);
+  border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--foreground) / 0.5);
+  background: linear-gradient(108deg, hsl(var(--primary)), hsl(var(--primary-foreground))/60%);
 }
+
