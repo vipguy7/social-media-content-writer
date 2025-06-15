@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
@@ -8,11 +9,13 @@ import ContentFormConfig from '@/components/ContentFormConfig';
 import ResultsPanel from '@/components/ResultsPanel';
 import ErrorDisplay from '@/components/ErrorDisplay';
 import FloatingActionButton from '@/components/FloatingActionButton';
-import { Book, Sparkles } from "lucide-react";
+import { Book, Sparkles, AlertCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useContentGenerator } from '@/hooks/useContentGenerator';
 import InterstitialAd from '@/components/InterstitialAd';
+import { Button } from '@/components/ui/button';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 const Index = () => {
   const { user, loading, fetchProfile } = useAuth();
@@ -49,6 +52,8 @@ const Index = () => {
   if (!user) {
     return null; // Will redirect to auth
   }
+  
+  const isCreditError = error.includes('Not enough credits');
 
   return (
     <div className="min-h-screen flex flex-col bg-white animate-fade-in">
@@ -88,7 +93,20 @@ const Index = () => {
           </div>
         </nav>
 
-        <ErrorDisplay error={error} />
+        {isCreditError ? (
+          <Alert variant="destructive" className="my-4 animate-fade-in">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Credit Depleted</AlertTitle>
+            <AlertDescription className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <span>You've run out of credits. Please subscribe or earn more to continue generating content.</span>
+              <Button onClick={() => navigate('/billing')} className="myanmar-gradient hover:opacity-90 whitespace-nowrap mt-2 sm:mt-0">
+                Go to Billing Page
+              </Button>
+            </AlertDescription>
+          </Alert>
+        ) : (
+          <ErrorDisplay error={error} />
+        )}
 
         <section className={
           "flex-1 w-full flex flex-col-reverse gap-5 md:gap-8 md:flex-row mt-1 md:mt-6 transition-all duration-300"
