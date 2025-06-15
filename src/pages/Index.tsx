@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
@@ -12,11 +13,13 @@ import FloatingActionButton from '@/components/FloatingActionButton';
 import { ContentFormData, QAMetrics, MarketingInsights } from '@/types/content';
 import { Book, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const Index = () => {
   const { toast } = useToast();
   const { user, loading } = useAuth();
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>('');
   const [generatedContent, setGeneratedContent] = useState<string[]>([]);
@@ -59,7 +62,6 @@ const Index = () => {
     }
     setIsLoading(true);
     try {
-      console.log('Starting enhanced content generation...');
       const response = await fetch(`https://xlowbgltztktrejjifie.supabase.co/functions/v1/generate-content`, {
         method: 'POST',
         headers: {
@@ -178,74 +180,86 @@ const Index = () => {
     <div className="min-h-screen flex flex-col bg-white animate-fade-in">
       <Header />
 
-      <main className="flex flex-col w-full flex-1 px-0 sm:px-4 py-3 sm:py-8 space-y-5 sm:space-y-10 max-w-[640px] mx-auto relative">
-        {/* Removed <HeroSection /> per requirements */}
-        {/* Analytics Dashboard Entry */}
-        <div className="flex justify-end max-w-full sm:max-w-5xl mx-auto px-2">
-          <a
-            href="/analytics"
-            className="inline-flex items-center gap-2 px-4 py-2 font-semibold rounded-2xl bg-gradient-to-r from-blue-50 to-yellow-50 border-2 border-blue-200 hover:bg-blue-100 transition shadow hover:scale-[1.04] text-base sm:text-lg"
-            aria-label="Go to Analytics Dashboard"
-          >
-            <span className="material-symbols-outlined text-blue-600">insights</span>
-            <span className="text-blue-700 font-bold">Analytics Dashboard</span>
-          </a>
-        </div>
-
-        {/* Navigation Buttons for Knowledge Base and Library */}
-        <div className="flex flex-col gap-3 md:flex-row md:gap-5 justify-center mt-1 mb-2 w-full max-w-full sm:max-w-3xl mx-auto px-2">
-          <Link
-            to="/knowledge-base"
-            className="flex-1 flex items-center justify-center gap-3 bg-gradient-to-r from-[#fbe7ee] to-[#e7f5fc] border-2 border-pink-300 hover:border-pink-400 rounded-2xl p-3 sm:p-5 shadow hover:scale-[1.03] transition group"
-            aria-label="Go to Content Strategy Knowledge Base"
-          >
-            <Sparkles className="w-7 h-7 text-pink-500 drop-shadow-glow group-hover:animate-bounce" />
-            <span className="text-lg sm:text-xl font-bold text-pink-600 capitalize">Content Knowledge Base</span>
-          </Link>
-          <Link
-            to="/library"
-            className="flex-1 flex items-center justify-center gap-3 bg-gradient-to-r from-[#e4eafc] to-[#fdf6ec] border-2 border-blue-300 hover:border-blue-400 rounded-2xl p-3 sm:p-5 shadow hover:scale-[1.03] transition group"
-            aria-label="Go to My Personal Content Library"
-          >
-            <Book className="w-7 h-7 text-blue-600 drop-shadow-glow group-hover:animate-bounce" />
-            <span className="text-lg sm:text-xl font-bold text-blue-700 capitalize">Personal Library</span>
-          </Link>
-        </div>
+      {/* Responsive main area */}
+      <main className="flex-1 w-full flex flex-col items-stretch px-1 sm:px-3 pb-6 max-w-4xl mx-auto">
+        {/* Top navigation & quick access row */}
+        <nav className="w-full flex flex-col gap-2 sm:gap-0 sm:flex-row items-stretch sm:items-center justify-between mt-2 mb-2 sm:mb-3 px-0">
+          <div className="flex gap-2 w-full sm:w-auto">
+            <Link
+              to="/knowledge-base"
+              className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-[#fbe7ee] to-[#e7f5fc] border-2 border-pink-300 hover:border-pink-400 rounded-xl p-2 sm:p-3 shadow hover:scale-[1.03] transition group"
+              aria-label="Go to Content Strategy Knowledge Base"
+            >
+              <Sparkles className="w-6 h-6 text-pink-500 drop-shadow-glow group-hover:animate-bounce" />
+              <span className="text-base sm:text-lg font-bold text-pink-600 capitalize">Content Knowledge Base</span>
+            </Link>
+            <Link
+              to="/library"
+              className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-[#e4eafc] to-[#fdf6ec] border-2 border-blue-300 hover:border-blue-400 rounded-xl p-2 sm:p-3 shadow hover:scale-[1.03] transition group"
+              aria-label="Go to My Personal Content Library"
+            >
+              <Book className="w-6 h-6 text-blue-600 drop-shadow-glow group-hover:animate-bounce" />
+              <span className="text-base sm:text-lg font-bold text-blue-700 capitalize">Personal Library</span>
+            </Link>
+          </div>
+          <div className="flex justify-end mt-2 sm:mt-0">
+            <a
+              href="/analytics"
+              className="inline-flex items-center gap-2 px-4 py-2 font-semibold rounded-xl bg-gradient-to-r from-blue-50 to-yellow-50 border-2 border-blue-200 hover:bg-blue-100 transition shadow hover:scale-[1.04] text-base"
+              aria-label="Go to Analytics Dashboard"
+            >
+              <span className="material-symbols-outlined text-blue-600">insights</span>
+              <span className="text-blue-700 font-bold">Analytics</span>
+            </a>
+          </div>
+        </nav>
 
         <ErrorDisplay error={error} />
 
-        <div className="flex-1 flex flex-col gap-6 sm:grid sm:grid-cols-3 sm:gap-8">
-          <div className="sm:col-span-2 animate-slide-in-left flex-1 flex flex-col">
-            <ContentGeneratorForm
-              formData={formData}
-              updateFormData={updateFormData}
-              onGenerate={handleGenerateContent}
-              isLoading={isLoading}
-              hasContent={generatedContent.length > 0}
-            />
+        <section className={
+          "flex-1 w-full flex flex-col-reverse gap-5 md:gap-8 md:flex-row mt-1 md:mt-6 transition-all duration-300"
+        }>
+          {/* Main content generator form */}
+          <div className="w-full md:w-2/3 flex flex-col">
+            <div className="animate-slide-in-left">
+              <ContentGeneratorForm
+                formData={formData}
+                updateFormData={updateFormData}
+                onGenerate={handleGenerateContent}
+                isLoading={isLoading}
+                hasContent={generatedContent.length > 0}
+              />
+            </div>
           </div>
-          <div className="flex-1 flex flex-col space-y-4 animate-slide-in-right mt-4 sm:mt-0">
-            <ResultsPanel
-              marketingInsights={marketingInsights}
-              qaMetrics={qaMetrics}
-              generatedContent={generatedContent}
-              onCopy={copyToClipboard}
-              onExportAll={exportAllContent}
-              onSave={handleSaveContent}
-            />
-          </div>
-        </div>
+          {/* Results & analysis panel */}
+          <aside className={`w-full md:w-1/3 flex flex-col pt-1 md:pt-0 ${isMobile ? "order-first" : "order-none"}`}>
+            <div className="animate-slide-in-right">
+              <ResultsPanel
+                marketingInsights={marketingInsights}
+                qaMetrics={qaMetrics}
+                generatedContent={generatedContent}
+                onCopy={copyToClipboard}
+                onExportAll={exportAllContent}
+                onSave={handleSaveContent}
+              />
+            </div>
+          </aside>
+        </section>
       </main>
 
-      {/* Floating action button always shown at bottom */}
-      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-full max-w-xs z-50">
-        <FloatingActionButton
-          onClick={handleGenerateContent}
-          isLoading={isLoading}
-        />
+      {/* Floating action button always shown at bottom, never overlays main form fields */}
+      <div className="fixed bottom-3 right-1/2 translate-x-1/2 sm:right-7 sm:translate-x-0 z-50 pointer-events-none">
+        {/* pointer-events-auto only on btn for accessibility */}
+        <div className="pointer-events-auto">
+          <FloatingActionButton
+            onClick={handleGenerateContent}
+            isLoading={isLoading}
+          />
+        </div>
       </div>
     </div>
   );
 };
 
 export default Index;
+
