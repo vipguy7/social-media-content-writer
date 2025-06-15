@@ -19,17 +19,17 @@ const AdvancedContentOptions = ({ formData, updateFormData }: AdvancedContentOpt
       <div className="space-y-2">
         <Label htmlFor="facebookPageLink" className="flex items-center gap-2">
           <Facebook className="w-4 h-4 text-blue-600" />
-          Facebook Page လင့်ခ်
+          သက်ဆိုင်ရာ လုပ်ငန်း၏ Facebook Page လင့်ခ်
         </Label>
         <Input
           id="facebookPageLink"
           value={formData.facebookPageLink}
           onChange={(e) => updateFormData({ facebookPageLink: e.target.value })}
-          placeholder="https://facebook.com/yourpage (ဘရန်းခွဲခြမ်းစိတ်ဖြာမှုအတွက်)"
+          placeholder="https://facebook.com/yourpage (လုပ်ငန်းနှင့်ထုတ်ကုန်အကြောင်း AI မှလေ့လာနိုင်ရန်)"
           className="focus:ring-myanmar-red focus:border-myanmar-red"
         />
         <p className="text-caption text-muted-foreground">
-          သင့် Facebook Page လင့်ခ်ကို ထည့်ပါ။ AI သည် သင့်ဘရန်း၏ စာရေးပုံစံ၊ အပြုအမူနှင့် ပရိသတ်တုံ့ပြန်မှုများကို ခွဲခြမ်းစိတ်ဖြာ၍ ပိုမိုက်ညီသော ပိုစ့်များ ဖန်တီးပေးပါမည်။
+         AI သည် သင့်ပိုစ့်များနှင့် ပရိသတ်တုံ့ပြန်မှုများကို လေ့လာပြီး ပိုမိုကောင်းမွန်တဲ့ ပုံစံဖြင့် ရေးသားပေးဖို့ဖြစ်ပါတယ်.
         </p>
       </div>
 
@@ -75,10 +75,10 @@ const AdvancedContentOptions = ({ formData, updateFormData }: AdvancedContentOpt
 
       <div className="grid md:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="style">အရေးအသားပုံစံ</Label>
+          <Label htmlFor="style">ပိုစ့်အမျိုးအစား ရွေးပါ</Label>
           <Select value={formData.style} onValueChange={(value) => updateFormData({ style: value })}>
             <SelectTrigger>
-              <SelectValue placeholder="ပုံစံ ရွေးချယ်ပါ" />
+              <SelectValue placeholder="ရွေးချယ်ပါ" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="professional">ပရော်ဖက်ရှင်နယ်</SelectItem>
@@ -91,7 +91,7 @@ const AdvancedContentOptions = ({ formData, updateFormData }: AdvancedContentOpt
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="targetAudience">ရည်မှန်းလိုသည့် ပရိသတ်</Label>
+          <Label htmlFor="targetAudience">ဖတ်ရှုစေလိုသည့် ပရိသတ်</Label>
           <Input
             id="targetAudience"
             value={formData.targetAudience}
@@ -102,7 +102,7 @@ const AdvancedContentOptions = ({ formData, updateFormData }: AdvancedContentOpt
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="keywords">အဓိက စကားလုံးများ</Label>
+        <Label htmlFor="keywords">ပိုစ့်တွင် ပါဝင်စေလိုသည့် စကားလုံးများ</Label>
         <Input
           id="keywords"
           value={formData.keywords}
