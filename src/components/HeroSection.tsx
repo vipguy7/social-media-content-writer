@@ -19,7 +19,6 @@ const HeroSection = () => {
       <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-12">
         <div className="p-6 text-center group bg-card border rounded-lg hover:bg-muted transition-all duration-300">
           <div className="p-3 bg-muted rounded-xl w-fit mx-auto mb-4 group-hover:bg-accent transition-colors">
-            <p className="w-8 h-8 text-primary"/>
           </div>
           <h3 className="font-bold text-lg myanmar-heading text-foreground mb-2">
             မြန်ဆန်မှု 
@@ -29,7 +28,6 @@ const HeroSection = () => {
         </div>
         <div className="p-6 text-center group bg-card border rounded-lg hover:bg-muted transition-all duration-300">
           <div className="p-3 bg-muted rounded-xl w-fit mx-auto mb-4 group-hover:bg-accent transition-colors">
-            <Target className="w-8 h-8 text-primary" />
           </div>
           <h3 className="font-bold text-lg myanmar-heading text-foreground mb-2">
           သင့်လျောညီထွေမှု
@@ -40,7 +38,6 @@ const HeroSection = () => {
         </div>
         <div className="p-6 text-center group bg-card border rounded-lg hover:bg-muted transition-all duration-300">
           <div className="p-3 bg-muted rounded-xl w-fit mx-auto mb-4 group-hover:bg-accent transition-colors">
-            <Sparkles className="w-8 h-8 text-primary" />
           </div>
           <h3 className="font-bold text-xl myanmar-heading text-foreground mb-2">
             ရိုးရာယဥ်ကျေးမှု
