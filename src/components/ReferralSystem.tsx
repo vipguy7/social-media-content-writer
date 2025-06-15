@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from './ui/button';
@@ -6,6 +5,7 @@ import { Input } from './ui/input';
 import { toast } from 'sonner';
 import { Copy, Gift } from 'lucide-react';
 import { Label } from './ui/label';
+import { Separator } from './ui/separator';
 
 interface ReferralSystemProps {
     profile: {
@@ -18,12 +18,20 @@ interface ReferralSystemProps {
 const ReferralSystem: React.FC<ReferralSystemProps> = ({ profile, onUpdate }) => {
     const [friendCode, setFriendCode] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [friendEmail, setFriendEmail] = useState('');
 
     const handleCopyCode = () => {
         if (profile.referral_code) {
             navigator.clipboard.writeText(profile.referral_code);
             toast.success('Referral code copied to clipboard!');
         }
+    };
+
+    const handleShareViaEmail = (e: React.FormEvent) => {
+        e.preventDefault();
+        toast.info("Coming Soon!", { 
+            description: "We are setting up the email service to share your code." 
+        });
     };
 
     const handleApplyCode = async (e: React.FormEvent) => {
@@ -71,9 +79,37 @@ const ReferralSystem: React.FC<ReferralSystemProps> = ({ profile, onUpdate }) =>
                     </Button>
                 </div>
                 <p className="text-sm text-muted-foreground mt-2">Share this code with friends. When they use it, you both get 10 free credits!</p>
+            
+                <form onSubmit={handleShareViaEmail} className="mt-4 space-y-2">
+                    <Label htmlFor="friendEmail" className="text-sm font-medium">Share via Email</Label>
+                    <div className="flex items-center gap-2">
+                        <Input
+                            id="friendEmail"
+                            type="email"
+                            placeholder="Friend's email address"
+                            value={friendEmail}
+                            onChange={(e) => setFriendEmail(e.target.value)}
+                            required
+                        />
+                        <Button type="submit" disabled={!friendEmail.trim()}>
+                            Send Invite
+                        </Button>
+                    </div>
+                </form>
             </div>
             
             {!hasBeenReferred && (
+                <>
+                <div className="relative">
+                    <div className="absolute inset-0 flex items-center">
+                        <Separator />
+                    </div>
+                    <div className="relative flex justify-center text-xs uppercase">
+                        <span className="bg-card px-2 text-muted-foreground">
+                        Or
+                        </span>
+                    </div>
+                </div>
                  <form onSubmit={handleApplyCode} className="space-y-2">
                     <Label htmlFor="friendCode">Used a friend's code?</Label>
                     <div className="flex items-center gap-2">
@@ -89,6 +125,7 @@ const ReferralSystem: React.FC<ReferralSystemProps> = ({ profile, onUpdate }) =>
                         </Button>
                     </div>
                  </form>
+                </>
             )}
 
             <div className={`flex items-start gap-3 text-sm p-3 rounded-md ${hasBeenReferred ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400' : 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400'}`}>

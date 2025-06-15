@@ -1,16 +1,16 @@
-
 import Header from '@/components/Header';
 import ProfileEditor from '@/components/ProfileEditor';
 import ReferralSystem from '@/components/ReferralSystem';
 import { useAuth } from '@/hooks/useAuth';
 import AnimatedLoader from '@/components/AnimatedLoader';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { User, KeySquare } from 'lucide-react';
+import { User, KeySquare, CreditCard, Sparkles } from 'lucide-react';
+import { Separator } from '@/components/ui/separator';
 
 const AccountPage = () => {
-    const { profile, loading, fetchProfile } = useAuth();
+    const { profile, loading, fetchProfile, subscription } = useAuth();
 
-    if (loading || !profile) {
+    if (loading || !profile || !subscription) {
         return (
             <div className="min-h-screen flex flex-col bg-gray-50/50 dark:bg-background">
                 <Header />
@@ -42,6 +42,19 @@ const AccountPage = () => {
                             <CardDescription>Complete your profile to earn free credits.</CardDescription>
                         </CardHeader>
                         <CardContent>
+                            <div className="space-y-4">
+                                <div className="flex items-center justify-between text-sm">
+                                    <span className="text-muted-foreground flex items-center gap-2"><CreditCard className="w-4 h-4" /> Subscription</span>
+                                    <span className={`font-semibold px-2 py-1 rounded-md text-xs ${subscription.isSubscribed ? 'bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300' : 'bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300'}`}>
+                                        {subscription.isSubscribed ? (subscription.tier || 'Subscribed') : 'Free Plan'}
+                                    </span>
+                                </div>
+                                <div className="flex items-center justify-between text-sm">
+                                    <span className="text-muted-foreground flex items-center gap-2"><Sparkles className="w-4 h-4" /> Credits</span>
+                                    <span className="font-semibold">{profile.credits}</span>
+                                </div>
+                            </div>
+                            <Separator className="my-6" />
                             <ProfileEditor profile={profile} onUpdate={fetchProfile} />
                         </CardContent>
                     </Card>

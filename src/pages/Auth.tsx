@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
@@ -13,6 +12,7 @@ import GoogleIcon from '@/components/icons/GoogleIcon';
 
 const Auth = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isSendingReset, setIsSendingReset] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -94,6 +94,45 @@ const Auth = () => {
       }
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleForgotPassword = async () => {
+    if (!email) {
+      toast({
+        variant: "destructive",
+        title: "Email is required",
+        description: "Please enter your email address to reset your password.",
+      });
+      return;
+    }
+
+    setIsSendingReset(true);
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/auth`,
+      });
+
+      if (error) {
+        toast({
+          variant: "destructive",
+          title: "Failed to send reset email",
+          description: error.message,
+        });
+      } else {
+        toast({
+          title: "Password reset email sent",
+          description: "Please check your inbox for a link to reset your password.",
+        });
+      }
+    } catch (err) {
+       toast({
+          variant: "destructive",
+          title: "An error occurred",
+          description: "Please try again later.",
+        });
+    } finally {
+      setIsSendingReset(false);
     }
   };
 
@@ -217,7 +256,18 @@ const Auth = () => {
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="password">စကားဝှက်</Label>
+                   <div className="flex items-center justify-between">
+                    <Label htmlFor="password">စကားဝှက်</Label>
+                    <Button
+                      type="button"
+                      variant="link"
+                      className="px-0 text-xs h-auto"
+                      onClick={handleForgotPassword}
+                      disabled={isSendingReset}
+                    >
+                      {isSendingReset ? 'Sending...' : 'Forgot Password?'}
+                    </Button>
+                  </div>
                   <div className="relative">
                     <Input
                       id="password"
@@ -345,7 +395,7 @@ const Auth = () => {
               <span className="w-full border-t" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-card px-2 text-muted-foreground">
+              <span className="bg-background px-2 text-muted-foreground">
                 Or continue with
               </span>
             </div>
