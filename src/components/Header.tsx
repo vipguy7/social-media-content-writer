@@ -10,6 +10,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const { user, signOut, profile } = useAuth();
@@ -71,13 +72,13 @@ const Header = () => {
               {profile && (
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <div className="flex cursor-help items-center gap-2 rounded-full bg-accent px-3 py-1.5 text-sm font-medium text-muted-foreground">
+                    <Link to="/billing" className="flex cursor-pointer items-center gap-2 rounded-full bg-accent px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent/80">
                       <Coins className="h-4 w-4 text-yellow-500" />
                       <span>{profile.credits} Credits</span>
-                    </div>
+                    </Link>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>Get more credits by subscribing to a plan.</p>
+                    <p>Click to manage subscription and get more credits.</p>
                   </TooltipContent>
                 </Tooltip>
               )}
@@ -112,3 +113,4 @@ const Header = () => {
 };
 
 export default Header;
+
