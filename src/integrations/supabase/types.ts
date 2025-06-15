@@ -311,6 +311,9 @@ export type Database = {
           email: string | null
           full_name: string | null
           id: string
+          profile_completion_bonus_awarded: boolean
+          referral_code: string | null
+          referred_by_user_id: string | null
           updated_at: string
         }
         Insert: {
@@ -320,6 +323,9 @@ export type Database = {
           email?: string | null
           full_name?: string | null
           id: string
+          profile_completion_bonus_awarded?: boolean
+          referral_code?: string | null
+          referred_by_user_id?: string | null
           updated_at?: string
         }
         Update: {
@@ -329,9 +335,20 @@ export type Database = {
           email?: string | null
           full_name?: string | null
           id?: string
+          profile_completion_bonus_awarded?: boolean
+          referral_code?: string | null
+          referred_by_user_id?: string | null
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profiles_referred_by_user_id_fkey"
+            columns: ["referred_by_user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       promo_codes: {
         Row: {
@@ -460,6 +477,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      apply_referral_code: {
+        Args: { p_referral_code: string }
+        Returns: Json
+      }
+      award_profile_completion_bonus: {
+        Args: Record<PropertyKey, never>
+        Returns: Json
+      }
       count_total_users: {
         Args: Record<PropertyKey, never>
         Returns: number
@@ -475,6 +500,10 @@ export type Database = {
       delete_old_generated_content: {
         Args: Record<PropertyKey, never>
         Returns: undefined
+      }
+      generate_referral_code: {
+        Args: Record<PropertyKey, never>
+        Returns: string
       }
       update_user_profile: {
         Args:

@@ -1,4 +1,3 @@
-
 import { Button } from '@/components/ui/button';
 import { LogOut, Sparkles, Coins, Library, CreditCard } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
@@ -124,17 +123,17 @@ const Header = () => {
                 </Tooltip>
               )}
 
-              <div className="flex items-center gap-3">
-                <Avatar className="h-9 w-9">
+              <Link to="/account" className="flex items-center gap-3 group">
+                <Avatar className="h-9 w-9 group-hover:ring-2 group-hover:ring-primary group-hover:ring-offset-2 group-hover:ring-offset-background transition-all">
                   <AvatarImage src={profile?.avatar_url ?? ''} alt={profile?.full_name ?? user.email ?? 'User'} />
                   <AvatarFallback>
                     {profile?.full_name ? profile.full_name.substring(0, 2) : user.email?.substring(0, 2).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
-                <span className="hidden lg:inline text-body-sm font-medium">
+                <span className="hidden lg:inline text-body-sm font-medium group-hover:text-primary transition-colors">
                   {profile?.full_name || user.email}
                 </span>
-              </div>
+              </Link>
               
               <Tooltip>
                 <TooltipTrigger asChild>

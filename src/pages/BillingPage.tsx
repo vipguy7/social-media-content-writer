@@ -7,7 +7,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import Header from '@/components/Header';
 import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 
 const BillingPage = () => {
   const { subscription, checkSubscription, profile } = useAuth(); // Get profile
@@ -118,20 +118,16 @@ const BillingPage = () => {
               </CardTitle>
               <CardDescription>Earn credits without paying.</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                  <h3 className="font-semibold text-foreground/90">Refer a Friend</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Invite your friends to join and you'll both get 10 free credits when they sign up! (Coming soon)
-                  </p>
-              </div>
-              <div>
-                  <h3 className="font-semibold text-foreground/90">Complete Your Profile</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Add a profile picture and fill out your details to receive 5 bonus credits. (Coming soon)
-                  </p>
-              </div>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                You can earn free credits by completing your profile or by referring friends. Click below to manage your profile and get your referral code.
+              </p>
             </CardContent>
+            <CardFooter>
+                <Button asChild className="w-full">
+                    <Link to="/account">Go to My Account</Link>
+                </Button>
+            </CardFooter>
           </Card>
 
           <Card className={`lg:col-span-1 shadow-lg gradient-border ${isSubscribed && subscription?.tier !== 'trial' ? 'border-green-500' : isSubscribed && subscription?.tier === 'trial' ? 'border-blue-500' : 'border-primary'}`}>

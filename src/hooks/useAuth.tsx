@@ -1,4 +1,3 @@
-
 import { createContext, useContext, useEffect, useState, useMemo, useCallback } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
@@ -7,6 +6,9 @@ interface Profile {
   credits: number;
   full_name: string | null;
   avatar_url: string | null;
+  referral_code: string | null;
+  referred_by_user_id: string | null;
+  profile_completion_bonus_awarded: boolean;
 }
 
 interface Subscription {
@@ -40,7 +42,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (currentUser) {
       const { data, error } = await supabase
         .from('profiles')
-        .select('credits, full_name, avatar_url')
+        .select('credits, full_name, avatar_url, referral_code, referred_by_user_id, profile_completion_bonus_awarded')
         .eq('id', currentUser.id)
         .maybeSingle();
       
