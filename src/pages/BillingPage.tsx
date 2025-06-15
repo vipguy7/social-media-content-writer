@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { CheckCircle2, Gift } from 'lucide-react';
+import { CheckCircle2, Gift, Coins } from 'lucide-react'; // Import Coins icon
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
@@ -11,7 +11,7 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 const BillingPage = () => {
-  const { subscription, checkSubscription } = useAuth();
+  const { subscription, checkSubscription, profile } = useAuth(); // Get profile
   const [promoCode, setPromoCode] = useState('');
   const [isLoading, setIsLoading] = useState(''); // can be 'subscribe', 'promo', or 'manage'
   const [searchParams, setSearchParams] = useSearchParams();
@@ -100,6 +100,20 @@ const BillingPage = () => {
           <Card className="lg:col-span-1 glass-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
+                <Coins className="w-6 h-6 text-yellow-500" />
+                <span>Your Credit Balance</span>
+              </CardTitle>
+              <CardDescription>Credits are used to generate content.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold">{profile?.credits ?? '...'}</div>
+              <p className="text-sm text-muted-foreground">credits remaining</p>
+            </CardContent>
+          </Card>
+
+          <Card className="lg:col-span-1 glass-card">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
                 <Gift className="w-6 h-6 text-myanmar-red" />
                 <span>Get Free Credits</span>
               </CardTitle>
@@ -121,7 +135,7 @@ const BillingPage = () => {
             </CardContent>
           </Card>
 
-          <Card className={`lg:col-span-2 border-2 shadow-lg ${isSubscribed && subscription?.tier !== 'trial' ? 'border-green-500' : isSubscribed && subscription?.tier === 'trial' ? 'border-blue-500' : 'border-primary myanmar-gradient-border'}`}>
+          <Card className={`lg:col-span-1 border-2 shadow-lg ${isSubscribed && subscription?.tier !== 'trial' ? 'border-green-500' : isSubscribed && subscription?.tier === 'trial' ? 'border-blue-500' : 'border-primary myanmar-gradient-border'}`}>
             <CardHeader className="text-center">
               {isSubscribed ? (
                 <p className="text-sm font-semibold uppercase tracking-wide text-green-600">Your Current Plan</p>
@@ -130,9 +144,13 @@ const BillingPage = () => {
               )}
               <CardTitle className="text-3xl font-bold">Unlimited Plan</CardTitle>
               <CardDescription>
-                {isSubscribed 
-                  ? `You are on the ${subscription.tier} plan. ${subscription.tier === 'trial' && subscription.endDate ? `Your trial ends on ${new Date(subscription.endDate).toLocaleDateString()}` : ''}`
-                  : "Generate endless content without limits."}
+                {isSubscribed
+                  ? subscription.tier === 'trial'
+                    ? subscription.endDate
+                      ? `Your trial plan ends on ${new Date(subscription.endDate).toLocaleDateString()}.`
+                      : 'You are on a trial plan.'
+                    : `You are on the ${subscription.tier || 'Unlimited'} plan.`
+                  : 'Generate endless content without limits.'}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
