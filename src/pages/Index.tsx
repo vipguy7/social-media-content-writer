@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
@@ -202,16 +201,6 @@ const Index = () => {
               <span className="text-base sm:text-lg font-bold text-blue-700 capitalize">Personal Library</span>
             </Link>
           </div>
-          <div className="flex justify-end mt-2 sm:mt-0">
-            <a
-              href="/analytics"
-              className="inline-flex items-center gap-2 px-4 py-2 font-semibold rounded-xl bg-gradient-to-r from-blue-50 to-yellow-50 border-2 border-blue-200 hover:bg-blue-100 transition shadow hover:scale-[1.04] text-base"
-              aria-label="Go to Analytics Dashboard"
-            >
-              <span className="material-symbols-outlined text-blue-600">insights</span>
-              <span className="text-blue-700 font-bold">Analytics</span>
-            </a>
-          </div>
         </nav>
 
         <ErrorDisplay error={error} />
@@ -262,4 +251,3 @@ const Index = () => {
 };
 
 export default Index;
-
