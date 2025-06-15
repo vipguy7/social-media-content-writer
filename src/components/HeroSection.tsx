@@ -13,8 +13,7 @@ const HeroSection = () => {
       </div>
       
       <p className="text-h3 text-muted-foreground max-w-4xl mx-auto myanmar-text leading-relaxed text-balance">
-       မြန်မာဆိုရှယ်မီဒီယာပိုစ့်တွေရေးဖို့ AI လက်ထောက်စာရေးလေးပါခင်ဗျာ. 
-       မြန်မာယဉ်ကျေးမှုနှင့် ကိုက်ညီတဲ့ ပိုစ့်တွေကို အကန့်အသတ်မရှိ ကူညီရေးသားပေးနိုင်ပါတယ်။
+       မြန်မာဆိုရှယ်မီဒီယာပိုစ့်တွေကို အကန့်အသတ်မရှိ ကူညီရေးသားပေးမယ့် AI
       </p>
 
       <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-12">
@@ -35,7 +34,7 @@ const HeroSection = () => {
             <Target className="w-8 h-8 text-primary" />
           </div>
           <h3 className="font-bold text-lg myanmar-heading text-foreground mb-2">
-            ရည်မှန်းပရိသတ်နှင့် ကိုက်ညီမှု
+           ပရိသတ်နှင့် လိုက်လျောညီထွေမှု
           </h3>
           <p className="text-muted-foreground myanmar-text">
             သင့်ပရိသတ်အတွက် အထူးပြုရေးသားလိုက်ပါ
@@ -50,7 +49,7 @@ const HeroSection = () => {
             ယဉ်ကျေးမှု သင့်လျော်မှု
           </h3>
           <p className="text-muted-foreground myanmar-text">
-            မြန်မာယဉ်ကျေးမှုနှင့် လိုက်လျောညီထွေစွာ ရေးသားလိုက်ပါ
+            မြန်မာယဉ်ကျေးမှုနှင့် လိုက်လျောညီထွေစွာ ရေးသားပေး
           </p>
         </div>
       </div>
