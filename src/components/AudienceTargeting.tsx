@@ -29,10 +29,10 @@ const AudienceTargeting = ({ formData, updateFormData }: AudienceTargetingProps)
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Target className="w-5 h-5 text-myanmar-red" />
-          သင့်လုပ်ငန်းအတွက် ပရိသတ် အုပ်စု ရွေးချယ်ခြင်း
+          သင့်လုပ်ငန်းအတွက် ပရိသတ် ရွေးချယ်ခြင်း
         </CardTitle>
         <CardDescription>
-          သင့်လုပ်ငန်းအတွက် သင့်လျော်သော ပရိသတ် အုပ်စုကို ရွေးချယ်ပါ။
+          သင့်လုပ်ငန်းအတွက် သင့်လျော်သော ပရိသတ်ကို ရွေးချယ်ပါ။
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -40,7 +40,7 @@ const AudienceTargeting = ({ formData, updateFormData }: AudienceTargetingProps)
           <div className="space-y-2">
             <Label htmlFor="audienceGender" className="flex items-center gap-2">
               {getAudienceIcon()}
-              ပရိသတ် အုပ်စု
+              ပရိသတ်
             </Label>
             <Select 
               value={formData.targetAudience.includes('အမျိုးသမီး') ? 'female' : 
@@ -55,7 +55,7 @@ const AudienceTargeting = ({ formData, updateFormData }: AudienceTargetingProps)
               }}
             >
               <SelectTrigger>
-                <SelectValue placeholder="ပရိသတ် အုပ်စု ရွေးချယ်ပါ" />
+                <SelectValue placeholder="ပရိသတ် ရွေးချယ်ပါ" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="female">
