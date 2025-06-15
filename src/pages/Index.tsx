@@ -200,6 +200,18 @@ const Index = () => {
       <main className="container mx-auto px-4 py-12 space-y-12">
         <HeroSection />
 
+        {/* Analytics Dashboard Entry */}
+        <div className="flex justify-end max-w-5xl mx-auto">
+          <a
+            href="/analytics"
+            className="inline-flex items-center gap-2 px-5 py-2 font-semibold rounded-2xl bg-gradient-to-r from-blue-50 to-yellow-50 border-2 border-blue-200 hover:bg-blue-100 transition shadow hover:scale-[1.04]"
+            aria-label="Go to Analytics Dashboard"
+          >
+            <span className="material-symbols-outlined text-blue-600">insights</span>
+            <span className="text-blue-700 font-bold">Analytics Dashboard</span>
+          </a>
+        </div>
+
         {/* Navigation Buttons for Knowledge Base and Library */}
         <div className="flex flex-col md:flex-row gap-6 justify-center mt-4 mb-8 w-full max-w-3xl mx-auto">
           <Link

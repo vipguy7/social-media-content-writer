@@ -9,6 +9,39 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      audience_behavior: {
+        Row: {
+          count: number | null
+          day_of_week: number
+          hour_of_day: number
+          id: string
+          interaction_type: string
+          platform: string
+          recorded_at: string
+          user_id: string
+        }
+        Insert: {
+          count?: number | null
+          day_of_week: number
+          hour_of_day: number
+          id?: string
+          interaction_type: string
+          platform: string
+          recorded_at?: string
+          user_id: string
+        }
+        Update: {
+          count?: number | null
+          day_of_week?: number
+          hour_of_day?: number
+          id?: string
+          interaction_type?: string
+          platform?: string
+          recorded_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       cities: {
         Row: {
           country_id: number
@@ -35,6 +68,62 @@ export type Database = {
           },
         ]
       }
+      content_analytics: {
+        Row: {
+          comments: number | null
+          content_id: string
+          created_at: string
+          engagement_score: number | null
+          hashtags: string[] | null
+          id: string
+          likes: number | null
+          platform: string | null
+          posted_at: string | null
+          shares: number | null
+          updated_at: string
+          user_id: string
+          views: number | null
+        }
+        Insert: {
+          comments?: number | null
+          content_id: string
+          created_at?: string
+          engagement_score?: number | null
+          hashtags?: string[] | null
+          id?: string
+          likes?: number | null
+          platform?: string | null
+          posted_at?: string | null
+          shares?: number | null
+          updated_at?: string
+          user_id: string
+          views?: number | null
+        }
+        Update: {
+          comments?: number | null
+          content_id?: string
+          created_at?: string
+          engagement_score?: number | null
+          hashtags?: string[] | null
+          id?: string
+          likes?: number | null
+          platform?: string | null
+          posted_at?: string | null
+          shares?: number | null
+          updated_at?: string
+          user_id?: string
+          views?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_content"
+            columns: ["content_id"]
+            isOneToOne: false
+            referencedRelation: "generated_content"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       countries: {
         Row: {
           code: string
@@ -52,6 +141,47 @@ export type Database = {
           name?: string
         }
         Relationships: []
+      }
+      engagement_predictions: {
+        Row: {
+          actual_score: number | null
+          content_id: string
+          created_at: string
+          id: string
+          predicted_post_time: string | null
+          predicted_score: number | null
+          prediction_model_version: string | null
+          user_id: string
+        }
+        Insert: {
+          actual_score?: number | null
+          content_id: string
+          created_at?: string
+          id?: string
+          predicted_post_time?: string | null
+          predicted_score?: number | null
+          prediction_model_version?: string | null
+          user_id: string
+        }
+        Update: {
+          actual_score?: number | null
+          content_id?: string
+          created_at?: string
+          id?: string
+          predicted_post_time?: string | null
+          predicted_score?: number | null
+          prediction_model_version?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_content"
+            columns: ["content_id"]
+            isOneToOne: false
+            referencedRelation: "generated_content"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       generated_content: {
         Row: {
@@ -110,6 +240,66 @@ export type Database = {
           inserted_at?: string
           updated_at?: string
           user_id?: string | null
+        }
+        Relationships: []
+      }
+      hashtag_performance: {
+        Row: {
+          avg_engagement: number | null
+          best_performing: boolean | null
+          hashtag: string
+          id: string
+          last_used: string | null
+          platform: string | null
+          usage_count: number | null
+        }
+        Insert: {
+          avg_engagement?: number | null
+          best_performing?: boolean | null
+          hashtag: string
+          id?: string
+          last_used?: string | null
+          platform?: string | null
+          usage_count?: number | null
+        }
+        Update: {
+          avg_engagement?: number | null
+          best_performing?: boolean | null
+          hashtag?: string
+          id?: string
+          last_used?: string | null
+          platform?: string | null
+          usage_count?: number | null
+        }
+        Relationships: []
+      }
+      posting_time_optimization: {
+        Row: {
+          confidence_score: number | null
+          id: string
+          last_updated: string
+          platform: string | null
+          recommended_day: number | null
+          recommended_hour: number | null
+          user_id: string
+        }
+        Insert: {
+          confidence_score?: number | null
+          id?: string
+          last_updated?: string
+          platform?: string | null
+          recommended_day?: number | null
+          recommended_hour?: number | null
+          user_id: string
+        }
+        Update: {
+          confidence_score?: number | null
+          id?: string
+          last_updated?: string
+          platform?: string | null
+          recommended_day?: number | null
+          recommended_hour?: number | null
+          user_id?: string
         }
         Relationships: []
       }
