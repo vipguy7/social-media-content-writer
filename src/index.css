@@ -8,55 +8,73 @@
 @layer base {
   :root {
     --background: rgb(246, 248, 252);
-    --foreground: rgb(20, 30, 58);
+    --foreground: rgb(19, 23, 38);
+
+    /* Elevated card backgrounds for higher contrast and elegance */
     --card: rgb(255, 255, 255);
-    --card-foreground: rgb(30, 34, 56);
-    /* FIX: Use HSL color for popover and popover-foreground */
-    --popover: 0 0% 100%; /* hsl(0, 0%, 100%) = white */
-    --popover-foreground: 222 47% 18%; /* hsl(222, 47%, 18%) */
+    --card-foreground: rgb(20, 30, 58);
+
+    /* Popover menu fix: strong white for background, dark navy for text */
+    --popover: 0 0% 100%; /* hsl(0, 0%, 100%) */
+    --popover-foreground: 221 43% 16%; /* hsl(221,43%,16%) */
+
+    /* Primary theme: rich blue with gold accent */
     --primary: rgb(43, 91, 180);
     --primary-foreground: rgb(255, 255, 255);
-    --secondary: rgb(236, 241, 249);
-    --secondary-foreground: rgb(30, 41, 59);
-    --muted: rgb(228, 234, 243);
-    --muted-foreground: rgb(84, 104, 134);
+    --secondary: rgb(239, 243, 250);
+    --secondary-foreground: rgb(28, 42, 68);
+
+    /* More visible muted backgrounds/text */
+    --muted: rgb(232, 237, 244);
+    --muted-foreground: rgb(76, 90, 110);
+
     --accent: rgb(251, 191, 36);
-    --accent-foreground: rgb(24, 21, 0);
+    --accent-foreground: rgb(32, 28, 0);
+
     --destructive: rgb(239, 68, 68);
     --destructive-foreground: rgb(255, 255, 255);
-    --border: rgb(196, 209, 233);
+
+    --border: rgb(190, 202, 223);
     --input: rgb(251, 254, 255);
     --ring: rgb(43, 91, 180);
     --radius: 14px;
     --myanmar-red: rgb(220, 38, 127);
     --myanmar-gold: rgb(251, 191, 36);
-    --business-shadow: 0 6px 24px 0 rgba(43, 91, 180, 0.10), 0 1.5px 4px 0 rgba(20,30,58,0.07);
+    --business-shadow: 0 6px 24px 0 rgba(43, 91, 180, 0.11), 0 1.5px 4px 0 rgba(19,23,38,0.09);
   }
 
   .dark {
-    --background: rgb(10, 18, 34);
-    --foreground: rgb(246, 248, 252);
-    --card: rgb(23, 30, 51);
-    --card-foreground: rgb(243, 244, 246);
-    /* FIX: Use HSL color for dark mode popover and popover-foreground */
-    --popover: 224 26% 13%; /* hsl(224, 26%, 13%) */
-    --popover-foreground: 213 38% 83%; /* hsl(213, 38%, 83%) */
+    --background: rgb(13, 18, 26);
+    --foreground: rgb(240, 244, 252);
+
+    /* Higher contrast card in dark mode */
+    --card: rgb(27, 33, 49);
+    --card-foreground: rgb(220, 227, 241);
+
+    /* Popover: deep navy/charcoal with bright foreground */
+    --popover: 224 25% 17%; /* hsl(224,25%,17%) */
+    --popover-foreground: 211 35% 94%; /* hsl(211,35%,94%) */
+
     --primary: rgb(59, 130, 246);
     --primary-foreground: rgb(255, 255, 255);
-    --secondary: rgb(30, 34, 56);
-    --secondary-foreground: rgb(203, 213, 225);
-    --muted: rgb(34, 38, 52);
-    --muted-foreground: rgb(138, 163, 194);
+    --secondary: rgb(36, 42, 63);
+    --secondary-foreground: rgb(209, 219, 233);
+
+    --muted: rgb(36, 41, 57);
+    --muted-foreground: rgb(157, 172, 198);
+
     --accent: rgb(251, 191, 36);
-    --accent-foreground: rgb(34, 32, 16);
+    --accent-foreground: rgb(40, 30, 8);
+
     --destructive: rgb(239, 68, 68);
     --destructive-foreground: rgb(255, 255, 255);
-    --border: rgb(51, 65, 85);
+
+    --border: rgb(64, 77, 99);
     --input: rgb(30, 41, 59);
     --ring: rgb(59, 130, 246);
     --myanmar-red: rgb(236, 72, 153);
     --myanmar-gold: rgb(251, 191, 36);
-    --business-shadow: 0 6px 24px 0 rgba(59, 130, 246, 0.16), 0 1.5px 4px 0 rgba(255,255,255,0.10);
+    --business-shadow: 0 6px 24px 0 rgba(59, 130, 246, 0.16), 0 1.5px 4px 0 rgba(255,255,255,0.12);
   }
 }
 
@@ -92,18 +110,19 @@
     @apply font-myanmar text-base text-foreground;
   }
 
+  /* Adjust: Use bg-card and text-card-foreground for best contrast */
   .glass-card {
-    background: linear-gradient(140deg, rgba(255,255,255,0.96) 70%, rgba(251,191,36,0.06) 100%);
+    background: linear-gradient(140deg, rgba(255,255,255,0.98) 70%, rgba(251,191,36,0.08) 100%);
     backdrop-filter: blur(14px);
-    border: 1.5px solid rgba(43, 91, 180, 0.07);
+    border: 1.5px solid rgba(43, 91, 180, 0.10);
     border-radius: var(--radius);
     box-shadow: var(--business-shadow);
     transition: box-shadow 0.21s cubic-bezier(.4,0,.2,1), border-color 0.21s cubic-bezier(.4,0,.2,1);
   }
 
   .glass-card:hover, .glass-card:focus-within {
-    box-shadow: 0 12px 32px 0 rgba(43,91,180,0.16), 0 2px 8px 0 rgba(20,30,58,0.13);
-    border-color: rgba(43, 91, 180, 0.18);
+    box-shadow: 0 12px 32px 0 rgba(43,91,180,0.19), 0 2px 8px 0 rgba(20,30,58,0.17);
+    border-color: rgba(43, 91, 180, 0.22);
   }
 
   .business-gradient {
@@ -119,11 +138,11 @@
   }
 
   .drop-shadow-glow {
-    filter: drop-shadow(0 0 12px rgba(43,91,180, 0.25));
+    filter: drop-shadow(0 0 12px rgba(43,91,180, 0.26));
   }
 
   .shadow-x4 {
-    box-shadow: 0 8px 34px 0 rgba(43,91,180,0.17), 0 2.5px 7px 0 rgba(220, 38, 127, 0.07);
+    box-shadow: 0 8px 34px 0 rgba(43,91,180,0.22), 0 2.5px 7px 0 rgba(220, 38, 127, 0.09);
   }
 
   .hover-scale {
@@ -154,7 +173,7 @@
 ::-webkit-scrollbar-track {
   background: hsl(var(--muted));
   border-radius: 8px;
-  box-shadow: 0 0 6px rgba(43,91,180,0.09);
+  box-shadow: 0 0 6px rgba(43,91,180,0.12);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -165,4 +184,3 @@
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(108deg, hsl(var(--primary)), hsl(var(--primary-foreground))/60%);
 }
-
