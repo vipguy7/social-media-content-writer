@@ -16,7 +16,7 @@ const PrimaryContentInputs = ({ formData, updateFormData }: PrimaryContentInputs
       <div className="grid md:grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="platform">ပလပ်ဖောင်း 
-            <span className="ml-2 rounded bg-blue-100 px-2 py-0.5 text-xs text-blue-700 font-semibold">NEW</span>
+            <span className="ml-2 rounded bg-accent/20 px-2 py-0.5 text-xs text-accent font-semibold">NEW</span>
           </Label>
           <Select value={formData.platform} onValueChange={(value) => updateFormData({ platform: value })}>
             <SelectTrigger>

@@ -21,11 +21,11 @@ const BillingPage = () => {
   }, [searchParams, checkSubscription, setSearchParams]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50/50 dark:bg-background">
+    <div className="min-h-screen flex flex-col bg-secondary">
       <Header />
       <main className="flex-1 w-full max-w-5xl mx-auto py-8 sm:py-12 px-4">
         <div className="text-center mb-10">
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-gray-900 dark:text-gray-50">Subscription & Credits</h1>
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-foreground">Subscription & Credits</h1>
           <p className="mt-3 max-w-2xl mx-auto text-lg text-muted-foreground">
             Choose the best plan for you, or find ways to earn more free credits.
           </p>

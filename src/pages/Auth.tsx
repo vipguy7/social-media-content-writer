@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
@@ -224,10 +225,10 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-background px-4">
       <Card className="w-full max-w-md animate-fade-in rounded-2xl shadow-2xl shadow-gray-200/40 dark:shadow-black/20">
         <CardHeader className="text-center p-8">
-          <CardTitle className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
+          <CardTitle className="text-3xl font-bold tracking-tight text-foreground">
             Myanmar Content Generator
           </CardTitle>
           <CardDescription className="pt-2">
@@ -363,7 +364,7 @@ const Auth = () => {
                   </div>
                   {passwordFeedback && (
                     <p className={`text-sm mt-1 ${
-                      passwordStrength === 'Weak' ? 'text-red-500' :
+                      passwordStrength === 'Weak' ? 'text-destructive' :
                       passwordStrength === 'Medium' ? 'text-orange-500' :
                       passwordStrength === 'Strong' ? 'text-green-500' : ''
                     }`}>
