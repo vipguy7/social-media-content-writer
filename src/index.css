@@ -10,9 +10,9 @@
     --foreground: rgb(30, 32, 32);
     --card: rgb(25, 116, 146);
     --card-foreground: rgb(24, 24, 24);
-    --popover: rgb(71, 154, 181);
+    --popover: rgb(255, 255, 255);
     --popover-foreground: rgb(20, 39, 42);
-    --primary: rgba(24, 145, 185, 0.779);
+    --primary: rgb(24, 145, 185);
     --primary-foreground: rgb(227, 216, 198);
     --secondary:rgb(18, 154, 199);
     --secondary-foreground: rgb(85, 112, 163);
@@ -34,8 +34,8 @@
     --foreground: rgb(12, 12, 12);
     --card:rgb(53, 88, 97);
     --card-foreground: rgb(33, 40, 46);
-    --popover: rgb(36, 37, 37);
-    --popover-foreground: rgb(43, 98, 180);
+    --popover: rgb(40, 40, 45);
+    --popover-foreground: rgb(255, 255, 255);
     --primary: rgb(170, 170, 170);
     --primary-foreground: #040404;
     --secondary: rgb(82, 118, 130);
