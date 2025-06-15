@@ -5,7 +5,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { ContentFormData, QAMetrics, MarketingInsights } from '@/types/content';
 import { User } from '@supabase/supabase-js';
 
-export const useContentGenerator = (user: User | null) => {
+export const useContentGenerator = (user: User | null, fetchProfile: () => Promise<void>) => {
   const { toast } = useToast();
   
   const [isLoading, setIsLoading] = useState(false);
@@ -38,19 +38,40 @@ export const useContentGenerator = (user: User | null) => {
 
   const handleGenerateContent = async () => {
     setError('');
+    if (!user) {
+      setError('You must be logged in to generate content.');
+       toast({
+        variant: "destructive",
+        title: "Authentication Required",
+        description: "Please log in to continue.",
+      });
+      return;
+    }
     if (!formData.productName.trim() || !formData.keyMessage.trim()) {
       setError('ထုတ်ကုန်အမည်နှင့် အဓိကမက်ဆေ့ခ် လိုအပ်ပါသည်။');
       return;
     }
     setIsLoading(true);
     try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        throw new Error('User not authenticated.');
+      }
+
       const response = await fetch(`https://xlowbgltztktrejjifie.supabase.co/functions/v1/generate-content`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
         },
         body: JSON.stringify(formData),
       });
+
+      if (response.status === 402) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Not enough credits.');
+      }
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
@@ -71,6 +92,9 @@ export const useContentGenerator = (user: User | null) => {
         engagement: Math.floor(Math.random() * 15) + 85
       };
       setQAMetrics(mockQA);
+      
+      await fetchProfile();
+
       toast({
         title: "အဆင့်မြင့် ကွန်တင့် အောင်မြင်စွာ ဖန်တီးပြီးပါပြီ!",
         description: `ပရော်ဖက်ရှင်နယ် မြန်မာ ကွန်တင့် ${data.variations?.length || 0} မျိုး ဖန်တီးပေးပြီးပါပြီ`,

@@ -1,6 +1,7 @@
 
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -306,8 +307,50 @@ serve(async (req) => {
   }
 
   try {
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      throw new Error('Missing authorization header');
+    }
+
+    const supabaseClient = createClient(
+      Deno.env.get('SUPABASE_URL')!,
+      Deno.env.get('SUPABASE_ANON_KEY')!,
+      { global: { headers: { Authorization: authHeader } } }
+    );
+
+    const { data: { user } } = await supabaseClient.auth.getUser();
+
+    if (!user) {
+      return new Response(JSON.stringify({ success: false, error: 'Unauthorized' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+    
+    const supabaseAdmin = createClient(
+      Deno.env.get('SUPABASE_URL')!,
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+    );
+
+    const { data: creditsDecremented, error: rpcError } = await supabaseAdmin.rpc(
+      'decrement_user_credits', 
+      { p_user_id: user.id }
+    );
+
+    if (rpcError) {
+      console.error('Error decrementing credits:', rpcError);
+      throw new Error('Could not process credits.');
+    }
+
+    if (!creditsDecremented) {
+      return new Response(JSON.stringify({ success: false, error: 'Not enough credits.' }), {
+        status: 402, // Payment Required
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
     const body: RequestBody = await req.json();
-    console.log('Enhanced content generation request:', { ...body, keyMessage: body.keyMessage?.substring(0, 50) + '...' });
+    console.log('Enhanced content generation request for user:', { userId: user.id, productName: body.productName, keyMessage: body.keyMessage?.substring(0, 50) + '...' });
     
     validateInput(body);
     

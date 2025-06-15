@@ -14,7 +14,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useContentGenerator } from '@/hooks/useContentGenerator';
 
 const Index = () => {
-  const { user, loading } = useAuth();
+  const { user, loading, fetchProfile } = useAuth();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   
@@ -30,7 +30,7 @@ const Index = () => {
     handleSaveContent,
     copyToClipboard,
     exportAllContent,
-  } = useContentGenerator(user);
+  } = useContentGenerator(user, fetchProfile!);
 
   useEffect(() => {
     if (!loading && !user) {
