@@ -35,9 +35,6 @@ const PrimaryContentInputs = ({ formData, updateFormData }: PrimaryContentInputs
               </SelectItem>
             </SelectContent>
           </Select>
-          <p className="text-caption text-muted-foreground mt-1">
-            Facebook ပိုစ့်အတွက် အဆင်သင့်သုံး စာသား ။ TikTok ဗီဒီယိုအတွက် စကားပြောscript!
-          </p>
         </div>
 
         <div className="space-y-2">
@@ -63,7 +60,7 @@ const PrimaryContentInputs = ({ formData, updateFormData }: PrimaryContentInputs
             id="productName"
             value={formData.productName}
             onChange={(e) => updateFormData({ productName: e.target.value })}
-            placeholder="သင့်ထုတ်ကုန် သို့မဟုတ် လုပ်ငန်းအမည်ကို ထည့်ပါ"
+            placeholder="ထုတ်ကုန် သို့မဟုတ် လုပ်ငန်းအမည်ကို ထည့်ပါ"
             className="focus:ring-myanmar-red focus:border-myanmar-red"
           />
         </div>
