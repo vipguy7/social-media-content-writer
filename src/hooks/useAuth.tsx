@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const fetchProfile = useCallback(async () => {
     const { data: { user: currentUser } } = await supabase.auth.getUser();
     if (currentUser) {
-      const { data, error } = await supabase
+      let { data, error } = await supabase
         .from('profiles')
         .select('credits, full_name, avatar_url, referral_code, referred_by_user_id, profile_completion_bonus_awarded')
         .eq('id', currentUser.id)
@@ -49,11 +49,27 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (error) {
         console.error("Error fetching profile:", error);
         setProfile(null);
-      } else if (data) {
-        setProfile(data as Profile);
-      } else {
-        setProfile(null);
+        return;
       }
+
+      if (!data) {
+        // Profile doesn't exist, create it and get the new row back.
+        console.log("No profile found for user, creating one.");
+        const { data: newData, error: insertError } = await supabase
+            .from('profiles')
+            .insert({ id: currentUser.id })
+            .select('credits, full_name, avatar_url, referral_code, referred_by_user_id, profile_completion_bonus_awarded')
+            .single();
+
+        if (insertError) {
+            console.error("Error creating profile:", insertError);
+            setProfile(null);
+            return;
+        }
+        data = newData;
+      }
+
+      setProfile(data as Profile);
     }
   }, []);
 
