@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import Header from '@/components/Header';
+import AdPlaceholder from '@/components/AdPlaceholder';
 import AnimatedLoader from '@/components/AnimatedLoader';
 import ContentFormConfig from '@/components/ContentFormConfig';
 import ResultsPanel from '@/components/ResultsPanel';
@@ -50,6 +51,16 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col bg-white animate-fade-in">
       <Header />
+
+      {/* Header Banner Ad */}
+      <div className="w-full flex justify-center bg-background pt-2 pb-1">
+        <AdPlaceholder 
+          width={isMobile ? '320px' : '728px'} 
+          height={isMobile ? '50px' : '90px'} 
+          label={isMobile ? "320x50 Banner" : "728x90 Banner"}
+          className="my-1"
+        />
+      </div>
 
       {/* Responsive main area */}
       <main className="flex-1 w-full flex flex-col items-stretch px-1 sm:px-3 pb-6 max-w-4xl mx-auto">
@@ -103,6 +114,16 @@ const Index = () => {
                 onExportAll={exportAllContent}
                 onSave={handleSaveContent}
               />
+              {/* Sidebar Ad - Desktop only */}
+              {!isMobile && (
+                 <div className="mt-6 flex justify-center">
+                   <AdPlaceholder 
+                     width="300px"
+                     height="250px"
+                     label="300x250 Ad"
+                   />
+                 </div>
+              )}
             </div>
           </aside>
         </section>

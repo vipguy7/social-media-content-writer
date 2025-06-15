@@ -5,6 +5,7 @@ import { Loader2, Wand2 } from 'lucide-react';
 import { ContentFormData } from '@/types/content';
 import PrimaryContentInputs from './PrimaryContentInputs';
 import AdvancedContentOptions from './AdvancedContentOptions';
+import AdPlaceholder from './AdPlaceholder';
 
 interface ContentFormConfigProps {
   formData: ContentFormData;
@@ -38,6 +39,17 @@ const ContentFormConfig = ({
       </CardHeader>
       <CardContent className="space-y-6">
         <PrimaryContentInputs formData={formData} updateFormData={updateFormData} />
+        
+        {/* In-Content Ad */}
+        <div className="py-2">
+          <AdPlaceholder 
+            width="100%" 
+            height="280px" 
+            label="336x280 Ad"
+            className="max-w-[336px] mx-auto"
+          />
+        </div>
+
         <AdvancedContentOptions formData={formData} updateFormData={updateFormData} />
 
         {/* Generate Buttons */}
