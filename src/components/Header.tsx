@@ -53,9 +53,9 @@ const Header = () => {
           )}
           <div>
             <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Myanmar Content Crafter
+              Myanmar Content Writer
             </h1>
-            <p className="text-xs text-muted-foreground">Professional မြန်မာ Content ဖန်တီးရေး AI</p>
+            <p className="text-xs text-muted-foreground">မြန်မာအွန်လိုင်းစီးပွားရေးများအတွက် အထူးလုပ်ဆောင်ပေးနိုင်သည့် AI </p>
           </div>
         </div>
 

@@ -29,7 +29,7 @@ const AudienceTargeting = ({ formData, updateFormData }: AudienceTargetingProps)
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Target className="w-5 h-5 text-myanmar-red" />
-          ရည်မှန်းပရိသတ် ခွဲခြမ်းစိတ်ဖြာမှု
+          သင့်လုပ်ငန်းအတွက် ပရိသတ် အုပ်စု ရွေးချယ်ခြင်း
         </CardTitle>
         <CardDescription>
           သင့်လုပ်ငန်းအတွက် သင့်လျော်သော ပရိသတ် အုပ်စုကို ရွေးချယ်ပါ။
@@ -102,7 +102,7 @@ const AudienceTargeting = ({ formData, updateFormData }: AudienceTargetingProps)
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="detailedAudience">ပရိသတ်ကို အသေးစိတ် ဖော်ပြချက်</Label>
+          <Label htmlFor="detailedAudience">အသေးစိတ် ဖော်ပြချက်</Label>
           <Textarea
             id="detailedAudience"
             value={formData.targetAudience}

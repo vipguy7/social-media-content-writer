@@ -35,10 +35,10 @@ const ContentFormConfig = ({
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-xl">
           <Wand2 className="w-7 h-7 text-myanmar-red drop-shadow-glow" />
-          <span>ပိုစ့်အမျိုးအစားရွေးပါ၊ ပိုမိုတော့ အံ့သြဖွယ် <span className="text-myanmar-red">AI</span> ဖန်တီးမှု!</span>
+          <span>ပိုစ့်အမျိုးအစားရွေးပါ၊ </span>
         </CardTitle>
         <CardDescription className="font-medium text-base">
-          သင့် Facebook ပိုစ့် သို့မဟုတ် TikTok ဗီဒီယို စကားပြောဆိုမှုအတွက် အချက်အလက်များ ဖြည့်ဆိုပြီး စတင်ရေးသားပါ။
+          သင့် Facebook ပိုစ့် သို့မဟုတ် TikTok ဗီဒီယိုအတွက် ပိုစ့်ရေးသားပေးနိုင်ရန် လိုအပ်သော အချက်အလက်များကို ဖြည့်ပါ။
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -66,7 +66,7 @@ const ContentFormConfig = ({
               </SelectContent>
             </Select>
             <p className="text-xs text-muted-foreground mt-1">
-              Facebook: ပုံမှန် ပိုစ့် အတွက် ချစ်ခင်ဖွယ် အကြောင်းအရာ။ TikTok: ဗီဒီယိုအတွက် စကားပြောနည်း script!
+              Facebook ပိုစ့်အတွက် အဆင်သင့်သုံး စာသား ။ TikTok ဗီဒီယိုအတွက် စကားပြောscript!
             </p>
           </div>
 
@@ -78,7 +78,7 @@ const ContentFormConfig = ({
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="promotional">ကြော်ငြာ ပိုစ့်</SelectItem>
-                <SelectItem value="educational">ထုတ်ကုန်နှင့်ပတ်သတ်သည်များကို ရှင်းပြသည့် ပိုစ့်</SelectItem>
+                <SelectItem value="educational">ထုတ်ကုန်/လုပ်ငန်း အကြောင်းအရာ ပိုစ့်</SelectItem>
                 <SelectItem value="entertaining">ဖျော်ဖြေ်ရေးဆန်သော ပိုစ့်</SelectItem>
                 <SelectItem value="news">Press Release</SelectItem>
                 <SelectItem value="community">အားပေးသူ တိုးလာစေချင်တဲ့ ပိုစ့်</SelectItem>
@@ -191,7 +191,7 @@ const ContentFormConfig = ({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="targetAudience">ပစ်မှတ် ပရိသတ်</Label>
+            <Label htmlFor="targetAudience">ရည်မှန်းလိုသည့် ပရိသတ်</Label>
             <Input
               id="targetAudience"
               value={formData.targetAudience}
@@ -275,7 +275,7 @@ const ContentFormConfig = ({
                   alt="Generating content animation..."
                   className="h-12 w-auto mx-auto mb-2"
                 />
-                <span>ရေးနေပါပြီ ခင်ဗျာ..ခဏလေးစိတ်ရှည်ပေးပါ.မကြာပါဘူး...</span>
+                <span>ရေးသားပေးနေပါပြီ</span>
               </div>
             ) : (
               <>
