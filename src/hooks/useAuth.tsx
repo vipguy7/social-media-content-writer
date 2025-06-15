@@ -1,3 +1,4 @@
+
 import { createContext, useContext, useEffect, useState, useMemo, useCallback } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
@@ -94,7 +95,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setSession(initialSession);
       setUser(initialSession?.user ?? null);
       if (initialSession?.user) {
-        await Promise.all([fetchProfile(), checkSubscription()]);
+        try {
+          await Promise.all([fetchProfile(), checkSubscription()]);
+        } catch (error) {
+          console.error("Error fetching initial user data:", error);
+          setProfile(null);
+          setSubscription(null);
+        }
       }
       setLoading(false);
     };
@@ -105,7 +112,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setSession(newSession);
         setUser(newSession?.user ?? null);
         if (newSession?.user) {
-          await Promise.all([fetchProfile(), checkSubscription()]);
+          try {
+            await Promise.all([fetchProfile(), checkSubscription()]);
+          } catch (error) {
+            console.error("Error fetching user data on auth change:", error);
+            setProfile(null);
+            setSubscription(null);
+          }
         } else {
           setProfile(null);
           setSubscription(null);

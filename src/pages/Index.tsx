@@ -98,7 +98,7 @@ const Index = () => {
             <div className="animate-slide-in-left">
               <ContentFormConfig
                 formData={formData}
-                setFormData={updateFormData}
+                updateFormData={updateFormData}
                 onGenerate={handleGenerateContent}
                 isLoading={isLoading}
                 hasContent={generatedContent.length > 0}

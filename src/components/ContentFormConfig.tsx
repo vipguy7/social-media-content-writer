@@ -9,7 +9,7 @@ import AdPlaceholder from './AdPlaceholder';
 
 interface ContentFormConfigProps {
   formData: ContentFormData;
-  setFormData: (data: ContentFormData) => void;
+  updateFormData: (updates: Partial<ContentFormData>) => void;
   onGenerate: () => void;
   isLoading: boolean;
   hasContent: boolean;
@@ -17,14 +17,11 @@ interface ContentFormConfigProps {
 
 const ContentFormConfig = ({ 
   formData, 
-  setFormData, 
+  updateFormData, 
   onGenerate, 
   isLoading, 
   hasContent 
 }: ContentFormConfigProps) => {
-  const updateFormData = (updates: Partial<ContentFormData>) => {
-    setFormData({ ...formData, ...updates });
-  };
 
   return (
     <Card className="glass-card animate-fade-in">

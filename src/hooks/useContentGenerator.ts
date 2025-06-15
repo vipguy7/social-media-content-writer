@@ -178,7 +178,7 @@ export const useContentGenerator = (user: User | null, fetchProfile: () => Promi
 
   return {
     formData,
-    updateFormData: setFormData, // Exposing setFormData directly
+    updateFormData, // Correctly exporting the partial update helper
     isLoading,
     error,
     generatedContent,
