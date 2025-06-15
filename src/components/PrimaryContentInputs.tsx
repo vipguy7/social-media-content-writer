@@ -69,12 +69,12 @@ const PrimaryContentInputs = ({ formData, updateFormData }: PrimaryContentInputs
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="keyMessage">အဓိက မက်ဆေ့ခ် *</Label>
+          <Label htmlFor="keyMessage">ရေးသားလိုသည့် အကြောင်းအရာ*</Label>
           <Textarea
             id="keyMessage"
             value={formData.keyMessage}
             onChange={(e) => updateFormData({ keyMessage: e.target.value })}
-            placeholder="အဓိက ဘာပြောချင်တာလဲ?"
+            placeholder="သင့်ရဲ့ ဘယ်လို ထုတ်ကုန်/ဝန်ဆောင်မှု/လုပ်ငန်း အကြောင်း ကြော်ငြာချင်သလဲဆိုတာ အစအဆုံးရေးစရာမလိုဘဲ အဓိက စကားလုံးစုများကို ကော်မာခံပြီးရေးပေးပါ. ဥပမာ - အသားဖြူချင်သူများအတွက်,ထုတ်ကုန်အသစ်,သဘာဝပစွည်းများဖြင့်သာထုတ်လုပ်"
             rows={3}
             className="focus:ring-myanmar-red focus:border-myanmar-red"
           />
