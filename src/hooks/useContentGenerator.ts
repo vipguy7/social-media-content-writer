@@ -13,6 +13,7 @@ export const useContentGenerator = (user: User | null, fetchProfile: () => Promi
   const [generatedContent, setGeneratedContent] = useState<string[]>([]);
   const [qaMetrics, setQAMetrics] = useState<QAMetrics | null>(null);
   const [marketingInsights, setMarketingInsights] = useState<MarketingInsights | null>(null);
+  const [showInterstitialAd, setShowInterstitialAd] = useState(false);
 
   const [formData, setFormData] = useState<ContentFormData>({
     platform: 'facebook',
@@ -94,6 +95,8 @@ export const useContentGenerator = (user: User | null, fetchProfile: () => Promi
       setQAMetrics(mockQA);
       
       await fetchProfile();
+
+      setShowInterstitialAd(true);
 
       toast({
         title: "အဆင့်မြင့် ကွန်တင့် အောင်မြင်စွာ ဖန်တီးပြီးပါပြီ!",
@@ -185,5 +188,7 @@ export const useContentGenerator = (user: User | null, fetchProfile: () => Promi
     handleSaveContent,
     copyToClipboard,
     exportAllContent,
+    showInterstitialAd,
+    setShowInterstitialAd,
   };
 };

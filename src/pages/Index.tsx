@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
@@ -13,6 +12,7 @@ import { Book, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useContentGenerator } from '@/hooks/useContentGenerator';
+import InterstitialAd from '@/components/InterstitialAd';
 
 const Index = () => {
   const { user, loading, fetchProfile } = useAuth();
@@ -31,6 +31,8 @@ const Index = () => {
     handleSaveContent,
     copyToClipboard,
     exportAllContent,
+    showInterstitialAd,
+    setShowInterstitialAd,
   } = useContentGenerator(user, fetchProfile!);
 
   useEffect(() => {
@@ -139,6 +141,10 @@ const Index = () => {
           />
         </div>
       </div>
+      
+      {showInterstitialAd && (
+        <InterstitialAd onClose={() => setShowInterstitialAd(false)} />
+      )}
     </div>
   );
 };
