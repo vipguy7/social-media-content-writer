@@ -116,17 +116,7 @@ const AudienceTargeting = ({ formData, updateFormData }: AudienceTargetingProps)
         <div className="p-4 bg-gradient-to-r from-blue-50 to-pink-50 rounded-lg border">
           <div className="flex items-start gap-3">
             <div className="p-2 bg-white rounded-full">
-              <Target className="w-4 h-4 text-myanmar-red" />
-            </div>
-            <div className="flex-1">
-              <h4 className="font-medium text-sm mb-1"> အရေးအသား ပိုကောင်းအောင် အကြံလေးတစ်ခု ပေးပါရစေ</h4>
-              <p className="text-xs text-muted-foreground">
-                သင့်လုပ်ငန်းနှင့် ကြော်ငြာလိုတဲ့ အကြောင်းအရာ/အချက်အလက် များများပြောပြပေးနိုင်မယ်ဆိုရင် ပိုကောင်းအောင် ရေးသားပေးနိုင်ပါလိမ့်မည်။ 
-                ဥပမာ - "ရန်ကုန်မြို့ရှိ အမျိုးသမီးများ"လို့မပြောဘဲ "ရန်ကုန်မြို့ရှိ အမျိုးသမီး လူငယ် အလှအပ ကြိုက်နှစ်သက်သူများ" ဟု ရေးသားပေးပါ။
-                အချက်အလက်တူပြီး မတူတဲ့ အကြောင်းအရာများကို များများရေးသားစေလိုပါက တစ်ခါရေးသားပြီးတိုင်း အချက်အလက်များကို မပြောင်းလဲဘဲ 
-                "ရေးသားပါ" ခလုတ်ကို ထပ်ခါထပ်နှိပ်ပေးပါ။ ကြိုက်နှစ်သက်တဲ့ ပုံစံရပါက ဖိုင်ဖြင့် သိမ်းဆည်းနိုင်ပါသည်။ 
-        
-              </p>
+              <Target className="w-4 h-4 text-blue-500" />
             </div>
           </div>
         </div>
