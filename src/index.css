@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,60 +7,63 @@
 
 @layer base {
   :root {
-    --background: rgb(232, 230, 237);
-    --foreground: rgb(30, 32, 32);
-    --card: rgb(25, 116, 146);
-    --card-foreground: rgb(24, 24, 24);
+    --background: rgb(248, 250, 252);
+    --foreground: rgb(15, 23, 42);
+    --card: rgb(255, 255, 255);
+    --card-foreground: rgb(15, 23, 42);
     --popover: rgb(255, 255, 255);
-    --popover-foreground: rgb(20, 39, 42);
-    --primary: rgb(24, 145, 185);
-    --primary-foreground: rgb(227, 216, 198);
-    --secondary:rgb(18, 154, 199);
-    --secondary-foreground: rgb(85, 112, 163);
-    --muted: rgb(32, 101, 125);
-    --muted-foreground: rgb(49, 69, 78);
-    --accent: rgb(203, 205, 205);
-    --accent-foreground: rgb(225, 223, 223);
-    --destructive: rgb(1, 148, 170);
-    --destructive-foreground: rgb(23, 86, 96);
-    --border: rgb(14, 17, 21);
-    --input:rgb(9, 10, 12);
-    --ring: rgba(17, 19, 19, 0.8);
-    --radius: 10px; /* Kept existing radius */
-
+    --popover-foreground: rgb(15, 23, 42);
+    --primary: rgb(59, 130, 246);
+    --primary-foreground: rgb(255, 255, 255);
+    --secondary: rgb(241, 245, 249);
+    --secondary-foreground: rgb(51, 65, 85);
+    --muted: rgb(241, 245, 249);
+    --muted-foreground: rgb(100, 116, 139);
+    --accent: rgb(241, 245, 249);
+    --accent-foreground: rgb(51, 65, 85);
+    --destructive: rgb(239, 68, 68);
+    --destructive-foreground: rgb(255, 255, 255);
+    --border: rgb(226, 232, 240);
+    --input: rgb(255, 255, 255);
+    --ring: rgb(59, 130, 246);
+    --radius: 10px;
+    --myanmar-red: rgb(220, 38, 127);
+    --myanmar-gold: rgb(251, 191, 36);
   }
 
   .dark {
-    --background: rgb(209, 202, 194);
-    --foreground: rgb(12, 12, 12);
-    --card:rgb(53, 88, 97);
-    --card-foreground: rgb(33, 40, 46);
-    --popover: rgb(40, 40, 45);
-    --popover-foreground: rgb(255, 255, 255);
-    --primary: rgb(170, 170, 170);
-    --primary-foreground: #040404;
-    --secondary: rgb(82, 118, 130);
-    --secondary-foreground: rgb(153, 152, 151);
-    --muted: rgb(15, 15, 15);
-    --muted-foreground: rgb(120, 120, 120);
-    --accent: rgb(29, 179, 243);
-    --accent-foreground: rgb(203, 206, 207);
-    --destructive: rgb(106, 6, 136);
-    --destructive-foreground: rgb(230, 52, 250);
-    --border: rgb(30, 31, 31);
-    --input: rgb(63, 62, 62);
-    --ring: rgb(34, 34, 34);
+    --background: rgb(2, 6, 23);
+    --foreground: rgb(248, 250, 252);
+    --card: rgb(15, 23, 42);
+    --card-foreground: rgb(248, 250, 252);
+    --popover: rgb(15, 23, 42);
+    --popover-foreground: rgb(248, 250, 252);
+    --primary: rgb(59, 130, 246);
+    --primary-foreground: rgb(255, 255, 255);
+    --secondary: rgb(30, 41, 59);
+    --secondary-foreground: rgb(203, 213, 225);
+    --muted: rgb(30, 41, 59);
+    --muted-foreground: rgb(148, 163, 184);
+    --accent: rgb(30, 41, 59);
+    --accent-foreground: rgb(203, 213, 225);
+    --destructive: rgb(239, 68, 68);
+    --destructive-foreground: rgb(255, 255, 255);
+    --border: rgb(51, 65, 85);
+    --input: rgb(30, 41, 59);
+    --ring: rgb(59, 130, 246);
+    --myanmar-red: rgb(236, 72, 153);
+    --myanmar-gold: rgb(251, 191, 36);
   }
 }
 
 @layer base {
   * {
-    border-color: var(--border);
+    border-color: hsl(var(--border));
   }
 
   body {
-    background-color: var(--background);
-    color: var(--foreground);
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
     font-family: 'Noto Sans Myanmar', 'Pyidaungsu', sans-serif;
     line-height: 1.8;
     -webkit-font-smoothing: antialiased;
@@ -84,11 +88,27 @@
     @apply font-myanmar text-base text-foreground;
   }
 
-  .glass-morphism {
-    background: #eaeaeb;
-    border: 4px solid #2d2d2e;
-    background: rgb(21, 20, 20);
-    border: 4px solid rgb(59, 58, 58);
+  .glass-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
+
+  .business-gradient {
+    background: linear-gradient(135deg, rgb(59, 130, 246) 0%, rgb(147, 51, 234) 100%);
+  }
+
+  .text-myanmar-red {
+    color: rgb(220, 38, 127);
+  }
+
+  .text-myanmar-gold {
+    color: rgb(251, 191, 36);
+  }
+
+  .drop-shadow-glow {
+    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.3));
   }
 }
 
@@ -97,12 +117,17 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-@media (max-width: 768px) {
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
 
+.animate-float {
+  animation: float 6s ease-in-out infinite;
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -111,8 +136,9 @@
 
 ::-webkit-scrollbar-thumb {
   background: hsl(var(--border));
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--foreground));
+  background: hsl(var(--foreground) / 0.5);
 }
