@@ -41,13 +41,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         .from('profiles')
         .select('credits, full_name, avatar_url')
         .eq('id', currentUser.id)
-        .single();
+        .maybeSingle();
       
       if (error) {
         console.error("Error fetching profile:", error);
         setProfile(null);
       } else if (data) {
         setProfile(data as Profile);
+      } else {
+        setProfile(null);
       }
     }
   }, []);
@@ -63,9 +65,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       .from('subscribers')
       .select('subscribed, subscription_tier, subscription_end')
       .eq('user_id', currentUser.id)
-      .single();
+      .maybeSingle();
 
-    if (error && error.code !== 'PGRST116') { // PGRST116: no rows returned
+    if (error) {
       console.error("Error fetching subscription:", error);
       setSubscription({ isSubscribed: false, tier: null, endDate: null });
       return;
