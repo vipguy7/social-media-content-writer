@@ -29,18 +29,15 @@ const AudienceTargeting = ({ formData, updateFormData }: AudienceTargetingProps)
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Target className="w-5 h-5 text-myanmar-red" />
-          သင့်လုပ်ငန်းအတွက် ပရိသတ် ရွေးချယ်ခြင်း
+          ပိုစ့်တွင်သုံးမည့် စကားပြောဟန်
         </CardTitle>
-        <CardDescription>
-          သင့်လုပ်ငန်းအတွက် သင့်လျော်သော ပရိသတ်ကို ရွေးချယ်ပါ။
-        </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid md:grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label htmlFor="audienceGender" className="flex items-center gap-2">
               {getAudienceIcon()}
-              ပရိသတ်
+              စကားပြောဟန်
             </Label>
             <Select 
               value={formData.targetAudience.includes('အမျိုးသမီး') ? 'female' : 
@@ -49,31 +46,31 @@ const AudienceTargeting = ({ formData, updateFormData }: AudienceTargetingProps)
                 const audienceMap = {
                   'female': 'အမျိုးသမီးများ',
                   'male': 'အမျိုးသားများ',
-                  'general': 'ယေဘုယျ ပရိသတ်'
+                  'general': 'မည်သူမဆို'
                 };
                 updateFormData({ targetAudience: audienceMap[value as keyof typeof audienceMap] });
               }}
             >
               <SelectTrigger>
-                <SelectValue placeholder="ပရိသတ် ရွေးချယ်ပါ" />
+                <SelectValue placeholder="ပိုစ့် အရေးအသား" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="female">
                   <div className="flex items-center gap-2">
                     <Heart className="w-4 h-4 text-pink-500" />
-                    မိန်းမဆန်သော အရေးအသား (နူးညံ့၊ ယဉ်ကျေးသော အသံ)
+                    မိန်းမဆန်သော(နူးညံ့၊ ယဉ်ကျေးသော အသံ)
                   </div>
                 </SelectItem>
                 <SelectItem value="male">
                   <div className="flex items-center gap-2">
                     <Zap className="w-4 h-4 text-blue-500" />
-                    ယောက်ျားဆန်သော အရေးအသား (အားကောင်း၊ ရဲရင့်သော အသံ)
+                    ယောက်ျားဆန်သော(အားကောင်း၊ ရဲရင့်သော အသံ)
                   </div>
                 </SelectItem>
                 <SelectItem value="general">
                   <div className="flex items-center gap-2">
                     <Users className="w-4 h-4 text-gray-500" />
-                    ယေဘုယျ ပရိသတ် (မျှတသော အသံ)
+                    ကျား၊မ မရွေးသင့်လျော်
                   </div>
                 </SelectItem>
               </SelectContent>
