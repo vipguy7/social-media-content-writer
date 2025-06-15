@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from './ui/button';
@@ -95,8 +94,11 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ profile, onUpdate }) => {
 
             if (uploadError) throw uploadError;
 
-            const publicUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/avatars/${filePath}`;
-            setAvatarUrl(publicUrl);
+            const { data } = supabase.storage
+                .from('avatars')
+                .getPublicUrl(filePath);
+            
+            setAvatarUrl(data.publicUrl);
             toast.success('Avatar Uploaded', { description: 'Your avatar has been successfully uploaded.' });
         } catch (error: any) {
             toast.error('Upload Failed', { description: error.message });
