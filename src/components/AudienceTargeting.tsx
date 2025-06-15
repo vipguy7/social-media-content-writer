@@ -109,16 +109,7 @@ const AudienceTargeting = ({ formData, updateFormData }: AudienceTargetingProps)
             onChange={(e) => updateFormData({ targetAudience: e.target.value })}
             placeholder="ဥပမာ - ရန်ကုန်မြို့ရှိ အမျိုးသမီး လူငယ် ပရော်ဖက်ရှင်နယ်များ၊ လှပမှုကို ဂရုစိုက်သူများ"
             rows={3}
-            className="focus:ring-myanmar-red focus:border-myanmar-red"
-          />
-        </div>
-
-        <div className="p-4 bg-gradient-to-r from-blue-50 to-pink-50 rounded-lg border">
-          <div className="flex items-start gap-3">
-            <div className="p-2 bg-white rounded-full">
-              <Target className="w-4 h-4 text-blue-500" />
-            </div>
-          </div>
+            className="focus:ring-myanmar-red focus:border-myanmar-red"/>
         </div>
       </CardContent>
     </Card>
