@@ -1,3 +1,4 @@
+
 import { createContext, useContext, useEffect, useState, useMemo, useCallback } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
@@ -91,36 +92,44 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     setLoading(true);
+
+    supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
+      setSession(currentSession);
+      setUser(currentSession?.user ?? null);
+      setLoading(false);
+    });
     
     const { data: { subscription: authSubscription } } = supabase.auth.onAuthStateChange(
-      async (_event, newSession) => {
+      (_event, newSession) => {
         setSession(newSession);
         setUser(newSession?.user ?? null);
-        
-        if (newSession?.user) {
-          try {
-            await Promise.all([fetchProfile(), checkSubscription()]);
-          } catch (error) {
-            console.error("Error fetching user data on auth change:", error);
-            setProfile(null);
-            setSubscription(null);
-          }
-        } else {
-          setProfile(null);
-          setSubscription(null);
-        }
-        
         setLoading(false);
       }
     );
 
     return () => authSubscription.unsubscribe();
-  }, [fetchProfile, checkSubscription]);
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      const loadUserData = async () => {
+        try {
+          await Promise.all([fetchProfile(), checkSubscription()]);
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+          setProfile(null);
+          setSubscription(null);
+        }
+      };
+      loadUserData();
+    } else {
+      setProfile(null);
+      setSubscription(null);
+    }
+  }, [user, fetchProfile, checkSubscription]);
 
   const signOut = async () => {
     await supabase.auth.signOut();
-    setProfile(null);
-    setSubscription(null);
   };
 
   const value = useMemo(() => ({
