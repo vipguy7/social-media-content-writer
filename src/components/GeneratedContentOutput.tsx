@@ -51,27 +51,27 @@ const GeneratedContentOutput = ({ content, onCopy, onExportAll, onSave }: Genera
 
   return (
     <div className="space-y-6">
-      {/* Content Variations */}
-      <Card className="glass-card animate-slide-up">
-        <CardHeader>
-          <div className="flex items-center justify-between">
+      <Card className="glass-card animate-slide-up border-2">
+        <CardHeader className="pb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <CardTitle className="flex items-center gap-2">
-                <FileText className="w-5 h-5 text-myanmar-red" />
-               ရေးပြီးပါပြီ
+              <CardTitle className="flex items-center gap-3 text-foreground font-semibold text-xl">
+                <FileText className="w-6 h-6 text-primary" />
+                <span className="myanmar-text">ရေးပြီးပါပြီ</span>
               </CardTitle>
-              <CardDescription>
+              <CardDescription className="text-muted-foreground font-medium mt-2">
                 အဆင့်သင့် အသုံးပြုရန် ပိုစ့် {content.length} မျိုး
               </CardDescription>
             </div>
-            <div className="flex gap-2">
+            
+            <div className="flex flex-col sm:flex-row gap-3">
               {onSave && (
-                <div className="flex items-center gap-2">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                   <Button
                     onClick={handleSelectAll}
                     variant="outline"
                     size="sm"
-                    className="hover:bg-myanmar-red hover:text-white transition-colors"
+                    className="text-foreground border-2 hover:bg-primary hover:text-primary-foreground font-medium px-4 py-2"
                   >
                     <Check className="w-4 h-4 mr-2" />
                     {selectedItems.length === content.length ? 'Deselect All' : 'Select All'}
@@ -80,7 +80,7 @@ const GeneratedContentOutput = ({ content, onCopy, onExportAll, onSave }: Genera
                     onClick={handleSave}
                     disabled={selectedItems.length === 0 || isSaving}
                     size="sm"
-                    className="bg-myanmar-red hover:bg-myanmar-red/90 text-white"
+                    className="btn-visible px-4 py-2 font-semibold"
                   >
                     <Save className="w-4 h-4 mr-2" />
                     {isSaving ? 'Saving...' : `Save Selected (${selectedItems.length})`}
@@ -91,19 +91,20 @@ const GeneratedContentOutput = ({ content, onCopy, onExportAll, onSave }: Genera
                 onClick={onExportAll}
                 variant="outline"
                 size="sm"
-                className="hover:bg-myanmar-red hover:text-white transition-colors"
+                className="text-foreground border-2 hover:bg-primary hover:text-primary-foreground font-medium px-4 py-2"
               >
                 <Download className="w-4 h-4 mr-2" />
-                အားလုံး ထုတ်ယူပါ
+                <span className="myanmar-text">အားလုံး ထုတ်ယူပါ</span>
               </Button>
             </div>
           </div>
         </CardHeader>
+        
         <CardContent className="space-y-4">
           {content.map((variation, index) => (
             <div
               key={index}
-              className="relative p-4 bg-gradient-to-r from-slate-50 to-white border border-slate-200 rounded-lg hover:shadow-md transition-shadow"
+              className="relative p-6 bg-card border-2 border-border rounded-xl hover:shadow-lg hover:border-primary/30 transition-all duration-300"
             >
               <div className="flex items-start justify-between gap-4">
                 {onSave && (
@@ -111,23 +112,25 @@ const GeneratedContentOutput = ({ content, onCopy, onExportAll, onSave }: Genera
                     <Checkbox
                       checked={selectedItems.includes(index)}
                       onCheckedChange={() => handleItemSelect(index)}
-                      className="mr-3"
+                      className="mr-4 mt-1"
                     />
                   </div>
                 )}
+                
                 <div className="flex-1">
-                  <div className="text-xs text-muted-foreground mb-2 font-medium">
-                    ရွေးချယ်စရာ {index + 1}
+                  <div className="text-sm text-muted-foreground mb-3 font-semibold">
+                    <span className="myanmar-text">ရွေးချယ်စရာ {index + 1}</span>
                   </div>
-                  <p className="text-sm leading-relaxed text-foreground whitespace-pre-wrap">
+                  <p className="text-base leading-relaxed text-foreground whitespace-pre-wrap font-medium myanmar-text">
                     {variation}
                   </p>
                 </div>
+                
                 <Button
                   onClick={() => onCopy(variation)}
                   variant="ghost"
                   size="sm"
-                  className="hover:bg-myanmar-red hover:text-white transition-colors shrink-0"
+                  className="hover:bg-primary hover:text-primary-foreground transition-all duration-200 shrink-0 p-2"
                 >
                   <Copy className="w-4 h-4" />
                 </Button>

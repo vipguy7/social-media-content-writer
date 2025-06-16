@@ -63,34 +63,36 @@ const Index = () => {
             <HeroSection />
         </div>
 
-        <div className="w-full flex justify-center bg-background py-2">
+        <div className="w-full flex justify-center bg-background py-4">
             <AdPlaceholder 
                 width={isMobile ? '320px' : '728px'} 
                 height={isMobile ? '50px' : '90px'} 
                 label={isMobile ? "320x50 Banner" : "728x90 Banner"}
-                className="my-1"
+                className="my-2"
             />
         </div>
 
-        <div className="w-full max-w-7xl mx-auto px-1 sm:px-3 pb-6" id="content-generator">
+        <div className="w-full max-w-7xl mx-auto px-2 sm:px-4 pb-8" id="content-generator">
           {isCreditError ? (
-            <Alert variant="destructive" className="my-4 animate-fade-in">
-              <AlertCircle className="h-4 w-4" />
-              <AlertTitle>Credit Depleted</AlertTitle>
-              <AlertDescription className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                <span>You've run out of credits. Please subscribe or earn more to continue generating content.</span>
-                <Button onClick={() => navigate('/billing')} className="adorable-gradient text-white hover:opacity-90 whitespace-nowrap mt-2 sm:mt-0">
-                  Go to Billing Page
-                </Button>
-              </AlertDescription>
-            </Alert>
+            <div className="my-6 p-6 border-2 border-destructive rounded-xl bg-destructive/5 animate-fade-in">
+              <div className="flex items-start gap-4">
+                <AlertCircle className="h-6 w-6 text-destructive mt-1 flex-shrink-0" />
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-destructive mb-2">Credit Depleted</h3>
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <p className="text-foreground font-medium">You've run out of credits. Please subscribe or earn more to continue generating content.</p>
+                    <Button onClick={() => navigate('/billing')} className="btn-visible whitespace-nowrap">
+                      Go to Billing Page
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
           ) : (
             <ErrorDisplay error={error} />
           )}
 
-          <section className={
-            "flex-1 w-full flex flex-col-reverse gap-5 md:gap-8 md:flex-row mt-1 md:mt-6 transition-all duration-300"
-          }>
+          <section className="flex-1 w-full flex flex-col-reverse gap-6 md:gap-8 md:flex-row mt-2 md:mt-8 transition-all duration-300">
             <div className="w-full md:w-2/3 flex flex-col">
               <div className="animate-slide-in-left">
                 <ContentFormConfig
@@ -102,7 +104,8 @@ const Index = () => {
                 />
               </div>
             </div>
-            <aside className={`w-full md:w-1/3 flex flex-col pt-1 md:pt-0 ${isMobile ? "order-first" : "order-none"}`}>
+            
+            <aside className={`w-full md:w-1/3 flex flex-col pt-2 md:pt-0 ${isMobile ? "order-first" : "order-none"}`}>
               <div className="animate-slide-in-right">
                 <ResultsPanel
                   marketingInsights={marketingInsights}
@@ -113,11 +116,12 @@ const Index = () => {
                   onSave={handleSaveContent}
                 />
                 {!isMobile && (
-                   <div className="mt-6 flex justify-center">
+                   <div className="mt-8 flex justify-center">
                      <AdPlaceholder 
                        width="300px"
                        height="250px"
                        label="300x250 Ad"
+                       className="border-2"
                      />
                    </div>
                 )}
@@ -127,7 +131,7 @@ const Index = () => {
         </div>
       </main>
 
-      <div className="fixed bottom-3 right-1/2 translate-x-1/2 sm:right-7 sm:translate-x-0 z-50 pointer-events-none">
+      <div className="fixed bottom-4 right-1/2 translate-x-1/2 sm:right-8 sm:translate-x-0 z-50 pointer-events-none">
         <div className="pointer-events-auto">
           <FloatingActionButton
             onClick={handleGenerateContent}
