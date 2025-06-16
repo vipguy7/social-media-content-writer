@@ -50,13 +50,13 @@ const GeneratedContentOutput = ({ content, onCopy, onExportAll, onSave }: Genera
   };
 
   return (
-    <div className="space-y-6">
-      <Card className="glass-card animate-slide-up border-2">
+    <div className="space-y-6 w-full">
+      <Card className="glass-card animate-slide-up border-2 w-full">
         <CardHeader className="pb-4">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex flex-col gap-4">
             <div>
               <CardTitle className="flex items-center gap-3 text-foreground font-semibold text-xl">
-                <FileText className="w-6 h-6 text-primary" />
+                <FileText className="w-6 h-6 text-primary flex-shrink-0" />
                 <span className="myanmar-text">ရေးပြီးပါပြီ</span>
               </CardTitle>
               <CardDescription className="text-muted-foreground font-medium mt-2">
@@ -64,36 +64,42 @@ const GeneratedContentOutput = ({ content, onCopy, onExportAll, onSave }: Genera
               </CardDescription>
             </div>
             
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex flex-col gap-3 w-full">
               {onSave && (
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-                  <Button
-                    onClick={handleSelectAll}
-                    variant="outline"
-                    size="sm"
-                    className="text-foreground border-2 hover:bg-primary hover:text-primary-foreground font-medium px-4 py-2"
-                  >
-                    <Check className="w-4 h-4 mr-2" />
-                    {selectedItems.length === content.length ? 'Deselect All' : 'Select All'}
-                  </Button>
-                  <Button
-                    onClick={handleSave}
-                    disabled={selectedItems.length === 0 || isSaving}
-                    size="sm"
-                    className="btn-visible px-4 py-2 font-semibold"
-                  >
-                    <Save className="w-4 h-4 mr-2" />
-                    {isSaving ? 'Saving...' : `Save Selected (${selectedItems.length})`}
-                  </Button>
+                <div className="flex flex-col gap-2 w-full">
+                  <div className="flex flex-col sm:flex-row gap-2 w-full">
+                    <Button
+                      onClick={handleSelectAll}
+                      variant="outline"
+                      size="sm"
+                      className="text-foreground border-2 hover:bg-primary hover:text-primary-foreground font-medium flex-1 min-w-0"
+                    >
+                      <Check className="w-4 h-4 mr-2 flex-shrink-0" />
+                      <span className="truncate">
+                        {selectedItems.length === content.length ? 'Deselect All' : 'Select All'}
+                      </span>
+                    </Button>
+                    <Button
+                      onClick={handleSave}
+                      disabled={selectedItems.length === 0 || isSaving}
+                      size="sm"
+                      className="btn-visible font-semibold flex-1 min-w-0"
+                    >
+                      <Save className="w-4 h-4 mr-2 flex-shrink-0" />
+                      <span className="truncate">
+                        {isSaving ? 'Saving...' : `Save Selected (${selectedItems.length})`}
+                      </span>
+                    </Button>
+                  </div>
                 </div>
               )}
               <Button
                 onClick={onExportAll}
                 variant="outline"
                 size="sm"
-                className="text-foreground border-2 hover:bg-primary hover:text-primary-foreground font-medium px-4 py-2"
+                className="text-foreground border-2 hover:bg-primary hover:text-primary-foreground font-medium w-full"
               >
-                <Download className="w-4 h-4 mr-2" />
+                <Download className="w-4 h-4 mr-2 flex-shrink-0" />
                 <span className="myanmar-text">အားလုံး ထုတ်ယူပါ</span>
               </Button>
             </div>
@@ -104,24 +110,24 @@ const GeneratedContentOutput = ({ content, onCopy, onExportAll, onSave }: Genera
           {content.map((variation, index) => (
             <div
               key={index}
-              className="relative p-6 bg-card border-2 border-border rounded-xl hover:shadow-lg hover:border-primary/30 transition-all duration-300"
+              className="relative p-4 sm:p-6 bg-card border-2 border-border rounded-xl hover:shadow-lg hover:border-primary/30 transition-all duration-300 w-full"
             >
-              <div className="flex items-start justify-between gap-4">
+              <div className="flex gap-3 w-full">
                 {onSave && (
-                  <div className="flex items-start pt-1">
+                  <div className="flex items-start pt-1 flex-shrink-0">
                     <Checkbox
                       checked={selectedItems.includes(index)}
                       onCheckedChange={() => handleItemSelect(index)}
-                      className="mr-4 mt-1"
+                      className="mt-1"
                     />
                   </div>
                 )}
                 
-                <div className="flex-1">
+                <div className="flex-1 min-w-0">
                   <div className="text-sm text-muted-foreground mb-3 font-semibold">
                     <span className="myanmar-text">ရွေးချယ်စရာ {index + 1}</span>
                   </div>
-                  <p className="text-base leading-relaxed text-foreground whitespace-pre-wrap font-medium myanmar-text">
+                  <p className="text-base leading-relaxed text-foreground whitespace-pre-wrap font-medium myanmar-text break-words">
                     {variation}
                   </p>
                 </div>
@@ -130,7 +136,7 @@ const GeneratedContentOutput = ({ content, onCopy, onExportAll, onSave }: Genera
                   onClick={() => onCopy(variation)}
                   variant="ghost"
                   size="sm"
-                  className="hover:bg-primary hover:text-primary-foreground transition-all duration-200 shrink-0 p-2"
+                  className="hover:bg-primary hover:text-primary-foreground transition-all duration-200 flex-shrink-0 p-2"
                 >
                   <Copy className="w-4 h-4" />
                 </Button>
