@@ -15,14 +15,36 @@ const Auth = () => {
 
   useEffect(() => {
     const checkUser = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        navigate('/');
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        console.log('Initial session check:', { session: !!session, error });
+        
+        if (session) {
+          console.log('User already logged in, redirecting to home');
+          navigate('/');
+        }
+      } catch (error) {
+        console.error('Error checking session:', error);
       }
     };
+    
     checkUser();
+    
     // Set dark mode by default for the auth page
     document.documentElement.classList.add('dark');
+    
+    // Listen for auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log('Auth state change:', event, !!session);
+      if (event === 'SIGNED_IN' && session) {
+        console.log('User signed in, redirecting to home');
+        navigate('/');
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, [navigate]);
 
   return (

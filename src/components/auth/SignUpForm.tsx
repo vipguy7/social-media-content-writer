@@ -42,14 +42,27 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab }: SignUpFormProps) 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newPassword = e.target.value;
     setPassword(newPassword);
-    const { strength, feedback } = checkPasswordStrength(newPassword);
-    setPasswordStrength(strength);
-    setPasswordFeedback(feedback);
+    if (newPassword) {
+      const { strength, feedback } = checkPasswordStrength(newPassword);
+      setPasswordStrength(strength);
+      setPasswordFeedback(feedback);
+    } else {
+      setPasswordStrength('');
+      setPasswordFeedback('');
+    }
   };
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
+    
+    if (!email.trim() || !password.trim() || !fullName.trim()) {
+      toast({
+        variant: "destructive",
+        title: "အချက်အလက်များ ပြည့်စုံအောင် ဖြည့်ပါ",
+        description: "အမည်၊ အီးမေးလ်နှင့် စကားဝှက် အားလုံး လိုအပ်ပါသည်။",
+      });
+      return;
+    }
 
     const strengthCheck = checkPasswordStrength(password);
     if (strengthCheck.strength === 'Weak') {
@@ -58,31 +71,45 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab }: SignUpFormProps) 
         title: "စကားဝှက် အားနည်းလွန်းပါသည်",
         description: "ကျေးဇူးပြု၍ လမ်းညွှန်ချက်များအတိုင်း ပိုမိုခိုင်မာသော စကားဝှက်ကို ရွေးချယ်ပါ။",
       });
-      setIsLoading(false);
       return;
     }
 
+    setIsLoading(true);
+    console.log('Attempting signup for:', email.trim());
+
     try {
-      const { error } = await supabase.auth.signUp({
-        email,
+      const { data, error } = await supabase.auth.signUp({
+        email: email.trim(),
         password,
         options: {
-          emailRedirectTo: window.location.origin,
+          emailRedirectTo: `${window.location.origin}/`,
           data: {
-            full_name: fullName,
+            full_name: fullName.trim(),
           }
         }
       });
 
+      console.log('Signup response:', { data, error });
+
       if (error) {
+        console.error('Signup error:', error);
+        
+        let errorMessage = error.message;
+        if (error.message === 'User already registered') {
+          errorMessage = 'ဤအီးမေးလ်ဖြင့် အကောင့်တစ်ခု ရှိပြီးဖြစ်ပါသည်';
+        } else if (error.message.includes('Password should be')) {
+          errorMessage = 'စကားဝှက် အနည်းဆုံး ၆ လုံး ရှိရမည်';
+        } else if (error.message.includes('Unable to validate email')) {
+          errorMessage = 'အီးမေးလ်လိပ်စာ မှန်ကန်မှု စစ်ဆေး၍ မရပါ';
+        }
+        
         toast({
           variant: "destructive",
           title: "အကောင့်ဖွင့်မှု မအောင်မြင်ပါ",
-          description: error.message === 'User already registered' 
-            ? 'ဤအီးမေးလ်ဖြင့် အကောင့်တစ်ခု ရှိပြီးဖြစ်ပါသည်'
-            : error.message,
+          description: errorMessage,
         });
-      } else {
+      } else if (data.user) {
+        console.log('Signup successful for user:', data.user.email);
         toast({
           title: "အကောင့်ဖွင့်မှု အောင်မြင်ပါပြီ!",
           description: "အီးမေးလ်ကို စစ်ဆေးပြီး အကောင့်ကို အတည်ပြုပါ",
@@ -90,12 +117,22 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab }: SignUpFormProps) 
         setActiveTab('login');
       }
     } catch (err) {
-      if (err instanceof Error && err.message === 'Failed to fetch') {
-        toast({
-          variant: "destructive",
-          title: "ကွန်ရက်ချိတ်ဆက်မှု အမှား",
-          description: "သင်၏ ကွန်ရက်ချိတ်ဆက်မှုကို စစ်ဆေးပြီး ထပ်မံကြိုးစားပါ။"
-        });
+      console.error('Signup catch error:', err);
+      
+      if (err instanceof Error) {
+        if (err.message === 'Failed to fetch') {
+          toast({
+            variant: "destructive",
+            title: "ကွန်ရက်ချိတ်ဆက်မှု အမှား",
+            description: "သင်၏ ကွန်ရက်ချိတ်ဆက်မှုကို စစ်ဆေးပြီး ထပ်မံကြိုးစားပါ။"
+          });
+        } else {
+          toast({
+            variant: "destructive",
+            title: "အမှားတစ်ခု ဖြစ်ပေါ်ခဲ့သည်",
+            description: err.message || "ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ",
+          });
+        }
       } else {
         toast({
           variant: "destructive",
@@ -119,6 +156,7 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab }: SignUpFormProps) 
           onChange={(e) => setFullName(e.target.value)}
           placeholder="သင့်အမည် ထည့်ပါ"
           required
+          disabled={isLoading}
         />
       </div>
       
@@ -131,6 +169,7 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab }: SignUpFormProps) 
           onChange={(e) => setEmail(e.target.value)}
           placeholder="သင့်အီးမေးလ် ထည့်ပါ"
           required
+          disabled={isLoading}
         />
       </div>
       
@@ -145,6 +184,7 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab }: SignUpFormProps) 
             placeholder="စကားဝှက် ထည့်ပါ"
             required
             className="pr-10"
+            disabled={isLoading}
           />
           <Button
             type="button"
@@ -152,6 +192,7 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab }: SignUpFormProps) 
             size="sm"
             className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
             onClick={() => setShowPassword(!showPassword)}
+            disabled={isLoading}
           >
             {showPassword ? (
               <EyeOff className="h-4 w-4" />
@@ -173,7 +214,7 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab }: SignUpFormProps) 
       
       <Button
         type="submit"
-        className="w-full"
+        className="w-full btn-visible"
         disabled={isLoading}
       >
         {isLoading ? (

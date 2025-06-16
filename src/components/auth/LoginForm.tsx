@@ -23,23 +23,46 @@ const LoginForm = ({ setIsLoading, isLoading }: LoginFormProps) => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!email.trim() || !password.trim()) {
+      toast({
+        variant: "destructive",
+        title: "အချက်အလက်များ ပြည့်စုံအောင် ဖြည့်ပါ",
+        description: "အီးမေးလ်နှင့် စကားဝှက် နှစ်ခုလုံး လိုအပ်ပါသည်။",
+      });
+      return;
+    }
+
     setIsLoading(true);
+    console.log('Attempting login for:', email);
 
     try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email.trim(),
         password,
       });
 
+      console.log('Login response:', { data, error });
+
       if (error) {
+        console.error('Login error:', error);
+        
+        let errorMessage = error.message;
+        if (error.message === 'Invalid login credentials') {
+          errorMessage = 'အီးမေးလ် သို့မဟုတ် စကားဝှက် မှားယွင်းနေပါသည်';
+        } else if (error.message.includes('Email not confirmed')) {
+          errorMessage = 'အီးမေးလ်ကို အတည်ပြုရန် လိုအပ်ပါသည်။ သင့်အီးမေးလ်ကို စစ်ဆေးပါ။';
+        } else if (error.message.includes('Too many requests')) {
+          errorMessage = 'တောင်းဆိုမှု များလွန်းပါသည်။ ခဏစောင့်ပြီး ထပ်မံကြိုးစားပါ။';
+        }
+        
         toast({
           variant: "destructive",
           title: "အကောင့်ဝင်ရောက်မှု မအောင်မြင်ပါ",
-          description: error.message === 'Invalid login credentials' 
-            ? 'အီးမေးလ် သို့မဟုတ် စကားဝှက် မှားယွင်းနေပါသည်'
-            : error.message,
+          description: errorMessage,
         });
-      } else {
+      } else if (data.user) {
+        console.log('Login successful for user:', data.user.email);
         toast({
           title: "အကောင့်ဝင်ရောက်မှု အောင်မြင်ပါပြီ!",
           description: "Myanmar Content Generator သို့ ကြိုဆိုပါသည်",
@@ -47,12 +70,22 @@ const LoginForm = ({ setIsLoading, isLoading }: LoginFormProps) => {
         navigate('/');
       }
     } catch (err) {
-      if (err instanceof Error && err.message === 'Failed to fetch') {
-        toast({
-          variant: "destructive",
-          title: "ကွန်ရက်ချိတ်ဆက်မှု အမှား",
-          description: "သင်၏ ကွန်ရက်ချိတ်ဆက်မှုကို စစ်ဆေးပြီး ထပ်မံကြိုးစားပါ။"
-        });
+      console.error('Login catch error:', err);
+      
+      if (err instanceof Error) {
+        if (err.message === 'Failed to fetch') {
+          toast({
+            variant: "destructive",
+            title: "ကွန်ရက်ချိတ်ဆက်မှု အမှား",
+            description: "သင်၏ ကွန်ရက်ချိတ်ဆက်မှုကို စစ်ဆေးပြီး ထပ်မံကြိုးစားပါ။"
+          });
+        } else {
+          toast({
+            variant: "destructive",
+            title: "အမှားတစ်ခု ဖြစ်ပေါ်ခဲ့သည်",
+            description: err.message || "ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ",
+          });
+        }
       } else {
         toast({
           variant: "destructive",
@@ -66,38 +99,38 @@ const LoginForm = ({ setIsLoading, isLoading }: LoginFormProps) => {
   };
 
   const handleForgotPassword = async () => {
-    if (!email) {
+    if (!email.trim()) {
       toast({
         variant: "destructive",
-        title: "Email is required",
-        description: "Please enter your email address to reset your password.",
+        title: "အီးမေးလ် လိုအပ်ပါသည်",
+        description: "စကားဝှက် ပြန်လည်သတ်မှတ်ရန် သင့်အီးမေးလ်လိပ်စာကို ထည့်ပါ။",
       });
       return;
     }
 
     setIsSendingReset(true);
     try {
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
         redirectTo: `${window.location.origin}/auth`,
       });
 
       if (error) {
         toast({
           variant: "destructive",
-          title: "Failed to send reset email",
+          title: "စကားဝှက် ပြန်လည်သတ်မှတ်မှု မအောင်မြင်ပါ",
           description: error.message,
         });
       } else {
         toast({
-          title: "Password reset email sent",
-          description: "Please check your inbox for a link to reset your password.",
+          title: "စကားဝှက် ပြန်လည်သတ်မှတ်ရန် အီးမေးလ် ပို့ပြီးပါပြီ",
+          description: "စကားဝှက် ပြန်လည်သတ်မှတ်ရန် သင့်အီးမေးလ်ကို စစ်ဆေးပါ။",
         });
       }
     } catch (err) {
        toast({
           variant: "destructive",
-          title: "An error occurred",
-          description: "Please try again later.",
+          title: "အမှားတစ်ခု ဖြစ်ပေါ်ခဲ့သည်",
+          description: "ကျေးဇူးပြု၍ နောက်မှ ထပ်မံကြိုးစားပါ။",
         });
     } finally {
       setIsSendingReset(false);
@@ -115,6 +148,7 @@ const LoginForm = ({ setIsLoading, isLoading }: LoginFormProps) => {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="သင့်အီးမေးလ် ထည့်ပါ"
           required
+          disabled={isLoading}
         />
       </div>
       
@@ -126,9 +160,9 @@ const LoginForm = ({ setIsLoading, isLoading }: LoginFormProps) => {
             variant="link"
             className="px-0 text-xs h-auto"
             onClick={handleForgotPassword}
-            disabled={isSendingReset}
+            disabled={isSendingReset || isLoading}
           >
-            {isSendingReset ? 'Sending...' : 'Forgot Password?'}
+            {isSendingReset ? 'ပို့နေသည်...' : 'စကားဝှက် မေ့ပြီလား?'}
           </Button>
         </div>
         <div className="relative">
@@ -139,6 +173,7 @@ const LoginForm = ({ setIsLoading, isLoading }: LoginFormProps) => {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="စကားဝှက် ထည့်ပါ"
             required
+            disabled={isLoading}
           />
           <Button
             type="button"
@@ -146,6 +181,7 @@ const LoginForm = ({ setIsLoading, isLoading }: LoginFormProps) => {
             size="sm"
             className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
             onClick={() => setShowPassword(!showPassword)}
+            disabled={isLoading}
           >
             {showPassword ? (
               <EyeOff className="h-4 w-4" />
@@ -158,7 +194,7 @@ const LoginForm = ({ setIsLoading, isLoading }: LoginFormProps) => {
       
       <Button
         type="submit"
-        className="w-full"
+        className="w-full btn-visible"
         disabled={isLoading}
       >
         {isLoading ? (

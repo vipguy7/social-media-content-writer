@@ -1,3 +1,4 @@
+
 import { createContext, useContext, useEffect, useState, useMemo, useCallback } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
@@ -38,12 +39,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [subscription, setSubscription] = useState<Subscription | null>(null);
 
   const fetchProfile = useCallback(async () => {
-    const { data: { user: currentUser } } = await supabase.auth.getUser();
-    if (currentUser) {
+    if (!session?.user) return;
+    
+    try {
       let { data, error } = await supabase
         .from('profiles')
         .select('credits, full_name, avatar_url, referral_code, referred_by_user_id, profile_completion_bonus_awarded')
-        .eq('id', currentUser.id)
+        .eq('id', session.user.id)
         .maybeSingle();
       
       if (error) {
@@ -53,11 +55,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       if (!data) {
-        // Profile doesn't exist, create it and get the new row back.
         console.log("No profile found for user, creating one.");
         const { data: newData, error: insertError } = await supabase
             .from('profiles')
-            .insert({ id: currentUser.id })
+            .insert({ id: session.user.id })
             .select('credits, full_name, avatar_url, referral_code, referred_by_user_id, profile_completion_bonus_awarded')
             .single();
 
@@ -70,84 +71,101 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       setProfile(data as Profile);
+    } catch (error) {
+      console.error("Error in fetchProfile:", error);
+      setProfile(null);
     }
-  }, []);
+  }, [session?.user]);
 
   const checkSubscription = useCallback(async () => {
-    const { data: { user: currentUser } } = await supabase.auth.getUser();
-    if (!currentUser) {
+    if (!session?.user) {
       setSubscription({ isSubscribed: false, tier: null, endDate: null });
       return;
     }
     
-    const { data, error } = await supabase
-      .from('subscribers')
-      .select('subscribed, subscription_tier, subscription_end')
-      .eq('user_id', currentUser.id)
-      .maybeSingle();
+    try {
+      const { data, error } = await supabase
+        .from('subscribers')
+        .select('subscribed, subscription_tier, subscription_end')
+        .eq('user_id', session.user.id)
+        .maybeSingle();
 
-    if (error) {
-      console.error("Error fetching subscription:", error);
-      setSubscription({ isSubscribed: false, tier: null, endDate: null });
-      return;
-    }
-
-    if (data) {
-        if (data.subscribed && data.subscription_tier === 'trial' && data.subscription_end && new Date(data.subscription_end) < new Date()) {
-            await supabase.from('subscribers').update({ subscribed: false, subscription_tier: null, subscription_end: null }).eq('user_id', currentUser.id);
-            setSubscription({ isSubscribed: false, tier: null, endDate: null });
-        } else {
-            setSubscription({
-                isSubscribed: data.subscribed ?? false,
-                tier: data.subscription_tier,
-                endDate: data.subscription_end,
-            });
-        }
-    } else {
+      if (error) {
+        console.error("Error fetching subscription:", error);
         setSubscription({ isSubscribed: false, tier: null, endDate: null });
+        return;
+      }
+
+      if (data) {
+          if (data.subscribed && data.subscription_tier === 'trial' && data.subscription_end && new Date(data.subscription_end) < new Date()) {
+              await supabase.from('subscribers').update({ subscribed: false, subscription_tier: null, subscription_end: null }).eq('user_id', session.user.id);
+              setSubscription({ isSubscribed: false, tier: null, endDate: null });
+          } else {
+              setSubscription({
+                  isSubscribed: data.subscribed ?? false,
+                  tier: data.subscription_tier,
+                  endDate: data.subscription_end,
+              });
+          }
+      } else {
+          setSubscription({ isSubscribed: false, tier: null, endDate: null });
+      }
+    } catch (error) {
+      console.error("Error in checkSubscription:", error);
+      setSubscription({ isSubscribed: false, tier: null, endDate: null });
     }
-  }, []);
+  }, [session?.user]);
 
   useEffect(() => {
-    setLoading(true);
+    let mounted = true;
 
-    supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
-      setSession(currentSession);
-      setUser(currentSession?.user ?? null);
-      setLoading(false);
-    });
-    
+    // Set up auth state listener first
     const { data: { subscription: authSubscription } } = supabase.auth.onAuthStateChange(
-      (_event, newSession) => {
-        setSession(newSession);
-        setUser(newSession?.user ?? null);
-        setLoading(false);
+      async (event, session) => {
+        console.log('Auth state changed:', event, session?.user?.email);
+        
+        if (mounted) {
+          setSession(session);
+          setUser(session?.user ?? null);
+          setLoading(false);
+        }
       }
     );
 
-    return () => authSubscription.unsubscribe();
+    // Then check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (mounted) {
+        setSession(session);
+        setUser(session?.user ?? null);
+        setLoading(false);
+      }
+    });
+
+    return () => {
+      mounted = false;
+      authSubscription.unsubscribe();
+    };
   }, []);
 
   useEffect(() => {
-    if (user) {
-      const loadUserData = async () => {
-        try {
-          await Promise.all([fetchProfile(), checkSubscription()]);
-        } catch (error) {
-          console.error("Error fetching user data:", error);
-          setProfile(null);
-          setSubscription(null);
-        }
-      };
-      loadUserData();
+    if (session?.user) {
+      // Use setTimeout to avoid deadlock
+      setTimeout(() => {
+        Promise.all([fetchProfile(), checkSubscription()]).catch(error => {
+          console.error("Error loading user data:", error);
+        });
+      }, 0);
     } else {
       setProfile(null);
       setSubscription(null);
     }
-  }, [user, fetchProfile, checkSubscription]);
+  }, [session?.user, fetchProfile, checkSubscription]);
 
   const signOut = async () => {
-    await supabase.auth.signOut();
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error('Error signing out:', error);
+    }
   };
 
   const value = useMemo(() => ({
