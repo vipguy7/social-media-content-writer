@@ -89,18 +89,23 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab }: SignUpFormProps) 
         }
       });
 
-      console.log('Signup response:', { data, error });
+      console.log('Signup response:', { user: !!data.user, session: !!data.session, error });
 
       if (error) {
         console.error('Signup error:', error);
         
-        let errorMessage = error.message;
+        let errorMessage = 'အကောင့်ဖွင့်မှုတွင် အမှား ဖြစ်ပေါ်ခဲ့သည်။';
+        
         if (error.message === 'User already registered') {
-          errorMessage = 'ဤအီးမေးလ်ဖြင့် အကောင့်တစ်ခု ရှိပြီးဖြစ်ပါသည်';
+          errorMessage = 'ဤအီးမေးလ်ဖြင့် အကောင့်တစ်ခု ရှိပြီးဖြစ်ပါသည်။';
         } else if (error.message.includes('Password should be')) {
-          errorMessage = 'စကားဝှက် အနည်းဆုံး ၆ လုံး ရှိရမည်';
+          errorMessage = 'စကားဝှက် အနည်းဆုံး ၆ လုံး ရှိရမည်။';
         } else if (error.message.includes('Unable to validate email')) {
-          errorMessage = 'အီးမေးလ်လိပ်စာ မှန်ကန်မှု စစ်ဆေး၍ မရပါ';
+          errorMessage = 'အီးမေးလ်လိပ်စာ မှန်ကန်မှု စစ်ဆေး၍ မရပါ။';
+        } else if (error.message.includes('timeout') || error.message.includes('504')) {
+          errorMessage = 'Server ပြဿနာ ရှိနေပါသည်။ ခဏစောင့်ပြီး ထပ်မံကြိုးစားပါ။';
+        } else if (error.message.includes('AuthRetryableFetchError')) {
+          errorMessage = 'Network ပြဿနာ ရှိနေပါသည်။ ခဏစောင့်ပြီး ထပ်မံကြိုးစားပါ။';
         }
         
         toast({
@@ -112,34 +117,35 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab }: SignUpFormProps) 
         console.log('Signup successful for user:', data.user.email);
         toast({
           title: "အကောင့်ဖွင့်မှု အောင်မြင်ပါပြီ!",
-          description: "အီးမေးလ်ကို စစ်ဆေးပြီး အကောင့်ကို အတည်ပြုပါ",
+          description: "အီးမေးလ်ကို စစ်ဆေးပြီး အကောင့်ကို အတည်ပြုပါ။",
         });
         setActiveTab('login');
+        
+        // Clear form
+        setEmail('');
+        setPassword('');
+        setFullName('');
+        setPasswordStrength('');
+        setPasswordFeedback('');
       }
     } catch (err) {
       console.error('Signup catch error:', err);
       
+      let errorMessage = "အမှားတစ်ခု ဖြစ်ပေါ်ခဲ့သည်။ ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ။";
+      
       if (err instanceof Error) {
         if (err.message === 'Failed to fetch') {
-          toast({
-            variant: "destructive",
-            title: "ကွန်ရက်ချိတ်ဆက်မှု အမှား",
-            description: "သင်၏ ကွန်ရက်ချိတ်ဆက်မှုကို စစ်ဆေးပြီး ထပ်မံကြိုးစားပါ။"
-          });
-        } else {
-          toast({
-            variant: "destructive",
-            title: "အမှားတစ်ခု ဖြစ်ပေါ်ခဲ့သည်",
-            description: err.message || "ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ",
-          });
+          errorMessage = "ကွန်ရက်ချိတ်ဆက်မှုကို စစ်ဆေးပြီး ထပ်မံကြိုးစားပါ။";
+        } else if (err.message.includes('timeout') || err.message.includes('504')) {
+          errorMessage = "Server ပြဿနာ ရှိနေပါသည်။ ခဏစောင့်ပြီး ထပ်မံကြိုးစားပါ။";
         }
-      } else {
-        toast({
-          variant: "destructive",
-          title: "အမှားတစ်ခု ဖြစ်ပေါ်ခဲ့သည်",
-          description: "ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ",
-        });
       }
+      
+      toast({
+        variant: "destructive",
+        title: "အကောင့်ဖွင့်မှု အမှား",
+        description: errorMessage,
+      });
     } finally {
       setIsLoading(false);
     }

@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [subscription, setSubscription] = useState<Subscription | null>(null);
 
   const fetchProfile = useCallback(async () => {
-    if (!session?.user) return;
+    if (!session?.user?.id) return;
     
     try {
       let { data, error } = await supabase
@@ -48,9 +48,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         .eq('id', session.user.id)
         .maybeSingle();
       
-      if (error) {
+      if (error && error.code !== 'PGRST116') {
         console.error("Error fetching profile:", error);
-        setProfile(null);
         return;
       }
 
@@ -64,7 +63,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
         if (insertError) {
             console.error("Error creating profile:", insertError);
-            setProfile(null);
             return;
         }
         data = newData;
@@ -73,12 +71,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setProfile(data as Profile);
     } catch (error) {
       console.error("Error in fetchProfile:", error);
-      setProfile(null);
     }
-  }, [session?.user]);
+  }, [session?.user?.id]);
 
   const checkSubscription = useCallback(async () => {
-    if (!session?.user) {
+    if (!session?.user?.id) {
       setSubscription({ isSubscribed: false, tier: null, endDate: null });
       return;
     }
@@ -90,7 +87,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         .eq('user_id', session.user.id)
         .maybeSingle();
 
-      if (error) {
+      if (error && error.code !== 'PGRST116') {
         console.error("Error fetching subscription:", error);
         setSubscription({ isSubscribed: false, tier: null, endDate: null });
         return;
@@ -114,7 +111,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       console.error("Error in checkSubscription:", error);
       setSubscription({ isSubscribed: false, tier: null, endDate: null });
     }
-  }, [session?.user]);
+  }, [session?.user?.id]);
 
   useEffect(() => {
     let mounted = true;
@@ -127,13 +124,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         if (mounted) {
           setSession(session);
           setUser(session?.user ?? null);
-          setLoading(false);
+          
+          // Only set loading to false after we've processed the initial session
+          if (event === 'INITIAL_SESSION') {
+            setLoading(false);
+          }
         }
       }
     );
 
     // Then check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(({ data: { session }, error }) => {
+      if (error) {
+        console.error('Error getting session:', error);
+      }
       if (mounted) {
         setSession(session);
         setUser(session?.user ?? null);
@@ -148,23 +152,38 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    if (session?.user) {
-      // Use setTimeout to avoid deadlock
-      setTimeout(() => {
-        Promise.all([fetchProfile(), checkSubscription()]).catch(error => {
-          console.error("Error loading user data:", error);
+    if (session?.user && !loading) {
+      // Use setTimeout to avoid potential deadlocks
+      const timeoutId = setTimeout(() => {
+        fetchProfile().catch(error => {
+          console.error("Error loading profile:", error);
         });
-      }, 0);
-    } else {
+        checkSubscription().catch(error => {
+          console.error("Error loading subscription:", error);
+        });
+      }, 100);
+
+      return () => clearTimeout(timeoutId);
+    } else if (!session?.user) {
       setProfile(null);
       setSubscription(null);
     }
-  }, [session?.user, fetchProfile, checkSubscription]);
+  }, [session?.user, loading, fetchProfile, checkSubscription]);
 
   const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      console.error('Error signing out:', error);
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        console.error('Error signing out:', error);
+        throw error;
+      }
+      
+      // Clear local state
+      setProfile(null);
+      setSubscription(null);
+    } catch (error) {
+      console.error('Error in signOut:', error);
+      throw error;
     }
   };
 

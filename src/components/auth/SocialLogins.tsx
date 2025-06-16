@@ -18,13 +18,16 @@ const SocialLogins = ({ setIsLoading, isLoading }: SocialLoginsProps) => {
     console.log('Attempting Google OAuth login');
     
     try {
+      // Get the current window origin dynamically
+      const redirectTo = window.location.origin;
+      
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/`,
+          redirectTo,
           queryParams: {
             access_type: 'offline',
-            prompt: 'consent',
+            prompt: 'select_account',
           },
         },
       });
@@ -34,11 +37,14 @@ const SocialLogins = ({ setIsLoading, isLoading }: SocialLoginsProps) => {
       if (error) {
         console.error('Google OAuth error:', error);
         
-        let errorMessage = error.message;
+        let errorMessage = 'Google ဖြင့် အကောင့်ဝင်ရောက်မှုတွင် ပြဿနာ ရှိနေပါသည်။';
+        
         if (error.message.includes('unauthorized_client')) {
-          errorMessage = 'Google အကောင့်ဝင်ရောက်မှု ပြဿနာ ရှိနေပါသည်။ နောက်မှ ထပ်မံကြိုးစားပါ။';
+          errorMessage = 'Google အကောင့်ဝင်ရောက်မှု စီမံခန့်ခွဲမှု ပြဿနာ ရှိနေပါသည်။ နောက်မှ ထပ်မံကြိုးစားပါ။';
         } else if (error.message.includes('access_denied')) {
           errorMessage = 'Google အကောင့်ဝင်ရောက်မှု ခွင့်ပြုချက် ငြင်းပယ်ခံရပါသည်။';
+        } else if (error.message.includes('popup_blocked')) {
+          errorMessage = 'Popup ပိတ်ဆို့ခံရပါသည်။ Browser ၏ popup settings ကို စစ်ဆေးပါ။';
         }
         
         toast({
@@ -49,14 +55,22 @@ const SocialLogins = ({ setIsLoading, isLoading }: SocialLoginsProps) => {
         setIsLoading(false);
       }
       // Note: If successful, the redirect will happen automatically
-      // so we don't need to setIsLoading(false) here
+      // The loading state will be cleared when the page redirects
     } catch (err) {
       console.error('Google OAuth catch error:', err);
+      
+      let errorMessage = "ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ။";
+      
+      if (err instanceof Error) {
+        if (err.message === 'Failed to fetch') {
+          errorMessage = "ကွန်ရက်ချိတ်ဆက်မှုကို စစ်ဆေးပြီး ထပ်မံကြိုးစားပါ။";
+        }
+      }
       
       toast({
         variant: "destructive",
         title: "Google Sign-In အမှား",
-        description: "ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ။",
+        description: errorMessage,
       });
       setIsLoading(false);
     }

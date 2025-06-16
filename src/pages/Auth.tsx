@@ -75,7 +75,6 @@ const Auth = () => {
           </Tabs>
 
           <SocialLogins setIsLoading={setIsLoading} isLoading={isLoading} />
-
         </CardContent>
       </Card>
     </div>
