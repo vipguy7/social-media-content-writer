@@ -52,12 +52,12 @@
     --popover-foreground: 210 40% 98%;
 
     --primary: rgb(96, 165, 250); /* blue-400 */
-    --primary-foreground: rgb(3, 7, 18);
+    --primary-foreground: rgb(75, 112, 215);
     
-    --secondary: rgb(30, 41, 59); /* slate-800 */
+    --secondary: rgb(4, 72, 180); /* slate-800 */
     --secondary-foreground: rgb(226, 232, 240);
 
-    --muted: rgb(30, 41, 59);
+    --muted: rgb(175, 178, 182);
     --muted-foreground: rgb(148, 163, 184); /* slate-400 */
 
     --accent: rgb(29, 78, 216); /* blue-700 */
@@ -132,7 +132,7 @@
   }
 
   .dark .glass-card {
-    background: hsla(222, 47%, 11%, 0.6);
+    background: hsla(313, 97%, 43%, 0.912);
   }
 
   .glass-card:hover, .glass-card:focus-within {
