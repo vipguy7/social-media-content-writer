@@ -54,9 +54,11 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab, onSuccess }: SignUp
   };
 
   const attemptSignUp = async (email: string, password: string, fullName: string, retryCount = 0): Promise<any> => {
-    const maxRetries = 2;
+    const maxRetries = 3; // Increased retries
     
     try {
+      console.log(`Signup attempt ${retryCount + 1} for:`, email.trim());
+      
       const { data, error } = await supabase.auth.signUp({
         email: email.trim(),
         password,
@@ -73,17 +75,25 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab, onSuccess }: SignUp
       console.error(`Signup attempt ${retryCount + 1} failed:`, err);
       
       // Check if it's a retryable error and we haven't exceeded max retries
-      if (retryCount < maxRetries && (
+      const isRetryableError = (
         err.name === 'AuthRetryableFetchError' || 
         err.message?.includes('timeout') ||
         err.message?.includes('504') ||
-        err.message?.includes('Failed to fetch')
-      )) {
-        // Wait before retrying (exponential backoff)
-        const delay = Math.pow(2, retryCount) * 1000; // 1s, 2s, 4s
+        err.message?.includes('502') ||
+        err.message?.includes('503') ||
+        err.message?.includes('Failed to fetch') ||
+        err.message?.includes('Network request failed')
+      );
+      
+      if (retryCount < maxRetries && isRetryableError) {
+        // Progressive delay with jitter to avoid thundering herd
+        const baseDelay = Math.pow(2, retryCount) * 1000; // 1s, 2s, 4s, 8s
+        const jitter = Math.random() * 1000; // Add up to 1s random delay
+        const delay = baseDelay + jitter;
+        
+        console.log(`Retrying signup in ${Math.round(delay)}ms (attempt ${retryCount + 2}/${maxRetries + 1})...`);
         await new Promise(resolve => setTimeout(resolve, delay));
         
-        console.log(`Retrying signup (attempt ${retryCount + 2}/${maxRetries + 1})...`);
         return attemptSignUp(email, password, fullName, retryCount + 1);
       }
       
@@ -115,12 +125,12 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab, onSuccess }: SignUp
     }
 
     setIsLoading(true);
-    console.log('Attempting signup for:', email.trim());
+    console.log('Starting signup process for:', email.trim());
 
     try {
       const { data, error } = await attemptSignUp(email, password, fullName);
 
-      console.log('Signup response:', { user: !!data?.user, session: !!data?.session, error });
+      console.log('Final signup response:', { user: !!data?.user, session: !!data?.session, error });
 
       if (error) {
         console.error('Signup error:', error);
@@ -164,22 +174,23 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab, onSuccess }: SignUp
         }
       }
     } catch (err: any) {
-      console.error('Signup catch error:', err);
+      console.error('Signup final catch error:', err);
       
-      let errorMessage = "ကွန်ရက်ပြဿနာ ရှိနေပါသည်။ ခဏစောင့်ပြီး ထပ်မံကြိုးစားပါ။";
+      let errorMessage = "ကွန်ရက်ပြဿနာ ရှိနေပါသည်။ ကျေးဇူးပြု၍ ခဏစောင့်ပြီး ထပ်မံကြိုးစားပါ။";
       
       if (err.name === 'AuthRetryableFetchError') {
-        errorMessage = "Server အလုပ်ရှုပ်နေပါသည်။ ၁-၂ မိနစ်စောင့်ပြီး ထပ်မံကြိုးစားပါ။";
+        errorMessage = "Supabase server တွင် ယာယီပြဿနာ ရှိနေပါသည်။ ၅-၁၀ မိနစ်စောင့်ပြီး ထပ်မံကြိုးစားပါ။";
       } else if (err.message?.includes('Failed to fetch')) {
         errorMessage = "ကွန်ရက်ချိတ်ဆက်မှုကို စစ်ဆေးပြီး ထပ်မံကြိုးစားပါ။";
-      } else if (err.message?.includes('timeout') || err.message?.includes('504')) {
-        errorMessage = "Server ပြဿနာ ရှိနေပါသည်။ ခဏစောင့်ပြီး ထပ်မံကြိုးစားပါ။";
+      } else if (err.message?.includes('timeout') || err.message?.includes('504') || err.message?.includes('502') || err.message?.includes('503')) {
+        errorMessage = "Server အလုပ်ရှုပ်နေပါသည်။ ခဏစောင့်ပြီး ထပ်မံကြိုးစားပါ။";
       }
       
       toast({
         variant: "destructive",
         title: "အကောင့်ဖွင့်မှု အမှား",
         description: errorMessage,
+        duration: 6000, // Show longer for server errors
       });
     } finally {
       setIsLoading(false);

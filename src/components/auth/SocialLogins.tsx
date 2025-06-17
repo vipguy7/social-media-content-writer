@@ -24,7 +24,12 @@ const SocialLogins = ({ setIsLoading, isLoading, onSuccess }: SocialLoginsProps)
       const redirectTo = `${window.location.origin}/`;
       console.log('Google OAuth redirect URL:', redirectTo);
       
-      const { data, error } = await supabase.auth.signInWithOAuth({
+      // Add timeout wrapper for Google OAuth
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Google OAuth timeout')), 15000)
+      );
+      
+      const oauthPromise = supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
           redirectTo,
@@ -34,6 +39,8 @@ const SocialLogins = ({ setIsLoading, isLoading, onSuccess }: SocialLoginsProps)
           },
         },
       });
+
+      const { data, error } = await Promise.race([oauthPromise, timeoutPromise]) as any;
 
       console.log('Google OAuth response:', { data, error });
 
@@ -66,8 +73,10 @@ const SocialLogins = ({ setIsLoading, isLoading, onSuccess }: SocialLoginsProps)
       
       let errorMessage = "ကွန်ရက်ပြဿနာ ရှိနေပါသည်။ ခဏစောင့်ပြီး ထပ်မံကြိုးစားပါ။";
       
-      if (err.name === 'AuthRetryableFetchError') {
-        errorMessage = "Server အလုပ်ရှုပ်နေပါသည်။ ၁-၂ မိနစ်စောင့်ပြီး ထပ်မံကြိုးစားပါ။";
+      if (err.message === 'Google OAuth timeout') {
+        errorMessage = "Google OAuth လုပ်ငန်းစဉ် အချိန်ကုန်ဆုံးသွားပါသည်။ ထပ်မံကြိုးစားပါ။";
+      } else if (err.name === 'AuthRetryableFetchError') {
+        errorMessage = "Supabase server တွင် ယာယီပြဿနာ ရှိနေပါသည်။ ၅-၁၀ မိနစ်စောင့်ပြီး ထပ်မံကြိုးစားပါ။";
       } else if (err.message === 'Failed to fetch') {
         errorMessage = "ကွန်ရက်ချိတ်ဆက်မှုကို စစ်ဆေးပြီး ထပ်မံကြိုးစားပါ။";
       } else if (err.message?.includes('timeout') || err.message?.includes('504')) {
@@ -78,6 +87,7 @@ const SocialLogins = ({ setIsLoading, isLoading, onSuccess }: SocialLoginsProps)
         variant: "destructive",
         title: "Google Sign-In အမှား",
         description: errorMessage,
+        duration: 6000, // Show longer for server errors
       });
       setIsLoading(false);
     }
