@@ -21,8 +21,8 @@ const SocialLogins = ({ setIsLoading, isLoading, onSuccess }: SocialLoginsProps)
     console.log('Attempting Google OAuth login');
     
     try {
-      // Get the current window origin dynamically
-      const redirectTo = window.location.origin;
+      const redirectTo = `${window.location.origin}/`;
+      console.log('Google OAuth redirect URL:', redirectTo);
       
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
@@ -57,44 +57,21 @@ const SocialLogins = ({ setIsLoading, isLoading, onSuccess }: SocialLoginsProps)
         });
         setIsLoading(false);
       } else {
-        // Success case - wait for auth state change
-        console.log('Google OAuth initiated successfully, waiting for redirect...');
-        
-        // Listen for auth state change
-        const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-          if (event === 'SIGNED_IN' && session) {
-            console.log('Google OAuth successful, user signed in');
-            subscription.unsubscribe();
-            setIsLoading(false);
-            
-            toast({
-              title: "Google Sign-In အောင်မြင်ပါပြီ!",
-              description: "Myanmar Content Generator သို့ ကြိုဆိုပါသည်",
-            });
-            
-            if (onSuccess) {
-              onSuccess();
-            } else {
-              navigate('/');
-            }
-          }
-        });
-        
-        // Cleanup subscription after 30 seconds to prevent memory leaks
-        setTimeout(() => {
-          subscription.unsubscribe();
-          setIsLoading(false);
-        }, 30000);
+        console.log('Google OAuth initiated successfully');
+        // Don't set loading to false here - let the auth state change handle it
+        // The redirect will happen automatically
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error('Google OAuth catch error:', err);
       
-      let errorMessage = "ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ။";
+      let errorMessage = "ကွန်ရက်ပြဿနာ ရှိနေပါသည်။ ခဏစောင့်ပြီး ထပ်မံကြိုးစားပါ။";
       
-      if (err instanceof Error) {
-        if (err.message === 'Failed to fetch') {
-          errorMessage = "ကွန်ရက်ချိတ်ဆက်မှုကို စစ်ဆေးပြီး ထပ်မံကြိုးစားပါ။";
-        }
+      if (err.name === 'AuthRetryableFetchError') {
+        errorMessage = "Server အလုပ်ရှုပ်နေပါသည်။ ၁-၂ မိနစ်စောင့်ပြီး ထပ်မံကြိုးစားပါ။";
+      } else if (err.message === 'Failed to fetch') {
+        errorMessage = "ကွန်ရက်ချိတ်ဆက်မှုကို စစ်ဆေးပြီး ထပ်မံကြိုးစားပါ။";
+      } else if (err.message?.includes('timeout') || err.message?.includes('504')) {
+        errorMessage = "Server ပြဿနာ ရှိနေပါသည်။ ခဏစောင့်ပြီး ထပ်မံကြိုးစားပါ။";
       }
       
       toast({
