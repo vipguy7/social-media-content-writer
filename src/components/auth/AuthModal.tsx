@@ -15,7 +15,19 @@ interface AuthModalProps {
 
 const AuthModal = ({ isOpen, onClose, defaultTab = 'login' }: AuthModalProps) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState(defaultTab);
+  const [activeTab, setActiveTab] = useState<'login' | 'signup'>(defaultTab);
+
+  const handleTabChange = (value: string) => {
+    if (value === 'login' || value === 'signup') {
+      setActiveTab(value);
+    }
+  };
+
+  const handleSetActiveTab = (tab: string) => {
+    if (tab === 'login' || tab === 'signup') {
+      setActiveTab(tab);
+    }
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -30,7 +42,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login' }: AuthModalProps) =>
         </DialogHeader>
         
         <div className="p-6">
-          <Tabs value={activeTab} onValueChange={setActiveTab}>
+          <Tabs value={activeTab} onValueChange={handleTabChange}>
             <TabsList className="grid w-full grid-cols-2 mb-6">
               <TabsTrigger value="login" className="font-myanmar">အကောင့်ဝင်ရန်</TabsTrigger>
               <TabsTrigger value="signup" className="font-myanmar">အကောင့်ဖွင့်ရန်</TabsTrigger>
@@ -48,7 +60,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login' }: AuthModalProps) =>
               <SignUpForm 
                 setIsLoading={setIsLoading} 
                 isLoading={isLoading} 
-                setActiveTab={setActiveTab}
+                setActiveTab={handleSetActiveTab}
                 onSuccess={onClose}
               />
             </TabsContent>
