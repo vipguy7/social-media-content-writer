@@ -1,6 +1,10 @@
 const { getDefaultConfig } = require('@expo/metro-config');
 
-const config = getDefaultConfig(__dirname);
+const {
+  getSentryExpoConfig
+} = require("@sentry/react-native/metro");
+
+const config = getSentryExpoConfig(__dirname);
 
 // Add support for importing TypeScript files
 config.resolver.sourceExts.push('ts', 'tsx');
