@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -11,9 +10,10 @@ interface SignUpFormProps {
   setIsLoading: (isLoading: boolean) => void;
   isLoading: boolean;
   setActiveTab: (tab: string) => void;
+  onSuccess?: () => void;
 }
 
-const SignUpForm = ({ setIsLoading, isLoading, setActiveTab }: SignUpFormProps) => {
+const SignUpForm = ({ setIsLoading, isLoading, setActiveTab, onSuccess }: SignUpFormProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -127,6 +127,10 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab }: SignUpFormProps) 
         setFullName('');
         setPasswordStrength('');
         setPasswordFeedback('');
+        
+        if (onSuccess) {
+          onSuccess();
+        }
       }
     } catch (err) {
       console.error('Signup catch error:', err);
@@ -154,7 +158,7 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab }: SignUpFormProps) 
   return (
     <form onSubmit={handleSignUp} className="space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="fullName">အမည်</Label>
+        <Label htmlFor="fullName" className="font-myanmar font-semibold text-slate-700 dark:text-slate-200">အမည်</Label>
         <Input
           id="fullName"
           type="text"
@@ -163,11 +167,12 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab }: SignUpFormProps) 
           placeholder="သင့်အမည် ထည့်ပါ"
           required
           disabled={isLoading}
+          className="bg-white dark:bg-slate-700 border-2 border-slate-300 dark:border-slate-600 text-slate-900 dark:text-slate-100"
         />
       </div>
       
       <div className="space-y-2">
-        <Label htmlFor="signupEmail">အီးမေးလ်</Label>
+        <Label htmlFor="signupEmail" className="font-myanmar font-semibold text-slate-700 dark:text-slate-200">အီးမေးလ်</Label>
         <Input
           id="signupEmail"
           type="email"
@@ -176,11 +181,12 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab }: SignUpFormProps) 
           placeholder="သင့်အီးမေးလ် ထည့်ပါ"
           required
           disabled={isLoading}
+          className="bg-white dark:bg-slate-700 border-2 border-slate-300 dark:border-slate-600 text-slate-900 dark:text-slate-100"
         />
       </div>
       
       <div className="space-y-2">
-        <Label htmlFor="signupPassword">စကားဝှက်</Label>
+        <Label htmlFor="signupPassword" className="font-myanmar font-semibold text-slate-700 dark:text-slate-200">စကားဝှက်</Label>
         <div className="relative">
           <Input
             id="signupPassword"
@@ -189,14 +195,14 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab }: SignUpFormProps) 
             onChange={handlePasswordChange}
             placeholder="စကားဝှက် ထည့်ပါ"
             required
-            className="pr-10"
+            className="pr-10 bg-white dark:bg-slate-700 border-2 border-slate-300 dark:border-slate-600 text-slate-900 dark:text-slate-100"
             disabled={isLoading}
           />
           <Button
             type="button"
             variant="ghost"
             size="sm"
-            className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+            className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent text-slate-500"
             onClick={() => setShowPassword(!showPassword)}
             disabled={isLoading}
           >
@@ -208,10 +214,10 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab }: SignUpFormProps) 
           </Button>
         </div>
         {passwordFeedback && (
-          <p className={`text-sm mt-1 ${
-            passwordStrength === 'Weak' ? 'text-destructive' :
-            passwordStrength === 'Medium' ? 'text-yellow-400' :
-            'text-cyan-400'
+          <p className={`text-sm mt-1 font-myanmar ${
+            passwordStrength === 'Weak' ? 'text-red-600 dark:text-red-400' :
+            passwordStrength === 'Medium' ? 'text-yellow-600 dark:text-yellow-400' :
+            'text-green-600 dark:text-green-400'
           }`}>
             {passwordFeedback}
           </p>
@@ -220,7 +226,7 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab }: SignUpFormProps) 
       
       <Button
         type="submit"
-        className="w-full btn-visible"
+        className="w-full btn-visible font-myanmar font-semibold"
         disabled={isLoading}
       >
         {isLoading ? (

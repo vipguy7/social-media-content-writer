@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
@@ -11,9 +10,10 @@ import { Eye, EyeOff, Loader2 } from 'lucide-react';
 interface LoginFormProps {
   setIsLoading: (isLoading: boolean) => void;
   isLoading: boolean;
+  onSuccess?: () => void;
 }
 
-const LoginForm = ({ setIsLoading, isLoading }: LoginFormProps) => {
+const LoginForm = ({ setIsLoading, isLoading, onSuccess }: LoginFormProps) => {
   const [isSendingReset, setIsSendingReset] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
@@ -70,7 +70,12 @@ const LoginForm = ({ setIsLoading, isLoading }: LoginFormProps) => {
           title: "အကောင့်ဝင်ရောက်မှု အောင်မြင်ပါပြီ!",
           description: "Myanmar Content Generator သို့ ကြိုဆိုပါသည်",
         });
-        navigate('/');
+        
+        if (onSuccess) {
+          onSuccess();
+        } else {
+          navigate('/');
+        }
       }
     } catch (err) {
       console.error('Login catch error:', err);
@@ -143,7 +148,7 @@ const LoginForm = ({ setIsLoading, isLoading }: LoginFormProps) => {
   return (
     <form onSubmit={handleLogin} className="space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="email">အီးမေးလ်</Label>
+        <Label htmlFor="email" className="font-myanmar font-semibold text-slate-700 dark:text-slate-200">အီးမေးလ်</Label>
         <Input
           id="email"
           type="email"
@@ -152,16 +157,17 @@ const LoginForm = ({ setIsLoading, isLoading }: LoginFormProps) => {
           placeholder="သင့်အီးမေးလ် ထည့်ပါ"
           required
           disabled={isLoading}
+          className="bg-white dark:bg-slate-700 border-2 border-slate-300 dark:border-slate-600 text-slate-900 dark:text-slate-100"
         />
       </div>
       
       <div className="space-y-2">
          <div className="flex items-center justify-between">
-          <Label htmlFor="password">စကားဝှက်</Label>
+          <Label htmlFor="password" className="font-myanmar font-semibold text-slate-700 dark:text-slate-200">စကားဝှက်</Label>
           <Button
             type="button"
             variant="link"
-            className="px-0 text-xs h-auto"
+            className="px-0 text-xs h-auto text-blue-600 dark:text-blue-400 font-myanmar"
             onClick={handleForgotPassword}
             disabled={isSendingReset || isLoading}
           >
@@ -177,12 +183,13 @@ const LoginForm = ({ setIsLoading, isLoading }: LoginFormProps) => {
             placeholder="စကားဝှက် ထည့်ပါ"
             required
             disabled={isLoading}
+            className="bg-white dark:bg-slate-700 border-2 border-slate-300 dark:border-slate-600 text-slate-900 dark:text-slate-100 pr-10"
           />
           <Button
             type="button"
             variant="ghost"
             size="sm"
-            className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+            className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent text-slate-500"
             onClick={() => setShowPassword(!showPassword)}
             disabled={isLoading}
           >
@@ -197,7 +204,7 @@ const LoginForm = ({ setIsLoading, isLoading }: LoginFormProps) => {
       
       <Button
         type="submit"
-        className="w-full btn-visible"
+        className="w-full btn-visible font-myanmar font-semibold"
         disabled={isLoading}
       >
         {isLoading ? (

@@ -4,14 +4,17 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2 } from 'lucide-react';
 import GoogleIcon from '@/components/icons/GoogleIcon';
+import { useNavigate } from 'react-router-dom';
 
 interface SocialLoginsProps {
   setIsLoading: (isLoading: boolean) => void;
   isLoading: boolean;
+  onSuccess?: () => void;
 }
 
-const SocialLogins = ({ setIsLoading, isLoading }: SocialLoginsProps) => {
+const SocialLogins = ({ setIsLoading, isLoading, onSuccess }: SocialLoginsProps) => {
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleLoginWithGoogle = async () => {
     setIsLoading(true);
@@ -53,9 +56,36 @@ const SocialLogins = ({ setIsLoading, isLoading }: SocialLoginsProps) => {
           description: errorMessage,
         });
         setIsLoading(false);
+      } else {
+        // Success case - wait for auth state change
+        console.log('Google OAuth initiated successfully, waiting for redirect...');
+        
+        // Listen for auth state change
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+          if (event === 'SIGNED_IN' && session) {
+            console.log('Google OAuth successful, user signed in');
+            subscription.unsubscribe();
+            setIsLoading(false);
+            
+            toast({
+              title: "Google Sign-In အောင်မြင်ပါပြီ!",
+              description: "Myanmar Content Generator သို့ ကြိုဆိုပါသည်",
+            });
+            
+            if (onSuccess) {
+              onSuccess();
+            } else {
+              navigate('/');
+            }
+          }
+        });
+        
+        // Cleanup subscription after 30 seconds to prevent memory leaks
+        setTimeout(() => {
+          subscription.unsubscribe();
+          setIsLoading(false);
+        }, 30000);
       }
-      // Note: If successful, the redirect will happen automatically
-      // The loading state will be cleared when the page redirects
     } catch (err) {
       console.error('Google OAuth catch error:', err);
       
@@ -77,13 +107,13 @@ const SocialLogins = ({ setIsLoading, isLoading }: SocialLoginsProps) => {
   };
 
   return (
-    <>
-      <div className="relative my-6">
+    <div className="mt-6">
+      <div className="relative">
         <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t" />
+          <span className="w-full border-t border-slate-300 dark:border-slate-600" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">
+          <span className="bg-white dark:bg-slate-800 px-3 text-slate-600 dark:text-slate-400 font-myanmar font-medium">
             သို့မဟုတ် ဆက်လက်ပြုလုပ်ပါ
           </span>
         </div>
@@ -91,7 +121,7 @@ const SocialLogins = ({ setIsLoading, isLoading }: SocialLoginsProps) => {
 
       <Button 
         variant="outline" 
-        className="w-full text-base font-semibold btn-visible" 
+        className="w-full mt-4 text-base font-semibold bg-white dark:bg-slate-700 border-2 border-slate-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200" 
         onClick={handleLoginWithGoogle} 
         disabled={isLoading}
       >
@@ -100,9 +130,9 @@ const SocialLogins = ({ setIsLoading, isLoading }: SocialLoginsProps) => {
         ) : (
           <GoogleIcon className="mr-2 h-5 w-5" />
         )}
-        Google ဖြင့် ဆက်လုပ်ပါ
+        <span className="font-myanmar">Google ဖြင့် ဆက်လုပ်ပါ</span>
       </Button>
-    </>
+    </div>
   );
 };
 
