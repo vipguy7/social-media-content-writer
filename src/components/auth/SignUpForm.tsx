@@ -55,70 +55,6 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab, onSuccess }: SignUp
     }
   };
 
-  const attemptSignUpWithTimeout = async (email: string, password: string, fullName: string): Promise<any> => {
-    // Create a more aggressive timeout for the signup request
-    const timeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('REQUEST_TIMEOUT')), 8000) // Reduced to 8 seconds
-    );
-    
-    const signupPromise = supabase.auth.signUp({
-      email: email.trim(),
-      password,
-      options: {
-        emailRedirectTo: `${window.location.origin}/`,
-        data: {
-          full_name: fullName.trim(),
-        }
-      }
-    });
-
-    return Promise.race([signupPromise, timeoutPromise]);
-  };
-
-  const attemptSignUp = async (email: string, password: string, fullName: string, retryCount = 0): Promise<any> => {
-    const maxRetries = 5; // Increased retries
-    
-    try {
-      console.log(`Signup attempt ${retryCount + 1} for:`, email.trim());
-      
-      const { data, error } = await attemptSignUpWithTimeout(email, password, fullName);
-      return { data, error };
-    } catch (err: any) {
-      console.error(`Signup attempt ${retryCount + 1} failed:`, err);
-      
-      // Check if it's a retryable error and we haven't exceeded max retries
-      const isRetryableError = (
-        err.name === 'AuthRetryableFetchError' || 
-        err.message?.includes('timeout') ||
-        err.message?.includes('REQUEST_TIMEOUT') ||
-        err.message?.includes('504') ||
-        err.message?.includes('502') ||
-        err.message?.includes('503') ||
-        err.message?.includes('Failed to fetch') ||
-        err.message?.includes('Network request failed')
-      );
-      
-      if (retryCount < maxRetries && isRetryableError) {
-        // More aggressive exponential backoff with jitter
-        const baseDelay = Math.min(Math.pow(2, retryCount) * 2000, 15000); // Cap at 15s max
-        const jitter = Math.random() * 2000; // Add up to 2s random delay
-        const delay = baseDelay + jitter;
-        
-        console.log(`Retrying signup in ${Math.round(delay)}ms (attempt ${retryCount + 2}/${maxRetries + 1})...`);
-        
-        // Show retry message to user
-        setServerError(`အင်တာနက်ပြဿနာကြောင့် ပြန်လည်ကြိုးစားနေသည်... (${retryCount + 2}/${maxRetries + 1})`);
-        
-        await new Promise(resolve => setTimeout(resolve, delay));
-        
-        return attemptSignUp(email, password, fullName, retryCount + 1);
-      }
-      
-      // If not retryable or max retries exceeded, throw the error
-      throw err;
-    }
-  };
-
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setServerError('');
@@ -146,9 +82,18 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab, onSuccess }: SignUp
     console.log('Starting signup process for:', email.trim());
 
     try {
-      const { data, error } = await attemptSignUp(email, password, fullName);
+      const { data, error } = await supabase.auth.signUp({
+        email: email.trim(),
+        password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/`,
+          data: {
+            full_name: fullName.trim(),
+          }
+        }
+      });
 
-      console.log('Final signup response:', { user: !!data?.user, session: !!data?.session, error });
+      console.log('Signup response:', { user: !!data?.user, session: !!data?.session, error });
 
       if (error) {
         console.error('Signup error:', error);
@@ -165,6 +110,8 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab, onSuccess }: SignUp
           errorMessage = 'အီးမေးလ်လိပ်စာ မှန်ကန်မှုကို စစ်ဆေးပါ။';
         } else if (error.message.includes('signup_disabled')) {
           errorMessage = 'အကောင့်ဖွင့်မှု ခေတ္တပိတ်ထားပါသည်။ နောက်မှ ထပ်မံကြိုးစားပါ။';
+        } else if (error.name === 'AuthRetryableFetchError' || error.message.includes('504') || error.message.includes('timeout')) {
+          errorMessage = 'Supabase server များ အလုပ်ရှုပ်နေပါသည်။ ခဏစောင့်ပြီး ထပ်မံကြိုးစားပါ။';
         }
         
         setServerError(errorMessage);
@@ -194,15 +141,11 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab, onSuccess }: SignUp
         }
       }
     } catch (err: any) {
-      console.error('Signup final catch error:', err);
+      console.error('Signup catch error:', err);
       
-      let errorMessage = "Supabase authentication server တွင် ပြဿနာရှိနေပါသည်။ ခဏစောင့်ပြီး ထပ်မံကြိုးစားပါ။";
+      let errorMessage = "အမှားတစ်ခု ဖြစ်ပေါ်ခဲ့သည်။ ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ။";
       
-      if (err.name === 'AuthRetryableFetchError') {
-        errorMessage = "အင်တာနက်ချိတ်ဆက်မှု မကောင်းပါ။ ၁၀-၁၅ မိနစ်စောင့်ပြီး ထပ်မံကြိုးစားပါ။";
-      } else if (err.message?.includes('Failed to fetch')) {
-        errorMessage = "ကွန်ရက်ချိတ်ဆက်မှုကို စစ်ဆေးပြီး ထပ်မံကြိုးစားပါ။";
-      } else if (err.message?.includes('REQUEST_TIMEOUT') || err.message?.includes('timeout') || err.message?.includes('504') || err.message?.includes('502') || err.message?.includes('503')) {
+      if (err.name === 'AuthRetryableFetchError' || err.message?.includes('Failed to fetch') || err.message?.includes('504') || err.message?.includes('timeout')) {
         errorMessage = "Supabase server များ အလုပ်ရှုပ်နေပါသည်။ ၁၀-၁၅ မိနစ်စောင့်ပြီး ထပ်မံကြိုးစားပါ။";
       }
       
@@ -215,7 +158,6 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab, onSuccess }: SignUp
       });
     } finally {
       setIsLoading(false);
-      setServerError('');
     }
   };
 

@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
@@ -5,7 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { Eye, EyeOff, Loader2 } from 'lucide-react';
+import { Eye, EyeOff, Loader2, AlertCircle } from 'lucide-react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 interface LoginFormProps {
   setIsLoading: (isLoading: boolean) => void;
@@ -18,11 +20,13 @@ const LoginForm = ({ setIsLoading, isLoading, onSuccess }: LoginFormProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [serverError, setServerError] = useState('');
   const navigate = useNavigate();
   const { toast } = useToast();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setServerError('');
     
     if (!email.trim() || !password.trim()) {
       toast({
@@ -55,10 +59,11 @@ const LoginForm = ({ setIsLoading, isLoading, onSuccess }: LoginFormProps) => {
           errorMessage = 'အီးမေးလ်ကို အတည်ပြုရန် လိုအပ်ပါသည်။ သင့်အီးမေးလ်ကို စစ်ဆေးပါ။';
         } else if (error.message.includes('Too many requests')) {
           errorMessage = 'တောင်းဆိုမှု များလွန်းပါသည်။ ခဏစောင့်ပြီး ထပ်မံကြိုးစားပါ။';
-        } else if (error.message.includes('timeout') || error.message.includes('504')) {
+        } else if (error.name === 'AuthRetryableFetchError' || error.message.includes('504') || error.message.includes('timeout')) {
           errorMessage = 'Server ပြဿနာ ရှိနေပါသည်။ ခဏစောင့်ပြီး ထပ်မံကြိုးစားပါ။';
         }
         
+        setServerError(errorMessage);
         toast({
           variant: "destructive",
           title: "အကောင့်ဝင်ရောက်မှု မအောင်မြင်ပါ",
@@ -77,19 +82,16 @@ const LoginForm = ({ setIsLoading, isLoading, onSuccess }: LoginFormProps) => {
           navigate('/');
         }
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error('Login catch error:', err);
       
       let errorMessage = "အမှားတစ်ခု ဖြစ်ပေါ်ခဲ့သည်။ ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ။";
       
-      if (err instanceof Error) {
-        if (err.message === 'Failed to fetch') {
-          errorMessage = "ကွန်ရက်ချိတ်ဆက်မှုကို စစ်ဆေးပြီး ထပ်မံကြိုးစားပါ။";
-        } else if (err.message.includes('timeout') || err.message.includes('504')) {
-          errorMessage = "Server ပြဿနာ ရှိနေပါသည်။ ခဏစောင့်ပြီး ထပ်မံကြိုးစားပါ။";
-        }
+      if (err.name === 'AuthRetryableFetchError' || err.message?.includes('Failed to fetch') || err.message?.includes('504') || err.message?.includes('timeout')) {
+        errorMessage = "Server ပြဿနာ ရှိနေပါသည်။ ခဏစောင့်ပြီး ထပ်မံကြိုးစားပါ။";
       }
       
+      setServerError(errorMessage);
       toast({
         variant: "destructive",
         title: "အကောင့်ဝင်ရောက်မှု အမှား",
@@ -119,7 +121,7 @@ const LoginForm = ({ setIsLoading, isLoading, onSuccess }: LoginFormProps) => {
       if (error) {
         let errorMessage = 'စကားဝှက် ပြန်လည်သတ်မှတ်မှုတွင် အမှား ဖြစ်ပေါ်ခဲ့သည်။';
         
-        if (error.message.includes('timeout') || error.message.includes('504')) {
+        if (error.name === 'AuthRetryableFetchError' || error.message.includes('504') || error.message.includes('timeout')) {
           errorMessage = 'Server ပြဿနာ ရှိနေပါသည်။ ခဏစောင့်ပြီး ထပ်မံကြိုးစားပါ။';
         }
         
@@ -134,12 +136,18 @@ const LoginForm = ({ setIsLoading, isLoading, onSuccess }: LoginFormProps) => {
           description: "စကားဝှက် ပြန်လည်သတ်မှတ်ရန် သင့်အီးမေးလ်ကို စစ်ဆေးပါ။",
         });
       }
-    } catch (err) {
-       toast({
-          variant: "destructive",
-          title: "အမှားတစ်ခု ဖြစ်ပေါ်ခဲ့သည်",
-          description: "ကျေးဇူးပြု၍ နောက်မှ ထပ်မံကြိုးစားပါ။",
-        });
+    } catch (err: any) {
+      let errorMessage = "အမှားတစ်ခု ဖြစ်ပေါ်ခဲ့သည်။ ကျေးဇူးပြု၍ နောက်မှ ထပ်မံကြိုးစားပါ။";
+      
+      if (err.name === 'AuthRetryableFetchError' || err.message?.includes('504') || err.message?.includes('timeout')) {
+        errorMessage = "Server ပြဿနာ ရှိနေပါသည်။ ခဏစောင့်ပြီး ထပ်မံကြိုးစားပါ။";
+      }
+      
+      toast({
+        variant: "destructive",
+        title: "အမှားတစ်ခု ဖြစ်ပေါ်ခဲ့သည်",
+        description: errorMessage,
+      });
     } finally {
       setIsSendingReset(false);
     }
@@ -147,6 +155,15 @@ const LoginForm = ({ setIsLoading, isLoading, onSuccess }: LoginFormProps) => {
 
   return (
     <form onSubmit={handleLogin} className="space-y-4">
+      {serverError && (
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertDescription className="font-myanmar">
+            {serverError}
+          </AlertDescription>
+        </Alert>
+      )}
+      
       <div className="space-y-2">
         <Label htmlFor="email" className="font-myanmar font-semibold text-slate-700 dark:text-slate-200">အီးမေးလ်</Label>
         <Input
