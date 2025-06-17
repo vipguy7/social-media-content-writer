@@ -2,9 +2,11 @@
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2 } from 'lucide-react';
+import { Loader2, AlertCircle } from 'lucide-react';
 import GoogleIcon from '@/components/icons/GoogleIcon';
 import { useNavigate } from 'react-router-dom';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { useState } from 'react';
 
 interface SocialLoginsProps {
   setIsLoading: (isLoading: boolean) => void;
@@ -15,18 +17,20 @@ interface SocialLoginsProps {
 const SocialLogins = ({ setIsLoading, isLoading, onSuccess }: SocialLoginsProps) => {
   const { toast } = useToast();
   const navigate = useNavigate();
+  const [serverError, setServerError] = useState('');
 
   const handleLoginWithGoogle = async () => {
     setIsLoading(true);
+    setServerError('');
     console.log('Attempting Google OAuth login');
     
     try {
       const redirectTo = `${window.location.origin}/`;
       console.log('Google OAuth redirect URL:', redirectTo);
       
-      // Add timeout wrapper for Google OAuth
+      // Reduced timeout for Google OAuth
       const timeoutPromise = new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Google OAuth timeout')), 15000)
+        setTimeout(() => reject(new Error('Google OAuth timeout')), 10000)
       );
       
       const oauthPromise = supabase.auth.signInWithOAuth({
@@ -57,6 +61,7 @@ const SocialLogins = ({ setIsLoading, isLoading, onSuccess }: SocialLoginsProps)
           errorMessage = 'Popup ပိတ်ဆို့ခံရပါသည်။ Browser ၏ popup settings ကို စစ်ဆေးပါ။';
         }
         
+        setServerError(errorMessage);
         toast({
           variant: "destructive",
           title: "Google Sign-In မအောင်မြင်ပါ",
@@ -71,23 +76,24 @@ const SocialLogins = ({ setIsLoading, isLoading, onSuccess }: SocialLoginsProps)
     } catch (err: any) {
       console.error('Google OAuth catch error:', err);
       
-      let errorMessage = "ကွန်ရက်ပြဿနာ ရှိနေပါသည်။ ခဏစောင့်ပြီး ထပ်မံကြိုးစားပါ။";
+      let errorMessage = "Google authentication server တွင် ပြဿနာရှိနေပါသည်။";
       
       if (err.message === 'Google OAuth timeout') {
         errorMessage = "Google OAuth လုပ်ငန်းစဉ် အချိန်ကုန်ဆုံးသွားပါသည်။ ထပ်မံကြိုးစားပါ။";
       } else if (err.name === 'AuthRetryableFetchError') {
-        errorMessage = "Supabase server တွင် ယာယီပြဿနာ ရှိနေပါသည်။ ၅-၁၀ မိနစ်စောင့်ပြီး ထပ်မံကြိုးစားပါ။";
+        errorMessage = "အင်တာနက်ချိတ်ဆက်မှု မကောင်းပါ။ ၁၀-၁၅ မိနစ်စောင့်ပြီး ထပ်မံကြိုးစားပါ။";
       } else if (err.message === 'Failed to fetch') {
         errorMessage = "ကွန်ရက်ချိတ်ဆက်မှုကို စစ်ဆေးပြီး ထပ်မံကြိုးစားပါ။";
       } else if (err.message?.includes('timeout') || err.message?.includes('504')) {
-        errorMessage = "Server ပြဿနာ ရှိနေပါသည်။ ခဏစောင့်ပြီး ထပ်မံကြိုးစားပါ။";
+        errorMessage = "Google server များ အလုပ်ရှုပ်နေပါသည်။ ခဏစောင့်ပြီး ထပ်မံကြိုးစားပါ။";
       }
       
+      setServerError(errorMessage);
       toast({
         variant: "destructive",
         title: "Google Sign-In အမှား",
         description: errorMessage,
-        duration: 6000, // Show longer for server errors
+        duration: 6000,
       });
       setIsLoading(false);
     }
@@ -105,6 +111,15 @@ const SocialLogins = ({ setIsLoading, isLoading, onSuccess }: SocialLoginsProps)
           </span>
         </div>
       </div>
+
+      {serverError && (
+        <Alert variant="destructive" className="mt-4">
+          <AlertCircle className="h-4 w-4" />
+          <AlertDescription className="font-myanmar">
+            {serverError}
+          </AlertDescription>
+        </Alert>
+      )}
 
       <Button 
         variant="outline" 

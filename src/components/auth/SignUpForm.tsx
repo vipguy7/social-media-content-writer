@@ -5,7 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { Eye, EyeOff, Loader2 } from 'lucide-react';
+import { Eye, EyeOff, Loader2, AlertCircle } from 'lucide-react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 interface SignUpFormProps {
   setIsLoading: (isLoading: boolean) => void;
@@ -21,6 +22,7 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab, onSuccess }: SignUp
   const [fullName, setFullName] = useState('');
   const [passwordStrength, setPasswordStrength] = useState('');
   const [passwordFeedback, setPasswordFeedback] = useState('');
+  const [serverError, setServerError] = useState('');
   const { toast } = useToast();
 
   const checkPasswordStrength = (password: string): { strength: string, feedback: string } => {
@@ -53,23 +55,33 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab, onSuccess }: SignUp
     }
   };
 
+  const attemptSignUpWithTimeout = async (email: string, password: string, fullName: string): Promise<any> => {
+    // Create a more aggressive timeout for the signup request
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('REQUEST_TIMEOUT')), 8000) // Reduced to 8 seconds
+    );
+    
+    const signupPromise = supabase.auth.signUp({
+      email: email.trim(),
+      password,
+      options: {
+        emailRedirectTo: `${window.location.origin}/`,
+        data: {
+          full_name: fullName.trim(),
+        }
+      }
+    });
+
+    return Promise.race([signupPromise, timeoutPromise]);
+  };
+
   const attemptSignUp = async (email: string, password: string, fullName: string, retryCount = 0): Promise<any> => {
-    const maxRetries = 3; // Increased retries
+    const maxRetries = 5; // Increased retries
     
     try {
       console.log(`Signup attempt ${retryCount + 1} for:`, email.trim());
       
-      const { data, error } = await supabase.auth.signUp({
-        email: email.trim(),
-        password,
-        options: {
-          emailRedirectTo: `${window.location.origin}/`,
-          data: {
-            full_name: fullName.trim(),
-          }
-        }
-      });
-
+      const { data, error } = await attemptSignUpWithTimeout(email, password, fullName);
       return { data, error };
     } catch (err: any) {
       console.error(`Signup attempt ${retryCount + 1} failed:`, err);
@@ -78,6 +90,7 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab, onSuccess }: SignUp
       const isRetryableError = (
         err.name === 'AuthRetryableFetchError' || 
         err.message?.includes('timeout') ||
+        err.message?.includes('REQUEST_TIMEOUT') ||
         err.message?.includes('504') ||
         err.message?.includes('502') ||
         err.message?.includes('503') ||
@@ -86,12 +99,16 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab, onSuccess }: SignUp
       );
       
       if (retryCount < maxRetries && isRetryableError) {
-        // Progressive delay with jitter to avoid thundering herd
-        const baseDelay = Math.pow(2, retryCount) * 1000; // 1s, 2s, 4s, 8s
-        const jitter = Math.random() * 1000; // Add up to 1s random delay
+        // More aggressive exponential backoff with jitter
+        const baseDelay = Math.min(Math.pow(2, retryCount) * 2000, 15000); // Cap at 15s max
+        const jitter = Math.random() * 2000; // Add up to 2s random delay
         const delay = baseDelay + jitter;
         
         console.log(`Retrying signup in ${Math.round(delay)}ms (attempt ${retryCount + 2}/${maxRetries + 1})...`);
+        
+        // Show retry message to user
+        setServerError(`အင်တာနက်ပြဿနာကြောင့် ပြန်လည်ကြိုးစားနေသည်... (${retryCount + 2}/${maxRetries + 1})`);
+        
         await new Promise(resolve => setTimeout(resolve, delay));
         
         return attemptSignUp(email, password, fullName, retryCount + 1);
@@ -104,6 +121,7 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab, onSuccess }: SignUp
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
+    setServerError('');
     
     if (!email.trim() || !password.trim() || !fullName.trim()) {
       toast({
@@ -149,6 +167,7 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab, onSuccess }: SignUp
           errorMessage = 'အကောင့်ဖွင့်မှု ခေတ္တပိတ်ထားပါသည်။ နောက်မှ ထပ်မံကြိုးစားပါ။';
         }
         
+        setServerError(errorMessage);
         toast({
           variant: "destructive",
           title: "အကောင့်ဖွင့်မှု မအောင်မြင်ပါ",
@@ -156,6 +175,7 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab, onSuccess }: SignUp
         });
       } else if (data?.user) {
         console.log('Signup successful for user:', data.user.email);
+        setServerError('');
         toast({
           title: "အကောင့်ဖွင့်မှု အောင်မြင်ပါပြီ!",
           description: "အီးမေးလ်ကို စစ်ဆေးပြီး အကောင့်ကို အတည်ပြုပါ။",
@@ -176,29 +196,40 @@ const SignUpForm = ({ setIsLoading, isLoading, setActiveTab, onSuccess }: SignUp
     } catch (err: any) {
       console.error('Signup final catch error:', err);
       
-      let errorMessage = "ကွန်ရက်ပြဿနာ ရှိနေပါသည်။ ကျေးဇူးပြု၍ ခဏစောင့်ပြီး ထပ်မံကြိုးစားပါ။";
+      let errorMessage = "Supabase authentication server တွင် ပြဿနာရှိနေပါသည်။ ခဏစောင့်ပြီး ထပ်မံကြိုးစားပါ။";
       
       if (err.name === 'AuthRetryableFetchError') {
-        errorMessage = "Supabase server တွင် ယာယီပြဿနာ ရှိနေပါသည်။ ၅-၁၀ မိနစ်စောင့်ပြီး ထပ်မံကြိုးစားပါ။";
+        errorMessage = "အင်တာနက်ချိတ်ဆက်မှု မကောင်းပါ။ ၁၀-၁၅ မိနစ်စောင့်ပြီး ထပ်မံကြိုးစားပါ။";
       } else if (err.message?.includes('Failed to fetch')) {
         errorMessage = "ကွန်ရက်ချိတ်ဆက်မှုကို စစ်ဆေးပြီး ထပ်မံကြိုးစားပါ။";
-      } else if (err.message?.includes('timeout') || err.message?.includes('504') || err.message?.includes('502') || err.message?.includes('503')) {
-        errorMessage = "Server အလုပ်ရှုပ်နေပါသည်။ ခဏစောင့်ပြီး ထပ်မံကြိုးစားပါ။";
+      } else if (err.message?.includes('REQUEST_TIMEOUT') || err.message?.includes('timeout') || err.message?.includes('504') || err.message?.includes('502') || err.message?.includes('503')) {
+        errorMessage = "Supabase server များ အလုပ်ရှုပ်နေပါသည်။ ၁၀-၁၅ မိနစ်စောင့်ပြီး ထပ်မံကြိုးစားပါ။";
       }
       
+      setServerError(errorMessage);
       toast({
         variant: "destructive",
-        title: "အကောင့်ဖွင့်မှု အမှား",
+        title: "Server ပြဿနာ",
         description: errorMessage,
-        duration: 6000, // Show longer for server errors
+        duration: 8000,
       });
     } finally {
       setIsLoading(false);
+      setServerError('');
     }
   };
 
   return (
     <form onSubmit={handleSignUp} className="space-y-4">
+      {serverError && (
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertDescription className="font-myanmar">
+            {serverError}
+          </AlertDescription>
+        </Alert>
+      )}
+      
       <div className="space-y-2">
         <Label htmlFor="fullName" className="font-myanmar font-semibold text-slate-700 dark:text-slate-200">အမည်</Label>
         <Input
