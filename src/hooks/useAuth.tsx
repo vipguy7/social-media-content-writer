@@ -48,29 +48,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         .eq('id', session.user.id)
         .maybeSingle();
       
-      if (error && error.code !== 'PGRST116') {
+      if (error && error.code !== 'PGRST116') { // PGRST116 means no rows found, which is not an error in maybeSingle()
         console.error("Error fetching profile:", error);
+        setProfile(null); // Explicitly set profile to null on error
         return;
       }
 
-      if (!data) {
-        console.log("No profile found for user, creating one.");
-        const { data: newData, error: insertError } = await supabase
-            .from('profiles')
-            .insert({ id: session.user.id })
-            .select('credits, full_name, avatar_url, referral_code, referred_by_user_id, profile_completion_bonus_awarded')
-            .single();
-
-        if (insertError) {
-            console.error("Error creating profile:", insertError);
-            return;
-        }
-        data = newData;
+      if (!data && session?.user) {
+        // If no data and we have a user session, it's unexpected as the trigger should have created a profile.
+        console.warn(`Profile not found for user ${session.user.id}. This might indicate an issue with the handle_new_user trigger or a delay.`);
+        // We will proceed with data being null, which will result in profile being null.
       }
 
-      setProfile(data as Profile);
+      setProfile(data as Profile); // This will set profile to null if data is null
     } catch (error) {
       console.error("Error in fetchProfile:", error);
+      setProfile(null); // Explicitly set profile to null on catch
     }
   }, [session?.user?.id]);
 
