@@ -26,7 +26,7 @@ BEGIN
   IF NOT is_unique THEN
     RAISE EXCEPTION 'Could not generate a unique referral code after % attempts. This may indicate high table contention or an issue with the generation logic.', max_attempts;
   END IF;
-
+  
   RETURN code;
 END;
 $$ LANGUAGE plpgsql VOLATILE;
