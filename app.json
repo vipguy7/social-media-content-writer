@@ -1,0 +1,18 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "dbc6a605-4485-4d72-95d2-f01d44362410"
+      }
+    },
+    "android": {
+      "package": "com.mycontentwriter.expo.app"
+    },
+    "ios": {
+      "bundleIdentifier": "com.mycontentwriter.expo.app",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    }
+  }
+}
