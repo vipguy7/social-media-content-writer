@@ -81,6 +81,7 @@ const GeneratedContentOutput = ({ content, onCopy, onExportAll, onSave }: Genera
                     </Button>
                     <Button
                       onClick={handleSave}
+                      variant="outline"
                       disabled={selectedItems.length === 0 || isSaving}
                       size="sm"
                       className="btn-visible font-semibold flex-1 min-w-0"
