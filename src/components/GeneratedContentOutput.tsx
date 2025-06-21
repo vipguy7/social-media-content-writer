@@ -72,7 +72,8 @@ const GeneratedContentOutput = ({ content, onCopy, onExportAll, onSave }: Genera
                       onClick={handleSelectAll}
                       variant="outline"
                       size="sm"
-                      className="text-foreground border-2 hover:bg-primary hover:text-primary-foreground font-medium flex-1 min-w-0">
+                      className="text-foreground border-2 hover:bg-primary hover:text-primary-foreground font-medium flex-1 min-w-0"
+                    >
                       <Check className="w-4 h-4 mr-2 flex-shrink-0" />
                       <span className="truncate">
                         {selectedItems.length === content.length ? 'Deselect All' : 'Select All'}
@@ -80,10 +81,11 @@ const GeneratedContentOutput = ({ content, onCopy, onExportAll, onSave }: Genera
                     </Button>
                     <Button
                       onClick={handleSave}
-                      disabled={selectedItems.length === 0 || isSaving}
                       variant="outline"
+                      disabled={selectedItems.length === 0 || isSaving}
                       size="sm"
-                      className="text-foreground border-2 hover:bg-primary hover:text-primary-foreground font-medium w-full">
+                      className="btn-visible font-semibold flex-1 min-w-0"
+                    >
                       <Save className="w-4 h-4 mr-2 flex-shrink-0" />
                       <span className="truncate">
                         {isSaving ? 'Saving...' : `Save Selected (${selectedItems.length})`}
