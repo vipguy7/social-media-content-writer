@@ -397,7 +397,7 @@ serve(async (req) => {
     const prompt = getRefinedBurmeseContentPrompt(body, fbAnalysis, marketingInsights);
     
     const geminiResponse = await Promise.race([
-      fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${GEMINI_API_KEY}`, {
+      fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -409,7 +409,7 @@ serve(async (req) => {
             }]
           }],
           generationConfig: {
-            temperature: 1.3,
+            temperature: 1.0,
             topK: 40,
             topP: 0.95,
             maxOutputTokens: 4096,
@@ -417,7 +417,7 @@ serve(async (req) => {
         }),
       }),
       new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Request timeout')), 20000)
+        setTimeout(() => reject(new Error('Request timeout')), 30000)
       )
     ]) as Response;
 
